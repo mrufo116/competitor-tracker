@@ -29,18 +29,6 @@
   }
   a { color: inherit; }
 
-  /* ── Focus ── */
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
-  /* ── Reduced motion ── */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition-duration: 0.01ms !important; }
-  }
-
   /* ── Top bar ── */
   .topbar {
     background: var(--topbar-bg);
@@ -56,14 +44,17 @@
     gap: 0.6rem;
     text-decoration: none;
   }
+  /* TGTG heart-bag icon, simplified as SVG inline via background */
   .topbar-icon {
     width: 30px; height: 30px;
     background: #ffffff;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
-    font-size: 16px;
-    line-height: 1;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--topbar-bg);
+    letter-spacing: -0.03em;
   }
   .topbar-name {
     font-weight: 700;
@@ -95,7 +86,7 @@
     border-bottom: 1px solid var(--border);
   }
   .page-header h1 {
-    font-size: 1.625rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--text);
     letter-spacing: -0.02em;
@@ -129,7 +120,6 @@
     gap: 1.5rem;
     align-items: start;
   }
-  @media (max-width: 1024px) { .layout { grid-template-columns: 1fr 220px; } }
   @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
 
   /* ── Section card ── */
@@ -141,7 +131,7 @@
     box-shadow: 0 1px 3px rgba(0,97,95,0.06);
   }
   .section-header {
-    padding: 0.875rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -149,7 +139,7 @@
     background: #faf8f6;
   }
   .section-header h2 {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -166,7 +156,7 @@
 
   /* ── Filter bars ── */
   .filter-bar {
-    padding: 0.625rem 1.25rem;
+    padding: 0.6rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     flex-wrap: wrap;
@@ -176,7 +166,7 @@
   }
   .filter-bar:last-of-type { border-bottom: 1px solid var(--border); }
   .filter-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
@@ -194,13 +184,9 @@
     font-weight: 500;
     cursor: pointer;
     font-family: inherit;
-    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    transition: all 0.12s;
   }
-  .filter-btn:hover {
-    border-color: var(--accent-mid);
-    color: var(--accent);
-    background: var(--accent-light);
-  }
+  .filter-btn:hover { border-color: var(--accent-mid); color: var(--accent); }
   .filter-btn.active {
     background: var(--accent);
     border-color: var(--accent);
@@ -216,12 +202,12 @@
     display: flex;
     gap: 0.875rem;
     align-items: flex-start;
-    transition: background-color 0.15s ease;
+    transition: background 0.1s;
   }
   .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: var(--accent-light); }
+  .article-row:hover { background: #faf8f6; }
   .article-accent {
-    width: 4px;
+    width: 3px;
     border-radius: 3px;
     flex-shrink: 0;
     align-self: stretch;
@@ -239,8 +225,8 @@
     letter-spacing: 0.02em;
   }
   .article-title {
-    font-size: 0.9375rem;
-    font-weight: 700;
+    font-size: 0.875rem;
+    font-weight: 600;
     line-height: 1.45;
     margin-bottom: 0.4rem;
     letter-spacing: -0.01em;
@@ -253,7 +239,7 @@
   /* ── Issues sidebar ── */
   .issue-list { display: flex; flex-direction: column; }
   .issue-row {
-    padding: 0.875rem 1.25rem;
+    padding: 0.8rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -262,7 +248,7 @@
     color: var(--text);
     font-size: 0.8rem;
     font-weight: 600;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: background 0.1s;
   }
   .issue-row:last-child { border-bottom: none; }
   .issue-row:hover { background: var(--accent-light); color: var(--accent); }
@@ -282,34 +268,32 @@
 
   /* ── Empty state ── */
   .empty {
-    padding: 2.5rem 1.25rem;
+    padding: 2.5rem;
     text-align: center;
     color: var(--muted);
     font-size: 0.8rem;
-    line-height: 1.6;
   }
-  .empty-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
 </style>
 </head>
 <body>
   <nav class="topbar">
     <div class="topbar-wordmark">
-      <div class="topbar-icon">♻</div>
+      <div class="topbar-icon">TG</div>
       <span class="topbar-name">Too Good To Go</span>
     </div>
     <div class="topbar-divider"></div>
     <span class="topbar-section">Competitive Intelligence</span>
   </nav>
-  <header class="page-header">
+  <div class="page-header">
     <h1>Competitor News Tracker</h1>
-    <span class="meta">86 articles tracked · Updated April 07, 2026</span>
-  </header>
-  <main class="layout">
+    <span class="meta">88 articles tracked · Updated April 07, 2026</span>
+  </div>
+  <div class="layout">
     <section>
       <div class="section-card">
         <div class="section-header">
           <h2>Recent Articles</h2>
-          <span class="section-count">30 most recent · 86 total</span>
+          <span class="section-count">30 of 88</span>
         </div>
         <div class="legend">
           <div class="legend-item"><div class="legend-dot" style="background:#2d7a4f"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#1d5fa8"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#b45309"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#b91c1c"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#00615f"></div>Too Good To Go</div>
@@ -833,10 +817,10 @@
         <div class="section-header">
           <h2>Weekly Issues</h2>
         </div>
-        <div class='empty'><div class='empty-icon'>📋</div>Weekly digests appear here every Monday.</div>
+        <div class='empty'>No issues yet.</div>
       </div>
     </aside>
-  </main>
+  </div>
   <script>
   function applyFilters() {
     const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
