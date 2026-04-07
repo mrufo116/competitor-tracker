@@ -25,9 +25,9 @@ COMPETITORS = {
     "Olio": ["Olio app food sharing", "Olio community sharing platform"],
     "Flashfood": ["Flashfood grocery surplus", "Flashfood app"],
     "Karma": ["Karma food waste app", "Karma surplus food"],
-    "Phenix": ["Phenix food waste", "Phenix anti-gaspillage"],
-    "ResQ Club": ["ResQ Club food rescue", "ResQclub surplus food"],
-    "Wasteless": ["Wasteless dynamic pricing grocery", "Wasteless food waste"],
+    "Phenix": ["Phenix food waste France", "Phenix food rescue France"],
+    "ResQ Club": ["ResQ Club food rescue", "ResQ Club Finland food"],
+    "Wasteless": ["Wasteless dynamic pricing grocery", "Wasteless AI dynamic pricing"],
     "Too Good To Go": ["Too Good To Go funding", "Too Good To Go expansion", "TGTG partnership"],
 }
 
@@ -173,9 +173,11 @@ def fetch_all() -> list[dict]:
                     new_articles.append(a)
                     print(f"  + {a['title'][:80]}")
 
-    # Persist — sort by pub_date descending, then cap
+    # Persist — sort by pub_date descending, drop >6 months old, then cap
+    cutoff_6mo = datetime.now(timezone.utc) - timedelta(days=183)
     all_articles = new_articles + data.get("articles", [])
     all_articles.sort(key=pub_date_key, reverse=True)
+    all_articles = [a for a in all_articles if pub_date_key(a) >= cutoff_6mo]
     all_articles = all_articles[:500]
     # Prune seen_ids to match kept articles so the list doesn't grow without bound
     kept_ids = {a["id"] for a in all_articles}
