@@ -127,30 +127,32 @@ def fetch_all() -> list[dict]:
 # ── HTML Generation ───────────────────────────────────────────────────────────
 
 CARD_COLORS = {
-    "Olio": "#16a34a",
-    "Flashfood": "#2563eb",
-    "Karma": "#d97706",
-    "Phenix": "#7c3aed",
-    "ResQ Club": "#dc2626",
-    "Wasteless": "#0891b2",
-    "Too Good To Go": "#059669",
+    "Olio": "#2d7a4f",
+    "Flashfood": "#1d5fa8",
+    "Karma": "#b45309",
+    "Phenix": "#6d28d9",
+    "ResQ Club": "#b91c1c",
+    "Wasteless": "#0e7490",
+    "Too Good To Go": "#00615f",
 }
 
 SHARED_CSS = """
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #f3f4f6;
+    --bg: #f9f3f0;
     --surface: #ffffff;
-    --border: #e5e7eb;
-    --text: #111827;
+    --border: #dee3e3;
+    --text: #222222;
     --muted: #6b7280;
-    --accent: #059669;
-    --accent-light: #d1fae5;
+    --accent: #00615f;
+    --accent-mid: #03a97b;
+    --accent-light: #ddf3e4;
+    --topbar-bg: #00615f;
   }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: Inter, system-ui, -apple-system, sans-serif;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     line-height: 1.5;
     min-height: 100vh;
@@ -159,47 +161,73 @@ SHARED_CSS = """
 
   /* ── Top bar ── */
   .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: var(--topbar-bg);
     padding: 0 2rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    height: 52px;
+    gap: 1rem;
+    height: 56px;
   }
-  .topbar-logo {
-    width: 22px; height: 22px;
-    background: var(--accent);
-    border-radius: 5px;
+  .topbar-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+  /* TGTG heart-bag icon, simplified as SVG inline via background */
+  .topbar-icon {
+    width: 30px; height: 30px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--topbar-bg);
+    letter-spacing: -0.03em;
   }
-  .topbar-title {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--text);
+  .topbar-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #ffffff;
+    letter-spacing: -0.01em;
   }
-  .topbar-sep { color: var(--border); margin: 0 0.25rem; }
-  .topbar-sub { font-size: 0.8rem; color: var(--muted); }
+  .topbar-divider {
+    width: 1px; height: 20px;
+    background: rgba(255,255,255,0.25);
+    margin: 0 0.25rem;
+  }
+  .topbar-section {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
 
   /* ── Page header ── */
   .page-header {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 1.75rem 2rem 1.25rem;
+    padding: 2rem 2rem 1.25rem;
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
   }
   .page-header h1 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--text);
+    letter-spacing: -0.02em;
   }
   .page-header .meta {
     font-size: 0.78rem;
     color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 120px;
+    padding: 0.3rem 0.85rem;
   }
   .back-link {
     font-size: 0.8rem;
@@ -208,6 +236,7 @@ SHARED_CSS = """
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
+    font-weight: 500;
   }
   .back-link:hover { text-decoration: underline; }
 
@@ -215,7 +244,7 @@ SHARED_CSS = """
   .layout {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 0 2rem 3rem;
+    padding: 1.5rem 2rem 3rem;
     display: grid;
     grid-template-columns: 1fr 260px;
     gap: 1.5rem;
@@ -227,30 +256,32 @@ SHARED_CSS = """
   .section-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,97,95,0.06);
   }
   .section-header {
-    padding: 0.875rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: #faf8f6;
   }
   .section-header h2 {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
+    letter-spacing: 0.08em;
+    color: var(--accent);
   }
   .section-count {
-    font-size: 0.75rem;
-    color: var(--muted);
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 0.1rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    border-radius: 120px;
+    padding: 0.15rem 0.6rem;
   }
 
   /* ── Filter bar ── */
@@ -260,65 +291,74 @@ SHARED_CSS = """
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    background: #fafafa;
+    background: #faf8f6;
   }
   .filter-btn {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     color: var(--text);
-    padding: 0.25rem 0.65rem;
-    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    border-radius: 120px;
     font-size: 0.72rem;
+    font-weight: 500;
     cursor: pointer;
     font-family: inherit;
     transition: all 0.12s;
   }
-  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .filter-btn:hover { border-color: var(--accent-mid); color: var(--accent); }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+  }
 
   /* ── Article rows ── */
   .article-list { display: flex; flex-direction: column; }
   .article-row {
-    padding: 0.9rem 1.25rem;
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
-    gap: 1rem;
+    gap: 0.875rem;
     align-items: flex-start;
     transition: background 0.1s;
   }
   .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: #fafafa; }
+  .article-row:hover { background: #faf8f6; }
   .article-accent {
     width: 3px;
-    min-height: 100%;
-    border-radius: 2px;
+    border-radius: 3px;
     flex-shrink: 0;
     align-self: stretch;
+    min-height: 40px;
   }
   .article-body { flex: 1; min-width: 0; }
   .article-tag {
     display: inline-block;
-    font-size: 0.68rem;
-    font-weight: 600;
-    padding: 0.15rem 0.5rem;
-    border-radius: 20px;
-    margin-bottom: 0.35rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+    border-radius: 120px;
+    margin-bottom: 0.4rem;
     color: #fff;
+    letter-spacing: 0.02em;
   }
   .article-title {
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.45;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
   }
   .article-title a { text-decoration: none; color: var(--text); }
   .article-title a:hover { color: var(--accent); }
-  .article-meta { font-size: 0.72rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .article-meta { font-size: 0.7rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .article-meta-sep { color: var(--border); }
 
   /* ── Issues sidebar ── */
   .issue-list { display: flex; flex-direction: column; }
   .issue-row {
-    padding: 0.75rem 1.25rem;
+    padding: 0.8rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -331,7 +371,7 @@ SHARED_CSS = """
   }
   .issue-row:last-child { border-bottom: none; }
   .issue-row:hover { background: var(--accent-light); color: var(--accent); }
-  .issue-arrow { color: var(--muted); font-size: 0.8rem; }
+  .issue-arrow { color: var(--muted); font-size: 0.75rem; }
 
   /* ── Legend ── */
   .legend {
@@ -340,10 +380,10 @@ SHARED_CSS = """
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    background: #fafafa;
+    background: #faf8f6;
   }
-  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--muted); }
-  .legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; color: var(--muted); font-weight: 500; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
   /* ── Empty state ── */
   .empty {
@@ -373,6 +413,7 @@ def render_article_row(a: dict) -> str:
         </div>
         <div class="article-meta">
           <span>{html.escape(a['source'])}</span>
+          <span class="article-meta-sep">·</span>
           <span>{pub}</span>
         </div>
       </div>
@@ -396,17 +437,19 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html.escape(title)} — TGTG Intel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>{SHARED_CSS}
     .layout {{ display: block; max-width: 820px; margin: 0 auto; padding: 0 2rem 3rem; }}
   </style>
 </head>
 <body>
   <nav class="topbar">
-    <div class="topbar-logo"></div>
-    <span class="topbar-title">Too Good To Go</span>
-    <span class="topbar-sep">/</span>
-    <span class="topbar-sub">Competitive Intelligence</span>
+    <div class="topbar-wordmark">
+      <div class="topbar-icon">TG</div>
+      <span class="topbar-name">Too Good To Go</span>
+    </div>
+    <div class="topbar-divider"></div>
+    <span class="topbar-section">Competitive Intelligence</span>
   </nav>
   <div class="page-header" style="max-width:820px">
     <div>
@@ -466,17 +509,19 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Competitor Intelligence — Too Good To Go</title>
+  <title>Competitor Intel · Too Good To Go</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>{SHARED_CSS}</style>
 </head>
 <body>
   <nav class="topbar">
-    <div class="topbar-logo"></div>
-    <span class="topbar-title">Too Good To Go</span>
-    <span class="topbar-sep">/</span>
-    <span class="topbar-sub">Competitive Intelligence</span>
+    <div class="topbar-wordmark">
+      <div class="topbar-icon">TG</div>
+      <span class="topbar-name">Too Good To Go</span>
+    </div>
+    <div class="topbar-divider"></div>
+    <span class="topbar-section">Competitive Intelligence</span>
   </nav>
   <div class="page-header">
     <h1>Competitor News Tracker</h1>
