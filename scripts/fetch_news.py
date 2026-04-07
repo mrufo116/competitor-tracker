@@ -81,6 +81,49 @@ def article_id(article: dict) -> str:
     return hashlib.md5(article["link"].encode()).hexdigest()
 
 
+_TLD_TO_COUNTRY = {
+    "uk": "United Kingdom", "co.uk": "United Kingdom", "org.uk": "United Kingdom",
+    "fr": "France", "de": "Germany", "dk": "Denmark", "nl": "Netherlands",
+    "es": "Spain", "it": "Italy", "be": "Belgium", "pt": "Portugal",
+    "ie": "Ireland", "no": "Norway", "se": "Sweden", "fi": "Finland",
+    "pl": "Poland", "at": "Austria", "ch": "Switzerland", "ca": "Canada",
+    "com.au": "Australia", "au": "Australia", "nz": "New Zealand",
+    "in": "India", "sg": "Singapore", "za": "South Africa",
+}
+_FLAG = {
+    "United Kingdom": "🇬🇧", "France": "🇫🇷", "Germany": "🇩🇪", "Denmark": "🇩🇰",
+    "Netherlands": "🇳🇱", "Spain": "🇪🇸", "Italy": "🇮🇹", "Belgium": "🇧🇪",
+    "Portugal": "🇵🇹", "Ireland": "🇮🇪", "Norway": "🇳🇴", "Sweden": "🇸🇪",
+    "Finland": "🇫🇮", "Poland": "🇵🇱", "Austria": "🇦🇹", "Switzerland": "🇨🇭",
+    "Canada": "🇨🇦", "Australia": "🇦🇺", "New Zealand": "🇳🇿",
+    "India": "🇮🇳", "Singapore": "🇸🇬", "South Africa": "🇿🇦",
+    "United States": "🇺🇸",
+}
+
+
+def detect_country(link: str) -> str:
+    """Infer country from article URL domain TLD."""
+    try:
+        host = urllib.parse.urlparse(link).hostname or ""
+        host = host.lower().removeprefix("www.")
+        # Check two-part TLDs first (e.g. co.uk, com.au)
+        parts = host.split(".")
+        if len(parts) >= 2:
+            two = ".".join(parts[-2:])
+            if two in _TLD_TO_COUNTRY:
+                return _TLD_TO_COUNTRY[two]
+        tld = parts[-1] if parts else ""
+        if tld in _TLD_TO_COUNTRY:
+            return _TLD_TO_COUNTRY[tld]
+    except Exception:
+        pass
+    return "United States"  # .com / .org / .net default
+
+
+def country_flag(country: str) -> str:
+    return _FLAG.get(country, "🌐")
+
+
 def pub_date_key(article: dict) -> datetime:
     """Parse RSS pub_date for sorting; falls back to fetched_at, then epoch."""
     for field in ("pub_date", "fetched_at"):
@@ -124,6 +167,7 @@ def fetch_all() -> list[dict]:
                 if aid not in seen:
                     seen.add(aid)
                     a["competitor"] = competitor
+                    a["country"] = detect_country(a["link"])
                     a["id"] = aid
                     a["fetched_at"] = datetime.now(timezone.utc).isoformat()
                     new_articles.append(a)
@@ -302,14 +346,25 @@ SHARED_CSS = """
     padding: 0.15rem 0.6rem;
   }
 
-  /* ── Filter bar ── */
+  /* ── Filter bars ── */
   .filter-bar {
-    padding: 0.75rem 1.25rem;
+    padding: 0.6rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.4rem;
     background: #faf8f6;
+  }
+  .filter-bar:last-of-type { border-bottom: 1px solid var(--border); }
+  .filter-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-right: 0.25rem;
+    white-space: nowrap;
   }
   .filter-btn {
     background: var(--surface);
@@ -421,8 +476,12 @@ def render_article_row(a: dict) -> str:
     color = competitor_color(a["competitor"])
     pub = html.escape(a.get("pub_date", "")[:16])
     safe_link = html.escape(a["link"], quote=True)
+    c = a.get("country", "United States")
+    flag = country_flag(c)
+    safe_competitor = html.escape(a["competitor"], quote=True)
+    safe_country = html.escape(c, quote=True)
     return f"""
-    <div class="article-row">
+    <div class="article-row" data-competitor="{safe_competitor}" data-country="{safe_country}">
       <div class="article-accent" style="background:{color}"></div>
       <div class="article-body">
         <span class="article-tag" style="background:{color}">{html.escape(a['competitor'])}</span>
@@ -431,6 +490,8 @@ def render_article_row(a: dict) -> str:
         </div>
         <div class="article-meta">
           <span>{html.escape(a['source'])}</span>
+          <span class="article-meta-sep">·</span>
+          <span>{flag} {html.escape(c)}</span>
           <span class="article-meta-sep">·</span>
           <span>{pub}</span>
         </div>
@@ -442,9 +503,14 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
     rows = "\n".join(render_article_row(a) for a in articles)
     now = datetime.now(timezone.utc).strftime("%B %d, %Y")
     count = len(articles)
-    filter_btns = "".join(
-        f'<button class="filter-btn" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
+    competitor_btns = "".join(
+        f'<button class="filter-btn" data-type="competitor" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
         for name in COMPETITORS
+    )
+    present_countries = sorted({a.get("country", "United States") for a in articles})
+    country_btns = "".join(
+        f'<button class="filter-btn" data-type="country" data-filter="{html.escape(c, quote=True)}">{country_flag(c)} {html.escape(c)}</button>'
+        for c in present_countries
     )
     back = '<a class="back-link" href="../index.html">← Back to archive</a>' if back_link else ""
 
@@ -485,20 +551,23 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
       <div class="legend">
         {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
       </div>
-      <div class="filter-bar">{filter_btns}</div>
+      <div class="filter-bar"><span class="filter-label">Competitor</span>{competitor_btns}</div>
+      <div class="filter-bar"><span class="filter-label">Country</span>{country_btns}</div>
       {"<div class='article-list'>" + rows + "</div>" if articles else "<div class='empty'>No articles for this period.</div>"}
     </div>
   </div>
   <script>
-  document.querySelectorAll('.filter-btn').forEach(btn => {{
-    btn.addEventListener('click', () => {{
-      btn.classList.toggle('active');
-      const active = [...document.querySelectorAll('.filter-btn.active')].map(b => b.dataset.filter);
-      document.querySelectorAll('.article-row').forEach(row => {{
-        const tag = row.querySelector('.article-tag')?.textContent.trim();
-        row.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
-      }});
+  function applyFilters() {{
+    const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
+    const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
+    document.querySelectorAll('.article-row').forEach(row => {{
+      const mc = ac.length === 0 || ac.includes(row.dataset.competitor);
+      const mk = ak.length === 0 || ak.includes(row.dataset.country);
+      row.style.display = (mc && mk) ? '' : 'none';
     }});
+  }}
+  document.querySelectorAll('.filter-btn').forEach(btn => {{
+    btn.addEventListener('click', () => {{ btn.classList.toggle('active'); applyFilters(); }});
   }});
   </script>
 </body>
@@ -517,9 +586,14 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
         display = datetime.strptime(d, "%Y-%m-%d").strftime("%B %d, %Y")
         issue_rows += f'<a class="issue-row" href="issues/{d}.html">Week of {display}<span class="issue-arrow">→</span></a>\n'
 
-    filter_btns = "".join(
-        f'<button class="filter-btn" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
+    competitor_btns = "".join(
+        f'<button class="filter-btn" data-type="competitor" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
         for name in COMPETITORS
+    )
+    present_countries = sorted({a.get("country", "United States") for a in recent})
+    country_btns = "".join(
+        f'<button class="filter-btn" data-type="country" data-filter="{html.escape(c, quote=True)}">{country_flag(c)} {html.escape(c)}</button>'
+        for c in present_countries
     )
 
     page = f"""<!DOCTYPE html>
@@ -555,7 +629,8 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
         <div class="legend">
           {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
         </div>
-        <div class="filter-bar">{filter_btns}</div>
+        <div class="filter-bar"><span class="filter-label">Competitor</span>{competitor_btns}</div>
+        <div class="filter-bar"><span class="filter-label">Country</span>{country_btns}</div>
         {"<div class='article-list'>" + rows + "</div>" if recent else "<div class='empty'>No articles yet. Run the scraper to populate.</div>"}
       </div>
     </section>
@@ -569,15 +644,17 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
     </aside>
   </div>
   <script>
-  document.querySelectorAll('.filter-btn').forEach(btn => {{
-    btn.addEventListener('click', () => {{
-      btn.classList.toggle('active');
-      const active = [...document.querySelectorAll('.filter-btn.active')].map(b => b.dataset.filter);
-      document.querySelectorAll('.article-row').forEach(row => {{
-        const tag = row.querySelector('.article-tag')?.textContent.trim();
-        row.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
-      }});
+  function applyFilters() {{
+    const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
+    const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
+    document.querySelectorAll('.article-row').forEach(row => {{
+      const mc = ac.length === 0 || ac.includes(row.dataset.competitor);
+      const mk = ak.length === 0 || ak.includes(row.dataset.country);
+      row.style.display = (mc && mk) ? '' : 'none';
     }});
+  }}
+  document.querySelectorAll('.filter-btn').forEach(btn => {{
+    btn.addEventListener('click', () => {{ btn.classList.toggle('active'); applyFilters(); }});
   }});
   </script>
 </body>
