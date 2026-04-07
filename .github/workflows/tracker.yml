@@ -1,0 +1,65 @@
+name: Competitor News Tracker
+
+on:
+  schedule:
+    # Daily fetch — 7:00 AM UTC (3 AM ET)
+    - cron: "0 7 * * *"
+    # Weekly email + issue page — Monday 8:00 AM UTC
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run mode: daily or weekly"
+        required: false
+        default: "daily"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Determine run mode
+        id: mode
+        run: |
+          # Manual dispatch
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          # Monday = weekly
+          elif [ "$(date +%u)" = "1" ]; then
+            echo "mode=weekly" >> $GITHUB_OUTPUT
+          else
+            echo "mode=daily" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run scraper
+        env:
+          SEND_EMAIL: ${{ steps.mode.outputs.mode == 'weekly' && 'true' || 'false' }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: |
+          python scripts/fetch_news.py ${{ steps.mode.outputs.mode }}
+
+      - name: Commit updated data and site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --staged --quiet || git commit -m "chore: update news feed [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push
