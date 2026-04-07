@@ -37,8 +37,8 @@ ISSUE_DIR = Path("docs/issues")
 SEND_EMAIL = os.environ.get("SEND_EMAIL", "false").lower() == "true"
 EMAIL_FROM = os.environ.get("EMAIL_FROM", "")
 EMAIL_TO = os.environ.get("EMAIL_TO", "")
-SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_HOST = os.environ.get("SMTP_HOST") or "smtp.gmail.com"
+SMTP_PORT = int(os.environ.get("SMTP_PORT") or "587")
 SMTP_USER = os.environ.get("SMTP_USER", "")
 SMTP_PASS = os.environ.get("SMTP_PASS", "")
 
@@ -127,272 +127,315 @@ def fetch_all() -> list[dict]:
 # ── HTML Generation ───────────────────────────────────────────────────────────
 
 CARD_COLORS = {
-    "Olio": "#4CAF50",
-    "Flashfood": "#2196F3",
-    "Karma": "#FF9800",
-    "Phenix": "#9C27B0",
-    "ResQ Club": "#F44336",
-    "Wasteless": "#00BCD4",
-    "Too Good To Go": "#1DB954",
+    "Olio": "#16a34a",
+    "Flashfood": "#2563eb",
+    "Karma": "#d97706",
+    "Phenix": "#7c3aed",
+    "ResQ Club": "#dc2626",
+    "Wasteless": "#0891b2",
+    "Too Good To Go": "#059669",
 }
+
+SHARED_CSS = """
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #059669;
+    --accent-light: #d1fae5;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  a { color: inherit; }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 52px;
+  }
+  .topbar-logo {
+    width: 22px; height: 22px;
+    background: var(--accent);
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+  .topbar-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text);
+  }
+  .topbar-sep { color: var(--border); margin: 0 0.25rem; }
+  .topbar-sub { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── Page header ── */
+  .page-header {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 1.75rem 2rem 1.25rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .page-header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .page-header .meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .back-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* ── Layout ── */
+  .layout {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+
+  /* ── Section card ── */
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-header h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .section-count {
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.1rem 0.55rem;
+  }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    background: #fafafa;
+  }
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.12s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  /* ── Article rows ── */
+  .article-list { display: flex; flex-direction: column; }
+  .article-row {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: background 0.1s;
+  }
+  .article-row:last-child { border-bottom: none; }
+  .article-row:hover { background: #fafafa; }
+  .article-accent {
+    width: 3px;
+    min-height: 100%;
+    border-radius: 2px;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+  .article-body { flex: 1; min-width: 0; }
+  .article-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    margin-bottom: 0.35rem;
+    color: #fff;
+  }
+  .article-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 0.35rem;
+  }
+  .article-title a { text-decoration: none; color: var(--text); }
+  .article-title a:hover { color: var(--accent); }
+  .article-meta { font-size: 0.72rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  /* ── Issues sidebar ── */
+  .issue-list { display: flex; flex-direction: column; }
+  .issue-row {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background 0.1s;
+  }
+  .issue-row:last-child { border-bottom: none; }
+  .issue-row:hover { background: var(--accent-light); color: var(--accent); }
+  .issue-arrow { color: var(--muted); font-size: 0.8rem; }
+
+  /* ── Legend ── */
+  .legend {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    background: #fafafa;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--muted); }
+  .legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Empty state ── */
+  .empty {
+    padding: 2.5rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+"""
 
 
 def competitor_color(name: str) -> str:
     return CARD_COLORS.get(name, "#666")
 
 
-def render_article_card(a: dict) -> str:
+def render_article_row(a: dict) -> str:
     color = competitor_color(a["competitor"])
     pub = html.escape(a.get("pub_date", "")[:16])
     safe_link = html.escape(a["link"], quote=True)
     return f"""
-    <article class="card">
-      <span class="tag" style="background:{color}">{html.escape(a['competitor'])}</span>
-      <h3><a href="{safe_link}" target="_blank" rel="noopener">{html.escape(a['title'])}</a></h3>
-      <footer>
-        <span class="source">{html.escape(a['source'])}</span>
-        <span class="date">{pub}</span>
-      </footer>
-    </article>"""
+    <div class="article-row">
+      <div class="article-accent" style="background:{color}"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:{color}">{html.escape(a['competitor'])}</span>
+        <div class="article-title">
+          <a href="{safe_link}" target="_blank" rel="noopener">{html.escape(a['title'])}</a>
+        </div>
+        <div class="article-meta">
+          <span>{html.escape(a['source'])}</span>
+          <span>{pub}</span>
+        </div>
+      </div>
+    </div>"""
 
 
 def render_page(articles: list[dict], title: str, back_link: bool = False) -> str:
-    cards = "\n".join(render_article_card(a) for a in articles)
-    back = '<a class="back" href="../index.html">← Back to archive</a>' if back_link else ""
+    rows = "\n".join(render_article_row(a) for a in articles)
     now = datetime.now(timezone.utc).strftime("%B %d, %Y")
     count = len(articles)
     filter_btns = "".join(
         f'<button class="filter-btn" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
         for name in COMPETITORS
     )
+    back = '<a class="back-link" href="../index.html">← Back to archive</a>' if back_link else ""
 
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{title}</title>
+  <title>{html.escape(title)} — TGTG Intel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-
-    :root {{
-      --bg: #0a0a0a;
-      --surface: #111;
-      --border: #222;
-      --text: #e8e8e8;
-      --muted: #666;
-      --accent: #c8f550;
-    }}
-
-    body {{
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      min-height: 100vh;
-    }}
-
-    header {{
-      padding: 3rem 2rem 2rem;
-      border-bottom: 1px solid var(--border);
-      max-width: 1100px;
-      margin: 0 auto;
-    }}
-
-    .eyebrow {{
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-    }}
-
-    h1 {{
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-    }}
-
-    .meta {{
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 0.5rem;
-    }}
-
-    .back {{
-      display: inline-block;
-      margin-top: 1rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--accent);
-      text-decoration: none;
-    }}
-    .back:hover {{ text-decoration: underline; }}
-
-    main {{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem;
-    }}
-
-    .filter-bar {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }}
-
-    .filter-btn {{
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.3rem 0.75rem;
-      border-radius: 2px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: all 0.15s;
-    }}
-    .filter-btn:hover, .filter-btn.active {{
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-    }}
-
-    .grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1px;
-      background: var(--border);
-    }}
-
-    .card {{
-      background: var(--surface);
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      transition: background 0.15s;
-    }}
-    .card:hover {{ background: #161616; }}
-
-    .tag {{
-      display: inline-block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #000;
-      padding: 0.2rem 0.5rem;
-      border-radius: 2px;
-      width: fit-content;
-      font-weight: 600;
-    }}
-
-    .card h3 {{
-      font-size: 0.9rem;
-      font-weight: 700;
-      line-height: 1.4;
-      flex: 1;
-    }}
-    .card h3 a {{
-      color: var(--text);
-      text-decoration: none;
-    }}
-    .card h3 a:hover {{
-      color: var(--accent);
-    }}
-
-    footer.card-footer, .card footer {{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      margin-top: auto;
-    }}
-
-    .issues-list {{
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      background: var(--border);
-    }}
-    .issue-row {{
-      background: var(--surface);
-      padding: 1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-decoration: none;
-      color: var(--text);
-      transition: background 0.15s;
-    }}
-    .issue-row:hover {{ background: #161616; color: var(--accent); }}
-    .issue-row span {{
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-    }}
-
-    .empty {{
-      padding: 3rem;
-      text-align: center;
-      color: var(--muted);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      background: var(--surface);
-    }}
-
-    .legend {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-    }}
-    .legend-item {{
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-    }}
-    .legend-dot {{
-      width: 8px; height: 8px; border-radius: 50%;
-    }}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>{SHARED_CSS}
+    .layout {{ display: block; max-width: 820px; margin: 0 auto; padding: 0 2rem 3rem; }}
   </style>
 </head>
 <body>
-  <header>
-    <p class="eyebrow">Too Good To Go · Competitive Intelligence</p>
-    <h1>{title}</h1>
-    <p class="meta">{count} articles · Updated {now}</p>
-    {back}
-  </header>
-  <main>
-    <div class="legend">
-      {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
+  <nav class="topbar">
+    <div class="topbar-logo"></div>
+    <span class="topbar-title">Too Good To Go</span>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-sub">Competitive Intelligence</span>
+  </nav>
+  <div class="page-header" style="max-width:820px">
+    <div>
+      {back}
+      <h1 style="margin-top:0.4rem">{html.escape(title)}</h1>
     </div>
-    <div class="filter-bar">{filter_btns}</div>
-    {"<div class='grid'>" + cards + "</div>" if articles else "<div class='empty'>No articles yet. Run the scraper to populate.</div>"}
-  </main>
+    <span class="meta">{count} articles · {now}</span>
+  </div>
+  <div class="layout">
+    <div class="section-card">
+      <div class="section-header">
+        <h2>Articles</h2>
+        <span class="section-count">{count}</span>
+      </div>
+      <div class="legend">
+        {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
+      </div>
+      <div class="filter-bar">{filter_btns}</div>
+      {"<div class='article-list'>" + rows + "</div>" if articles else "<div class='empty'>No articles for this period.</div>"}
+    </div>
+  </div>
   <script>
-  // Filter by competitor
   document.querySelectorAll('.filter-btn').forEach(btn => {{
     btn.addEventListener('click', () => {{
-      const target = btn.dataset.filter;
       btn.classList.toggle('active');
       const active = [...document.querySelectorAll('.filter-btn.active')].map(b => b.dataset.filter);
-      document.querySelectorAll('.card').forEach(card => {{
-        const tag = card.querySelector('.tag')?.textContent.trim();
-        card.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
+      document.querySelectorAll('.article-row').forEach(row => {{
+        const tag = row.querySelector('.article-tag')?.textContent.trim();
+        row.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
       }});
     }});
   }});
@@ -404,17 +447,17 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
 def build_index(all_articles: list[dict], issue_dates: list[str]):
     """Build the main archive index page."""
     recent = all_articles[:30]
-    cards = "\n".join(render_article_card(a) for a in recent)
+    rows = "\n".join(render_article_row(a) for a in recent)
     now = datetime.now(timezone.utc).strftime("%B %d, %Y")
     total = len(all_articles)
 
     issue_rows = ""
     for d in sorted(issue_dates, reverse=True)[:12]:
         display = datetime.strptime(d, "%Y-%m-%d").strftime("%B %d, %Y")
-        issue_rows += f'<a class="issue-row" href="issues/{d}.html"><strong>Week of {display}</strong><span>→</span></a>\n'
+        issue_rows += f'<a class="issue-row" href="issues/{d}.html">Week of {display}<span class="issue-arrow">→</span></a>\n'
 
     filter_btns = "".join(
-        f'<button class="filter-btn" data-filter="{name}">{name}</button>'
+        f'<button class="filter-btn" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
         for name in COMPETITORS
     )
 
@@ -423,73 +466,53 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TGTG Competitor Intelligence</title>
+  <title>Competitor Intelligence — Too Good To Go</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    :root {{
-      --bg: #0a0a0a; --surface: #111; --border: #222;
-      --text: #e8e8e8; --muted: #666; --accent: #c8f550;
-    }}
-    body {{ background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; }}
-    header {{ padding: 3rem 2rem 2rem; border-bottom: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }}
-    .eyebrow {{ font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }}
-    h1 {{ font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; line-height: 1.05; }}
-    .meta {{ font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; }}
-    main {{ max-width: 1100px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 280px; gap: 2rem; }}
-    @media (max-width: 760px) {{ main {{ grid-template-columns: 1fr; }} }}
-    h2 {{ font-size: 1rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.03em; }}
-    .filter-bar {{ display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }}
-    .filter-btn {{ background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.25rem 0.65rem; border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; cursor: pointer; letter-spacing: 0.05em; transition: all 0.15s; }}
-    .filter-btn:hover, .filter-btn.active {{ background: var(--accent); color: #000; border-color: var(--accent); }}
-    .grid {{ display: grid; gap: 1px; background: var(--border); }}
-    .card {{ background: var(--surface); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.15s; }}
-    .card:hover {{ background: #161616; }}
-    .tag {{ display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #000; padding: 0.2rem 0.5rem; border-radius: 2px; width: fit-content; font-weight: 600; }}
-    .card h3 {{ font-size: 0.88rem; font-weight: 700; line-height: 1.4; flex: 1; }}
-    .card h3 a {{ color: var(--text); text-decoration: none; }}
-    .card h3 a:hover {{ color: var(--accent); }}
-    .card footer {{ display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); }}
-    aside h2 {{ margin-bottom: 1rem; }}
-    .issues-list {{ display: flex; flex-direction: column; gap: 1px; background: var(--border); }}
-    .issue-row {{ background: var(--surface); padding: 0.85rem 1rem; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: var(--text); transition: background 0.15s; font-size: 0.82rem; font-weight: 700; }}
-    .issue-row:hover {{ background: #161616; color: var(--accent); }}
-    .issue-row span {{ font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--muted); }}
-    .empty {{ padding: 2rem; text-align: center; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--surface); }}
-    .legend {{ display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.25rem; }}
-    .legend-item {{ display: flex; align-items: center; gap: 0.35rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); }}
-    .legend-dot {{ width: 7px; height: 7px; border-radius: 50%; }}
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>{SHARED_CSS}</style>
 </head>
 <body>
-  <header>
-    <p class="eyebrow">Too Good To Go · Competitive Intelligence</p>
-    <h1>Competitor<br>News Tracker</h1>
-    <p class="meta">{total} articles tracked · {now}</p>
-  </header>
-  <main>
+  <nav class="topbar">
+    <div class="topbar-logo"></div>
+    <span class="topbar-title">Too Good To Go</span>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-sub">Competitive Intelligence</span>
+  </nav>
+  <div class="page-header">
+    <h1>Competitor News Tracker</h1>
+    <span class="meta">{total} articles tracked · Updated {now}</span>
+  </div>
+  <div class="layout">
     <section>
-      <h2>Recent Articles</h2>
-      <div class="legend">
-        {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Recent Articles</h2>
+          <span class="section-count">{len(recent)} of {total}</span>
+        </div>
+        <div class="legend">
+          {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
+        </div>
+        <div class="filter-bar">{filter_btns}</div>
+        {"<div class='article-list'>" + rows + "</div>" if recent else "<div class='empty'>No articles yet. Run the scraper to populate.</div>"}
       </div>
-      <div class="filter-bar">{filter_btns}</div>
-      {"<div class='grid'>" + cards + "</div>" if recent else "<div class='empty'>No articles yet.</div>"}
     </section>
     <aside>
-      <h2>Weekly Issues</h2>
-      {"<div class='issues-list'>" + issue_rows + "</div>" if issue_rows else "<div class='empty'>No issues yet.</div>"}
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Weekly Issues</h2>
+        </div>
+        {"<div class='issue-list'>" + issue_rows + "</div>" if issue_rows else "<div class='empty'>No issues yet.</div>"}
+      </div>
     </aside>
-  </main>
+  </div>
   <script>
   document.querySelectorAll('.filter-btn').forEach(btn => {{
     btn.addEventListener('click', () => {{
       btn.classList.toggle('active');
       const active = [...document.querySelectorAll('.filter-btn.active')].map(b => b.dataset.filter);
-      document.querySelectorAll('.card').forEach(card => {{
-        const tag = card.querySelector('.tag')?.textContent.trim();
-        card.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
+      document.querySelectorAll('.article-row').forEach(row => {{
+        const tag = row.querySelector('.article-tag')?.textContent.trim();
+        row.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
       }});
     }});
   }});
@@ -506,8 +529,8 @@ def build_issue_page(articles: list[dict], date_str: str):
     """Build a weekly digest archive page."""
     ISSUE_DIR.mkdir(parents=True, exist_ok=True)
     display = datetime.strptime(date_str, "%Y-%m-%d").strftime("%B %d, %Y")
-    html = render_page(articles, f"Week of {display}", back_link=True)
-    (ISSUE_DIR / f"{date_str}.html").write_text(html)
+    page_html = render_page(articles, f"Week of {display}", back_link=True)
+    (ISSUE_DIR / f"{date_str}.html").write_text(page_html)
     print(f"✓ Issue page written: issues/{date_str}.html")
 
 
@@ -577,8 +600,8 @@ def send_weekly_email(articles: list[dict]):
     msg["From"] = EMAIL_FROM
     msg["To"] = EMAIL_TO
 
-    html = build_email_html(articles, week_str)
-    msg.attach(MIMEText(html, "html"))
+    email_html = build_email_html(articles, week_str)
+    msg.attach(MIMEText(email_html, "html"))
 
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
         server.starttls()
