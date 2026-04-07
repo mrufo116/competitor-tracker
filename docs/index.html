@@ -3,342 +3,688 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TGTG Competitor Intelligence</title>
+  <title>Competitor Intelligence — Too Good To Go</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0a0a0a; --surface: #111; --border: #222;
-      --text: #e8e8e8; --muted: #666; --accent: #c8f550;
-    }
-    body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; }
-    header { padding: 3rem 2rem 2rem; border-bottom: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
-    .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
-    h1 { font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; line-height: 1.05; }
-    .meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; }
-    main { max-width: 1100px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 280px; gap: 2rem; }
-    @media (max-width: 760px) { main { grid-template-columns: 1fr; } }
-    h2 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.03em; }
-    .filter-bar { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
-    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.25rem 0.65rem; border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; cursor: pointer; letter-spacing: 0.05em; transition: all 0.15s; }
-    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
-    .grid { display: grid; gap: 1px; background: var(--border); }
-    .card { background: var(--surface); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.15s; }
-    .card:hover { background: #161616; }
-    .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #000; padding: 0.2rem 0.5rem; border-radius: 2px; width: fit-content; font-weight: 600; }
-    .card h3 { font-size: 0.88rem; font-weight: 700; line-height: 1.4; flex: 1; }
-    .card h3 a { color: var(--text); text-decoration: none; }
-    .card h3 a:hover { color: var(--accent); }
-    .card footer { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); }
-    aside h2 { margin-bottom: 1rem; }
-    .issues-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
-    .issue-row { background: var(--surface); padding: 0.85rem 1rem; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: var(--text); transition: background 0.15s; font-size: 0.82rem; font-weight: 700; }
-    .issue-row:hover { background: #161616; color: var(--accent); }
-    .issue-row span { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--muted); }
-    .empty { padding: 2rem; text-align: center; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--surface); }
-    .legend { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.25rem; }
-    .legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); }
-    .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
-  </style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #059669;
+    --accent-light: #d1fae5;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  a { color: inherit; }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 52px;
+  }
+  .topbar-logo {
+    width: 22px; height: 22px;
+    background: var(--accent);
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+  .topbar-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text);
+  }
+  .topbar-sep { color: var(--border); margin: 0 0.25rem; }
+  .topbar-sub { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── Page header ── */
+  .page-header {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 1.75rem 2rem 1.25rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .page-header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .page-header .meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .back-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* ── Layout ── */
+  .layout {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+
+  /* ── Section card ── */
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-header h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .section-count {
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.1rem 0.55rem;
+  }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    background: #fafafa;
+  }
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.12s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  /* ── Article rows ── */
+  .article-list { display: flex; flex-direction: column; }
+  .article-row {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: background 0.1s;
+  }
+  .article-row:last-child { border-bottom: none; }
+  .article-row:hover { background: #fafafa; }
+  .article-accent {
+    width: 3px;
+    min-height: 100%;
+    border-radius: 2px;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+  .article-body { flex: 1; min-width: 0; }
+  .article-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    margin-bottom: 0.35rem;
+    color: #fff;
+  }
+  .article-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 0.35rem;
+  }
+  .article-title a { text-decoration: none; color: var(--text); }
+  .article-title a:hover { color: var(--accent); }
+  .article-meta { font-size: 0.72rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  /* ── Issues sidebar ── */
+  .issue-list { display: flex; flex-direction: column; }
+  .issue-row {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background 0.1s;
+  }
+  .issue-row:last-child { border-bottom: none; }
+  .issue-row:hover { background: var(--accent-light); color: var(--accent); }
+  .issue-arrow { color: var(--muted); font-size: 0.8rem; }
+
+  /* ── Legend ── */
+  .legend {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    background: #fafafa;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--muted); }
+  .legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Empty state ── */
+  .empty {
+    padding: 2.5rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <p class="eyebrow">Too Good To Go · Competitive Intelligence</p>
-    <h1>Competitor<br>News Tracker</h1>
-    <p class="meta">500 articles tracked · April 07, 2026</p>
-  </header>
-  <main>
+  <nav class="topbar">
+    <div class="topbar-logo"></div>
+    <span class="topbar-title">Too Good To Go</span>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-sub">Competitive Intelligence</span>
+  </nav>
+  <div class="page-header">
+    <h1>Competitor News Tracker</h1>
+    <span class="meta">500 articles tracked · Updated April 07, 2026</span>
+  </div>
+  <div class="layout">
     <section>
-      <h2>Recent Articles</h2>
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#4CAF50"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#2196F3"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#FF9800"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#9C27B0"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#F44336"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#00BCD4"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#1DB954"></div>Too Good To Go</div>
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Recent Articles</h2>
+          <span class="section-count">30 of 500</span>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#059669"></div>Too Good To Go</div>
+        </div>
+        <div class="filter-bar"><button class="filter-btn" data-filter="Olio">Olio</button><button class="filter-btn" data-filter="Flashfood">Flashfood</button><button class="filter-btn" data-filter="Karma">Karma</button><button class="filter-btn" data-filter="Phenix">Phenix</button><button class="filter-btn" data-filter="ResQ Club">ResQ Club</button><button class="filter-btn" data-filter="Wasteless">Wasteless</button><button class="filter-btn" data-filter="Too Good To Go">Too Good To Go</button></div>
+        <div class='article-list'>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbWZ3clg2WXp4cVlabDN6OWtqR3NtRmx1aDZVLWJDUV9mdVFtUmxpSEVRWmhPWEpPeGJFWEpBRk5aX2RORGd6Mkt3dEZ2V1hnYUlZcVNXbUh4VmNhdEZkejk0U2F4NVdoMFpSLXB5QTB4Wm1lLTdXX3pvaTJSNURaazljZHJtOE41WkNPOXJMOWNkUS10V1hYRVhhdkhkd1hGMW1hMVZHVDA4RDJtc1VzSDV6MTZkbVVR?oc=5" target="_blank" rel="noopener">Olio partners with Gander ‘to ease cost-of-living burden’ - Fruitnet</a>
+        </div>
+        <div class="article-meta">
+          <span>Fruitnet</span>
+          <span>Mon, 29 Jul 2024</span>
+        </div>
       </div>
-      <div class="filter-bar"><button class="filter-btn" data-filter="Olio">Olio</button><button class="filter-btn" data-filter="Flashfood">Flashfood</button><button class="filter-btn" data-filter="Karma">Karma</button><button class="filter-btn" data-filter="Phenix">Phenix</button><button class="filter-btn" data-filter="ResQ Club">ResQ Club</button><button class="filter-btn" data-filter="Wasteless">Wasteless</button><button class="filter-btn" data-filter="Too Good To Go">Too Good To Go</button></div>
-      <div class='grid'>
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5RTFRlY28xdHBVSDRYdHowbGJodGI1d0Z2a2kzVHEwbXAtN19FQ0hUVXgza0lZa0w0T2FRTnczc09ydWloYjRsUFVxRG45cXZ0ckdlVURzY0dhVkE0eVhmbmZJY2dhMTVDazZiQQ?oc=5" target="_blank" rel="noopener">Tessa Clark on Olio, Food Waste and Sharing Culture - StartupValley</a></h3>
-      <footer>
-        <span class="source">StartupValley</span>
-        <span class="date">Wed, 02 Jul 2025</span>
-      </footer>
-    </article>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxQMTF6NzVLOFpfZzRocUhnQmRtYlNmVFlIdlV3Um5yZEZIRFMyTkRvRm5OcEtNOGdiRzVGaENDRXlQSEFXS3BfbmdCYmNaY0NzR1ZXY01yQi04UmhVY3FvTWtnNHVoS1d4YVp1NHhpZW9uX2piR00tb3hnTTRhRkd5WDE5clJodlpwTXVyTk9Cdnc1dmxqTXhtak5BcFVyb1FCQWJRQ04wbFdPT2V5OXZWUw?oc=5" target="_blank" rel="noopener">Women Leading a Food Sharing Revolution! | United Kingdom, Sweden, USA - UNFCCC</a></h3>
-      <footer>
-        <span class="source">UNFCCC</span>
-        <span class="date">Fri, 28 Sep 2018</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxPT1VlVzBJcVptR2xzbTgxbUpnSjFNTlJNOXhzamZQMFJvU2ZBM0ZSRmtRd0tVVFNVQXhxN0lMdUxuTmVFQk9fUmVRam4yc0FEaE5TSzNQWlZVVkRLTm9DaHpyb2Z3aWJ0MnBRb0l0WC10aGpFZXZ4SEdINkdiQ05PUTJyVm9LbjVqRlBBUDdfWThsRFJmeEZuTlotdFFMR2lR0gGmAUFVX3lxTFBDQjNFQm1BLUpRek9XNzNWdndSQy1IUXZNdkhZTEJkWktIRjU4WjhfU1lZRE8taGZfSG1jU0U2Q1U0MVoweWxvdlpjRUVNYWk2cTZ4djZrOC1Hakh1SXl5SXItaE5kd0VsWkdKaFRZQno4NWw2RGJUUGNnTG5fdDB5b1NERFd0RzlLLXUxaG9ydDBDbS1HTVVLSmgzWE14Ql9VZHd0d2c?oc=5" target="_blank" rel="noopener">Discover Olio: the food sharing app aiming to tackle food waste - deliciousmagazine.co.uk</a>
+        </div>
+        <div class="article-meta">
+          <span>deliciousmagazine.co.uk</span>
+          <span>Fri, 30 Oct 2020</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxNTy13YmdtUVhRVDdERTZUMkpJV3RuWjhJS25DZ2pjWUFLTVV6dmM0RE81ZGpvNGNYUUNVSFpPeE9Vam1SY1YxaGpja0llTjZTOGlLQVhlQ0J1aHB5bk00QnQ5SkF3MV9NYURBNlNLZVNXSUtxbTJNN2Z0UVhZSGdmZmc2Wkk0QzMwekk1eU9HWENWSGw4a1l5NHo1SS0wSEUyQnlNalBIQ25YeHNZTTNEaFBpRQ?oc=5" target="_blank" rel="noopener">OLIO’s Tessa Clarke: tackling food waste with hyper-local community sharing app - About Amazon Europe</a></h3>
-      <footer>
-        <span class="source">About Amazon Europe</span>
-        <span class="date">Tue, 07 Jun 2022</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxOY0J6cDNMd2NWSEQyYUFfWWl0ZjhEc3hqMnFQS0p0Qmx5QzBMTTd3UWhSdWdRYk5MZllxUTFFS01xalpTZFNiYlVqR013amdVaXpFZlpNMU90djJzYl9ndWRPTTg3UktUY0RmcFpRQ1ZHeVhsWkN5RVhpQzBYTF9YajVB?oc=5" target="_blank" rel="noopener">What went right this week: the UK’s four-day week, plus more positive news - Positive News</a>
+        </div>
+        <div class="article-meta">
+          <span>Positive News</span>
+          <span>Thu, 20 Jan 2022</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxQNjZpbF8wTFhPMUhEWG5WQTV2a1ZLSUp3cTJCY0lWVV84enZrTFJMVF9HR3JoeDJzRzZfQ1V6cGVSQUtISjkzaURYelJPUkY3LWpvUnRXRFNUcE92UXdaZFg5LUZGdFFscndwZXRyVWotOU5lMV9LRVlzYVFZcXdNR3VVTU5HZTljMFJ3Y1hpUEVuR2V3cmhKM0Y3STJjYW5uVmhNQUlXWkxtNGhqT3lmYmh1bGpXUWlIUV9IZnNR?oc=5" target="_blank" rel="noopener">Olio food waste app marks 10th anniversary with 120 million meal landmark | News - thegrocer.co.uk</a></h3>
-      <footer>
-        <span class="source">thegrocer.co.uk</span>
-        <span class="date">Wed, 23 Jul 2025</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE05WWp1ZWZRWk1oOE1EeV9xUTBGSzlZT0NaSlhhcFZIWUpLUjZ6SmN0YzlDYXJNdmxNOXc2R3ppSGhHTElrRThzekhYdW5EQ3phOXZlRGpKRHVqZnFKT242TklPcXd6bmZ5eS0wUjBkR3FITEFDSHBRU2NB?oc=5" target="_blank" rel="noopener">Morpholio 2.0: 7 New Tools for the Creative World - eVolo | Architecture Magazine</a>
+        </div>
+        <div class="article-meta">
+          <span>eVolo | Architecture Magazine</span>
+          <span>Thu, 02 May 2013</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxQd05mX19QMmpYMjgzdElGenVUTU81RFVwemVUQTRxMGN0RGhpamQ0d3pHWk5QSzhBUzdPVGRKNW04eXVHS0JkUVFnUjBqNVVYTzlpU2lrUnZTYlM5RHFpdFhobzNBb2dORlNwWXU3d2JmRUJnLXNJY3lIelllQXdXaFlyR0R6MmswRXFTQ0Yyb1YyRnFvVTlpRWRuVU9QMUNVaTFUVmtRMA?oc=5" target="_blank" rel="noopener">Food Sharing App Olio Launches New Craft Initiative - Forbes</a></h3>
-      <footer>
-        <span class="source">Forbes</span>
-        <span class="date">Sun, 20 Sep 2020</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiU0FVX3lxTE5tQjc3eDlWVXBSN25zZVkxbWd0M1pRbWszRDRYQl8walRERXlxMXZ6eWVhQnBrYm16eV81MjNsMWVsSTFKQmw1THYwUi1NMDYtdTBZ?oc=5" target="_blank" rel="noopener">Saudi women must share their stories with pride, Princess Noura Al-Saud tells London forum - Arab News</a>
+        </div>
+        <div class="article-meta">
+          <span>Arab News</span>
+          <span>Fri, 09 May 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiVEFVX3lxTE92dlNPaTlwSnliVEVYWEloTkUxaC11YTd6VVFlMW9rTTd3U2FXVm5IV0hFR2UwQ3ZmYVlOTnpGOUlVVWlIZThrZUp2UW9mTU9raGxkWQ?oc=5" target="_blank" rel="noopener">Food sharing app Olio raises $43m as neighbours scramble for free groceries - Sifted</a></h3>
-      <footer>
-        <span class="source">Sifted</span>
-        <span class="date">Sun, 05 Sep 2021</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOVnNzbkRaczNtWGdyb0V4MHZFZDk3TTA1TXZMdFNzRHJOaFo3RlhSMHNMV2RXQ1ZVYjBmRUZTbnJxbUYyMldBcU9IeHRTMkJMeWpzQmRfWWE5S2l4M0JxVzdqMUNlaUVLckFJcDBGYWw1UHNvSUVJcWp1M004Y2VTY1pjTjBvX1BCbVpMZV9kMlM?oc=5" target="_blank" rel="noopener">Up and coming: Food, glorious, food! Tessa Cook co-founder of OLIO - talk-business.co.uk</a>
+        </div>
+        <div class="article-meta">
+          <span>talk-business.co.uk</span>
+          <span>Tue, 16 Feb 2016</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE5HRGlKdktfQW11bTJ5V0lFNHZGenYyMTctMmgxdk5TaHlNNE41c09KSnVLN0s3LWtpSGFZVXN5YTBUay1oY3VmVGJuc1UzREFrUkZKR2ZKZzJIN3BlZW15cVVKb3VqNkpNTzJCV0lIdHFRMmc?oc=5" target="_blank" rel="noopener">How a Social App Reduces Food Waste and Promotes ‘Feel-Good’ Decluttering: Founder Q&A - observer.com</a></h3>
-      <footer>
-        <span class="source">observer.com</span>
-        <span class="date">Mon, 22 Apr 2024</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxNaF8tbmlfMGM1VkhyQUFqSFVUWDB4cm5ITU02MTV3aDRub1NhbnJQMUVkWFMySVJqSkZ3b2NlcmhmWDR1UzZHc04yTldMdVlzN0RvRDg3VkxNdWNsS3ZKSk5vbFdmbkpEVzdQUW1CNHpVMlBLTHNkc0x2NE4teW51Nm84TzlxcUlIaUxLLTVNVWEwWTJEeGRXTkRxYWpvRktaM3R6Y25pU21rMWlpR0lMbTZZdUZ4T25QZmt2WjRZZlFZVXhWLTFvSHdxb1hBOTQzOWp6M1ZB?oc=5" target="_blank" rel="noopener">Olio Pizza Renews Rajasthan Royals Partnership, Launches SLICE MAAR Campaign - Indian Retailer</a>
+        </div>
+        <div class="article-meta">
+          <span>Indian Retailer</span>
+          <span>Tue, 31 Mar 2026</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTFBuOEVkdmdZRUlCZ20xRlBzMDV6aE9NMkZmSTQ1aVVyQ05yOG5yalBpdWxkX0lNZ0NwVGE5V1NCYXRjMXJmSFZCZjBjU1VtdXZ2V2h1Y2dwcFZGdWxQZ3ZOOV80WnBsbW1mN085ZGpaTjlUMnRrYkgtN3EzM0Q?oc=5" target="_blank" rel="noopener">Share Surplus Food with Neighbors Using the Olio App - Treehugger</a></h3>
-      <footer>
-        <span class="source">Treehugger</span>
-        <span class="date">Tue, 23 Mar 2021</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxNT3llaWQwVVRxdEdRTWJSdDBVTm1HZFc1WUNfTHhaWUtFUFcwRlJPcFRTekZjTms4c1NRSVpWb2hhLVVjdmYyS3dPc2lRVWJLQ1g3Y0RDVDVVSTl3eHpfbUlkV0JJcHQ5UnFCemFUalBLczNMRmI0QzRVNXpJdEhrMzJYTldtalFFa1daOXR6NlU2ajdId2I1ZHBjakFTNTVxWXdIOTA3c0JNNGVaRjdabkdYYkJuZw?oc=5" target="_blank" rel="noopener">Retail India News: Olio Pizza&#x27;s 100th Locations Signals a Shift in India&#x27;s Pizza Landscape - Indian Retailer</a>
+        </div>
+        <div class="article-meta">
+          <span>Indian Retailer</span>
+          <span>Thu, 08 Feb 2024</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxNVzROVGh1YmI0MzhSa1RkcFFNYlB6eTNxcXpOOFRGaktpRmRCMWJkVnZsU3cwVFdTUEN4dUlQczZLRDhUWnoySGVLQXZnbkdGeFdQNHVDcHd3Nm0zWkRlN0hsN2o0ZHV0TjE5SktUMUx6UHBoelk3NC1Uc0hGcThHcFRoeGVRSEgwV3gyak5XdkNja2taeXNRV3p6NXNNTEtkdk5KeVF0RklHRVc4SklvZGdxNXhCV2NWeTV0SUZLWUZDYzhrM09zRzhWRGhuYXZw?oc=5" target="_blank" rel="noopener">Recycle the Weetabix! What I learned from a month on the app that tackles food waste - The Guardian</a></h3>
-      <footer>
-        <span class="source">The Guardian</span>
-        <span class="date">Wed, 02 May 2018</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMingFBVV95cUxOc212OWlEMWctNGlDWjNCQU1RZlZjalFGci1RUjNycU92Tll0b3NrTU03UXRxczVaZXdqNWJvdTNkaS1TRlliZVdZNjVqZ05Rb2doUVNoaTRrTmN1ekRON0xyZ2ZjMVlFRHNDZ2ZyLVhVTy0yVC1jUk1URldzRjVEemEzWmtFQ0Y2cXV5SVJmZjM5MEVIVEdRVWZ6aVJNQdIBowFBVV95cUxQak5IRzBRZk40R1F1UFBGRjdiYWUtTDhjeGxyallOMjZTX0dCR241MXpGYXNjbWdNR0tRZVBNYm10RkI5UlBiZWk5MW1JRzZfM040MDBQMkhHdmkwRE80TGlWYWNkSVlXdDRVQ0lkZkItWHZKb0o2bE5wTVVTVnNHRkZVRzZFRV9LQ2xITmd1SDdodWtrYUFIenJVeWVISEw0S0Rv?oc=5" target="_blank" rel="noopener">Free plants, prams, school uniform and toys - I got the Olio app and some of the stuff on offer is amazing - Birmingham Live</a>
+        </div>
+        <div class="article-meta">
+          <span>Birmingham Live</span>
+          <span>Wed, 17 May 2023</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxQUnFLXzY2OW5JR2VLX3dPV2VJSUk3RVhUOGVZNTNjZERxb092STFKOG1KTzRIMnl6em1hUG5oMURWdTh2a1Ezc1lyMFBIMVJIaTA2Q040VG5IUVdGenZZak1GQktPd0xhYnpFYTFEaXdfTlRlMV9VRVdoaW9qV3lqMmlkc2lTcmZiVG9RX2NXYXE?oc=5" target="_blank" rel="noopener">Cruise line saves thousands of meals from going to waste - Daily Echo</a></h3>
-      <footer>
-        <span class="source">Daily Echo</span>
-        <span class="date">Sat, 10 Jan 2026</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMif0FVX3lxTE9Dc2xJR3M5RDlpQnJDMW9fMXItODF6VTM1dXlfRXQ1bktfdXQtYVpkaWg4MWZtNmFrdDJiZnlmNDc1WWJHUHJsRzVfRzdqb01sZTQ0NkhuczAxMk1uZnhpRWxWc0ZNZXlKN2J6TmhJVVAxWTVUOXdjVkd5ZEZBdGs?oc=5" target="_blank" rel="noopener">10 tech-for-good apps to help during lockdown - Sync NI</a>
+        </div>
+        <div class="article-meta">
+          <span>Sync NI</span>
+          <span>Fri, 05 Jun 2020</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxOY0dXY1hwaFRiUlhYR3paVjFmaTU1UTBEQk1GeWhrTkMxRnZZMGFxYTRxTzVXb01tQVBVYlI0bS1BYVRQTGxFSHkwN3JSbkdHQUotWFBBV1VpUjEyaGhNendSYk5zSmx5Z2N2TGRvbE92X1pLbEtXU0VWRzZzOXVkSE5waHMtV2l1bXk4?oc=5" target="_blank" rel="noopener">How to get FREE furniture as mum kits out kids’ room without spending a penny - The Irish Sun</a></h3>
-      <footer>
-        <span class="source">The Irish Sun</span>
-        <span class="date">Thu, 12 Feb 2026</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE1yVmx6UXNjUzVhVWh2UjhHNW9GM05qdVNMcGc0NEtaTHFLbTZqa3hlb0F4OHNtVFZfUWFDOGdKa2V4SUN6UWRUQlFaYVdlSC1Hb1lOWjFrRVJZU3p4azdOajh0d2t0TFhza3g3MjNGN3c3MVEtNjc2RGln0gF_QVVfeXFMUE1kT01vU00zQ2RVeDBWV2VkRkhubWEzYkhGblV0SXhzWEpDRjJ4ZXh0OVZFSVVaN1l2WGdLb1pXeE1lYWgtOHllV2pRaDR0a1dQRmRnNm9TTU1DSzcwT3BnQW9QNWR2VFJsbmtac3cyMlNReWlFRXFxaWVnaHNFVQ?oc=5" target="_blank" rel="noopener">Dad shares yellow sticker tips that save him almost £1,000 every year in supermarkets - The Mirror</a>
+        </div>
+        <div class="article-meta">
+          <span>The Mirror</span>
+          <span>Wed, 20 Oct 2021</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxPLS15X1kxVW1BYnA4VnI3Z1BMSDdpWGp6QlY3WUZkaUpaVGVjRE1RenJwSjVRSTVCYmM2TXFBRmZlVjRqOEdGWEczYk1CcFZXVG5GVi1FejlyWkhlZ2dlajViZUdnU2ptREVKalBwUUlYX3RyRjAyQUI5N2w4WVZhekV3OC1sSTJaLXVlby0tSUhNdUIxNU1DWUExMFI3Q29X0gGmAUFVX3lxTE85ejNvY1M2SGdsNlJYMzZDUmZzWDRCb2U4Um5lUW5MRGVJazBiYmxHWjNjeHhCZkMyU3d2cEt2aTdHckh2TWpjbG5IUE9ESHhERDFjQWg5UlpDb1pfTlg5aWNKZ3VsdkVFU0FsVXFPOVlFb3RGcExTQXNwYVZfZlpmdjlzb0JRT0lGNkdfZnR0SXprNHlIYjQ2YXJ4UWprZnpKRUhyWkE?oc=5" target="_blank" rel="noopener">Mum-of-four feeds family for week on less than £5 using ‘genius’ food-sharing app - Daily Express</a></h3>
-      <footer>
-        <span class="source">Daily Express</span>
-        <span class="date">Sun, 26 Oct 2025</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMicEFVX3lxTE13ajdZTjlxWkFPcWJGckZBTEhVNTdoai1KTnNVV0VEdWxjMVY0SEhVWU91eDFfYTdBMjZNeDlPTzZZYWFzbkwxcUhaOUp2RER2TGNOMTc5bDc3b3NXTFV3UnVrZnBQM1FkeDBXTWRmSzA?oc=5" target="_blank" rel="noopener">Challenger brands to watch in 2020 - MyJoyOnline</a>
+        </div>
+        <div class="article-meta">
+          <span>MyJoyOnline</span>
+          <span>Mon, 17 Feb 2020</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxORnpBU0RuSVdfd0VUZnhERXBIcVZvN2pERlBVTjJOZ0RLUnNGM0NFa0pQY1AzM0pBZXZtRTA2VnNHZkZXeU9KSkZDdHNlaEZtUXN3NnN3Mm1OakE2ejM1QW5oN0FJS21NN2xVOFRCMFJGU3UxTWRqaHRpRU5uUTExNm1fbw?oc=5" target="_blank" rel="noopener">"I Survived Off The Scraps Of Strangers' Food For A Week" - Londonist</a></h3>
-      <footer>
-        <span class="source">Londonist</span>
-        <span class="date">Fri, 19 Feb 2021</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxNZnlQbEhzd2RPOWdvQldFTjBEOThJeXp3Zi1CTEFZZTRsa0MyNnRyVV9pSVQtQVoyTWdkaGRNU2gxMFo2VjNQUVNLWVhHN3F1ZTIwSzgwRUZwN3A0aUpKRnU5cFltbmRHUmRpcXFTNGNmNTU1UXFJN1h3aTAxOVRSRzUzcw?oc=5" target="_blank" rel="noopener">Richmond Scores Grocery Deals with Flashfood - virginialiving.com</a>
+        </div>
+        <div class="article-meta">
+          <span>virginialiving.com</span>
+          <span>Mon, 16 Mar 2026</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE5qQThiT0tpX0ZLNU1YT25yYmkycDd0amF1V3ptNXhmNGxDNDlTUzJ5aG1NdlJzcTlzM09SQ3RmQWVsczFQNm1yNGo4M1lZRk9QWDhuVFBMYi1wSmduX2fSAWRBVV95cUxNMERlT3Rpa1hwVDc2OXZFQkw0dllvaGJaMDVMbzZPNjFyRHB0TWhPU2g5b1R2RUdXMF9aU2kwVm0tRWRZM3JwWWVlZXo4b1pONzVqVjBkYl9wXzJzSXFLR2x0Q1Et?oc=5" target="_blank" rel="noopener">Pandemic prompts surge in food sharing, app says - Freethink</a></h3>
-      <footer>
-        <span class="source">Freethink</span>
-        <span class="date">Tue, 17 Aug 2021</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxPenpfZURaSTBSemJYN1hFT2NCd045Z3NzZHlTMDRDbXFWMURKUDdHQ3BSNkFrRHdkUUozTDR2dWJCSTh2MkFsaWl0U21EMkNOeUUtWFJ2OGw5TGJUaXpiNUU0TkhiX0pjaEN1MWFHYlVvOGZ5N1dTbi1ISVVvUGlwUlljOFg0cWZ0SmxrWnRjWWI?oc=5" target="_blank" rel="noopener">Canada’s Loblaw saves shoppers almost $300M by reducing food waste - Chain Store Age</a>
+        </div>
+        <div class="article-meta">
+          <span>Chain Store Age</span>
+          <span>Tue, 03 Mar 2026</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxQdGt2YVJLVEVkVzk1YzlUNmVuRzBUOFZMRjAxaXR1dDVPMzBsdmdvVFQ4NFk2OEJQR2YwT2xBYnpGZU9aUVk5MHVCbUZ4NElRUkwwaGN4R2RsR0VyVW45bFZqZDZ6S0p2cjRsQnNWcF9MX1dNTVlSYW1iTWgxY0daeDdCRUtWbElYcS1LQnZKc2x6WGJLZDVrVElxbzdKN25MY0V0RUZUd1dOb3J3N0pQWlpXRm9LWlE?oc=5" target="_blank" rel="noopener">From trash to treasure: Revolutionising food redistribution with Olio - New Food</a></h3>
-      <footer>
-        <span class="source">New Food</span>
-        <span class="date">Thu, 01 Jun 2023</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxOTlNTVWsxTVNndEczZnVhODJMSkNsYk0wVHNOQ2lyaG85TTJ0ZExFT2xiRkprSklXWE80a0ZqRDJWTEZ0NzBvaDZFRUJLSFNpd1BseVZKdk1JYXVLV3hyVVRLOVVpZDc0YzRWbEFXS3ZzY1ZHT01GRUNRc1ZxRVFvMjdkQXlXREFMcGVLTkQ0a0VGQ1k?oc=5" target="_blank" rel="noopener">Gelson’s Markets Offers Affordable Produce Boxes to L.A. Shoppers - Progressive Grocer</a>
+        </div>
+        <div class="article-meta">
+          <span>Progressive Grocer</span>
+          <span>Wed, 29 Oct 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxQMmZKaVdYN1lmZzMtck14R3RxU09WWkFMcm1CaHhiUTkwVVBvWjVqa2s2WF9HaXZYLVc0QTd6ckl0YWtCcmtmYXFwb1NuSmRpWWo5ZlotaWJueGlQdDdjclppWTh3RU4yYzVRNnhmVjJBa0xqVzhkLW1KVFFfemlPbEZFNXZHN2RsUFdB?oc=5" target="_blank" rel="noopener">Best apps to help you cut food waste - Wicked Leeks</a></h3>
-      <footer>
-        <span class="source">Wicked Leeks</span>
-        <span class="date">Thu, 10 Mar 2022</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxObnNhSUljSW9ySmxSQmVWMjBWV01HZUM2dzM4UGU1al82aTRXS0dQdEtVNkVVNTlZNkk4ZG1aQm5WVGRNblhveTdTdVlSUTk5ZVVfanMxblRIN1BsM3ZUY3FzNnF0QUt5c3k2QlFUUWJPSGFIcFBaUTFxSVZ2Y2NYTW13?oc=5" target="_blank" rel="noopener">Grocery Chain Ends Flashfood Partnership - NewtownPANow.com</a>
+        </div>
+        <div class="article-meta">
+          <span>NewtownPANow.com</span>
+          <span>Mon, 28 Jul 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiUEFVX3lxTE1EeDRLTURrQm5qN05id0lXMkNaUUEzekJFQ21WR3lKVzQ5QmpJeFlueGVkM1hmSF9pSTZGX21zUktES2ljYXZ6dXBlQWdGUU00?oc=5" target="_blank" rel="noopener">Olio, the app that lets you share unwanted food items with your neighbours, picks up £6M Series A - TechCrunch</a></h3>
-      <footer>
-        <span class="source">TechCrunch</span>
-        <span class="date">Wed, 11 Jul 2018</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirAJBVV95cUxQbERfdXpIakJXVDlUWWZaTEhIZU56WU1pYm8zM0pzSkV5ZXRqS19rT0JkWEprSDBJRXhxc3pxRFA1S2JYNER3d2VVWmF2d2g5amtJV19RZmxXSFZWX0g5VHJvNDhoQVYwOFFGZDhjbTkzSG9qNTVzeklmTkpid3l3UnBMcm9uQXo2YURWVWpOSG9HLVpmS1dnZzhOS0UtNTkzMGFJelFiRnZjV0NGNWNJdE5RWmdDc0pZMEUyVGxLTTVJenBZTi15ay1FcnFKZnBRNW85VlpBU2xjOGJSVDBzMVRFck9GaEZ6b0w5bTJZbVh5OFFqWm1lbnZoclRZZFpiZEZlWERydmxsR0FaRWsyQXFKZV83ZlQ0VzhtbEcyb1FGYTV3cXVDTUVRSGo?oc=5" target="_blank" rel="noopener">Save Mart Fights Food Waste with Expanded Rollout of Flashfood Partnership in Stanislaus County; Jordan Schenck and Tamara Pattison Comment - Deli Market News</a>
+        </div>
+        <div class="article-meta">
+          <span>Deli Market News</span>
+          <span>Tue, 09 Sep 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxPYXJLZ1E2VTlzVER6S0dEQWtIZGRPZTNsNDBqdngtRmpGNTRhS2tyZUQ5SVVqS0ZPcTFrNnJrMHdzTVNGa2VMYVo4VkU4WVF5d2V5QVJUbE92SkJGNjBfUnhreXppdkpMX3RZd2lHR2dpU0lkdVpGVHI1cklkMHQ4bUltc0s1Y09PWkh1TWswdEVFTXJUTGlLZG1ab9IBoAFBVV95cUxQbG1Xd3RTQ0JMM2VnVmZDRXo1bnBWTDhxMVA1ZHppMDV6OGdiYkxsQVlFckJtX2xoWkdta1hsR05UWEdWaHB4Mm9DVjkxM084eTNoZVBUdXdMMmR6d2k5QXZyWENlM0YxNEJTd0dfempzYTN2Z2ZWbHNqa0pteGJCMnVja0FvOUNSSWJtZjkwYVZFVUFxUFVsbDQwUXpmZVlW?oc=5" target="_blank" rel="noopener">Iceland rolls out major 'food change' across 900 stores over next few weeks - Gloucestershire Live</a></h3>
-      <footer>
-        <span class="source">Gloucestershire Live</span>
-        <span class="date">Fri, 08 Aug 2025</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxOWHdFOVpORzNGeG9xTWFqSTlSUEV4OVN6UGt2SnUtMnpuVmw3OEp6RVlHZlNRTnBUR1AxcGhLVk0xMGp6RldWNWktZXd3Wml4bm5kT0N2QVh2aENuWENOdzNkc1A0bzdOUm5MWjZpZC1xUC1pYV9UdkpIanEtWWtRZkdEVVBjVldwemRLNEVIS2xIWlE0ZlVOUXgwZlRhU3N3NDQ1T0x3a3F4QVJ4OEROM005dmlPQWFaUktfTkJzVVZpQkJqODhIYW5yVWFxZ3c3R1N2cl9KejBCc2xJal9qY2FJM1ZhSTQwOGRhRWo0QQ?oc=5" target="_blank" rel="noopener">The Independent Grocers Alliance (IGA) &amp; Flashfood Partner to Help Independents Reduce Shrink &amp; Feed Their Communities - Perishable News</a>
+        </div>
+        <div class="article-meta">
+          <span>Perishable News</span>
+          <span>Mon, 15 Sep 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxPXzBBTUIzVzRVYy1YbFRoalUtQmRvdVo3bW43bHNfaERQenU2cEUtdkNyV3hxT0NjU3hzeEloYVFCRU1pQlRlekdVWkdTeTJHYjhiTjA5eElocExublVoUkkzOWVxQTB0M2s4emM4OUhnRVlfa040VzhNekpFT3dkSHhGaXFZUXc0cU56RnNUZ1llUFhkUHdmZ0dzelhvaFd6NTkzWUQ2X3I2M3RXMV9jRUE3TEFJNDg?oc=5" target="_blank" rel="noopener">Tesco to work with sharing app Olio in bid to drive down food waste - The Guardian</a></h3>
-      <footer>
-        <span class="source">The Guardian</span>
-        <span class="date">Thu, 17 Sep 2020</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxOaDJodmF4dFhZUDhCSzlwUWZXYTJ1NnRtMlZfT3RGSU1hdjd0V3RoSWxtdThBbDdFdmJyb3cwajJUb1dFZUEzVWQtTzFoUHhKcHB3RF9SQUlGcU01Q0poN2tPSWcxem1yV0RhRFdBYmxWMEFJZkp3SEJLbUtSR3FGYzFNOWNvaUI1NUYyejIxTmpNSFhMSWZwbjdadWQ1OTlBaWdnOFh5WWN4Z2dRVi1HWUswd0F2cFl4ZnNkb0Y5WHpGdw?oc=5" target="_blank" rel="noopener">Flashfood Releases 2024 Impact Report: &quot;The Future of Waste is Health&quot; - Business Wire</a>
+        </div>
+        <div class="article-meta">
+          <span>Business Wire</span>
+          <span>Mon, 23 Jun 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiogFBVV95cUxNckowZExLYXBfTUpnMEo1TmxrMkhWanV6WXA2ald1elRUbHIyMTlETjR4WjRCZ2luZ3FFQm1MZm92TlFjUzVyQTk4WDJ1YTY2YnduQVd1QmNiRXJ0UmZObmRRWlVvaGo2TUVlSEFabGVVaXg0TWlEb1RwcHpMeVZDSkhYeVZSQ0ZtQVQ4VmlaZmRjZWFHQ0NFUGRHSU1sRXN4NUE?oc=5" target="_blank" rel="noopener">Tinder for Food! OLIO App Shares Leftover Food - AndNowUKnow</a></h3>
-      <footer>
-        <span class="source">AndNowUKnow</span>
-        <span class="date">Tue, 05 Dec 2017</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxONWZTSjNHVUhfbFNzSVcxY3pQYUt1eFRmZ3lGT1BGcndYVG15NFdwaU82VHZWV1VZS1NKWVRZbWtjTG5nLVpzQ01hUVpJbDg3eE12eUFMM2FzX0VuQkE4MDU2XzhqbGFpT3hkYlhSemhJbjJYR1M0bXR1a3QxOWY5M05aUmVIQ05XRkJFUHZ3akJnaU9xSmhkZEx3VXU2MFQ0NnBvOTVOQ0Y4SFY1SkNxbExtYW5WbHR2dG5hRWdnTE9qcnBs?oc=5" target="_blank" rel="noopener">A quiet grocery revolution is saving Saskatchewan shoppers millions - SaskToday.ca</a>
+        </div>
+        <div class="article-meta">
+          <span>SaskToday.ca</span>
+          <span>Fri, 13 Mar 2026</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5zWHVBZUdSOS1DUGp3NklObE5qSkpkb0tUanlLSGk3am1VOWNOeTFRSnVJWFFfbGFmTkJrMnZNLVUxTTRVVVphaEkzWjhkWkJkSzFLQzVjanNUTEdyc2JN?oc=5" target="_blank" rel="noopener">Social and environmental analysis of food waste abatement via the peer-to-peer sharing economy - Nature</a></h3>
-      <footer>
-        <span class="source">Nature</span>
-        <span class="date">Tue, 10 Mar 2020</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbnFYUl9BV0xFOVRWek1RQWpMN0FCYkRzMVJVMUFlNl9DZ1l1VVJTcTdvVlJfYUhLTXNqS3FvRG1pN3pWdE5LSVNYaEtSNTE4TEZSUndfcXJfeHRqQ1hJeWZtc0tVVEUxQUQzbjY0RE5ZNjRxano4VlJVTXA5al9vSC1HbFhSVWQxVk02Zl9fbVhBNlgyVmdWblVZZTlKRWtFTlpxbmp1eU1MWnZmTEtmSFI5RjdXdXdj?oc=5" target="_blank" rel="noopener">Flashfood Appoints Jordan Schenck as Chief Executive Officer - Business Wire</a>
+        </div>
+        <div class="article-meta">
+          <span>Business Wire</span>
+          <span>Thu, 01 May 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxPV2JnajdxMVBaeU1vc21odlZGXzBKd1phN2R4S1FmcVIxQzhaTjhYdDFJbWxCc1FDcDU2MW1tX3p3bWtxbm14S0F1TjhfbWRjbm1RXzVsdG52R2ZfQjhmVFA5OEgzVS1weklKSjlTSmNJZlBjc2lDM3VMR2I3QVZveGtGejVLT0lMZUpnTmdsZF9McHctV0ktUVhibkJXMjcxZ0h5RHZ4MUY4ckNMbzdOYm5STkx1cjQ?oc=5" target="_blank" rel="noopener">The OLIO food sharing app is an easy way to waste less and help more - Tech Advisor</a></h3>
-      <footer>
-        <span class="source">Tech Advisor</span>
-        <span class="date">Fri, 12 Feb 2021</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxQTG9PMHNVWGwtWndkSnNIWnRlZEZDNnlVMnRndnlGWkNLbFhEdHctbzFoZUR1RVJVaG5fZGVSMHc5VGdZWVRMUGxGSnp1TUVQMFJsT1o0XzhEQ3U1czQ3MmhLc3JSdHU2Z21YX0QwTXhRUTdnUG1ubEc2dFdKYUlPdENjOUQxWFRMMmlkYnYzZGR5a2tlLUhUcDZVYW9ycTRWOEc1UXhGdG81WjlFNm14cjZBN3JRY28?oc=5" target="_blank" rel="noopener">How a Mission to Cut Food Waste Launched a Multimillion-Dollar Venture - Harvard Business School</a>
+        </div>
+        <div class="article-meta">
+          <span>Harvard Business School</span>
+          <span>Fri, 02 Aug 2024</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxQMEZjZnFiSGdEc3g4c3RsU2JvMWpyem1jV0F0cUZDa3dDcDVEeV9CRzhLWkxYanpuUkRTak4tMzBDTHlxUkw2MzlCVWE1dnZVU2pUZWx5QWh4SnlFV0FPclItWHRYQVE3MnFyV3A3TlNwT0s1aHdoS1FUN25YVmtoWWFiMEN3TnYtdFpxUzRvMlRTTUZ1ZUk2MlpXT1FReGJqWG81VzV3RVRtV05XSEE?oc=5" target="_blank" rel="noopener">The mobile apps serving food businesses a solution to waste - FoodNavigator.com</a></h3>
-      <footer>
-        <span class="source">FoodNavigator.com</span>
-        <span class="date">Fri, 05 Jul 2019</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMingFBVV95cUxOYVhTMVhiWDcyZlpVOUVMS3BOdENOYTlxQWdKVHZFdk40SHFJUlRoeEU3QmFZZWRkNnpDNkFTY3lLSWJqS3FLaFBaMDRVZGhFTTJCQVBFSjBTNmZmMXNIeEs4SGZIWlU5d2RIZmZkUy04a05sckJvclUwZHZleng5OU82TnJTUmhId2dmMUxPRHZsZF9IM1dLLTFvRnoyUQ?oc=5" target="_blank" rel="noopener">How to reduce food waste and save on grocery bills - PNI Atlantic News</a>
+        </div>
+        <div class="article-meta">
+          <span>PNI Atlantic News</span>
+          <span>Sat, 16 Aug 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMickFVX3lxTFBMRThxWG5hMV95cDFmVGE0LXltRlllWTlsUlpqZFVsY3c5Y3ZwUGxISXR4Tkl0TmYzalBiay10cDdwdnNWVmc4c2F3RkNubFlxWU1NNU1IN3VNcTJXelRUOGlQVlB5LVAzX2d0RDlzeE03QQ?oc=5" target="_blank" rel="noopener">Don’t Toss That Lettuce — Share It - Stanford Graduate School of Business</a></h3>
-      <footer>
-        <span class="source">Stanford Graduate School of Business</span>
-        <span class="date">Fri, 20 Oct 2017</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1XNFM0SXJwbktUdUJLajkyQWZaZzc1cGRpR0FQYnA0OTljZk5UUmMtTkZyX3JNTzUwN3hjWG9fNlR4SUFPNDQtdlJRQUNHZlNxZWdsWVVuQjJHRUNDVUFoY0I2YUZWZFk?oc=5" target="_blank" rel="noopener">Flashfood appoints CEO - bluebookservices.com</a>
+        </div>
+        <div class="article-meta">
+          <span>bluebookservices.com</span>
+          <span>Thu, 01 May 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxNUkJiMHZnWEZjS2dzV1BRa3FuNldEeDQxZkhqU0JQX1MxOTRlRlNGWTJ0Mld5ZWRqMTU1ajlLZjF2RlR5eUIyZzJLT2QwZF9DRkRMUTJSeTNBcHU4WW9fLU5pdHhzX1ppbGs2dDh1QUlyV1BKckxmUGNsYzlZMDJycjFGd0IyWnNWb0ROVHV5STFBUXdqQkRrR3hBaDNETEdlM19EWTZCdWVBUVRtZlFwekl5MkotUQ?oc=5" target="_blank" rel="noopener">Hip and appy: the founder of OLIO on how hippy beginnings - The Guardian</a></h3>
-      <footer>
-        <span class="source">The Guardian</span>
-        <span class="date">Mon, 01 Apr 2019</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE9xbVVOYy1FeDFkVGU4ZmFXNEJCS0k1SDMzYUoyWUpMYjlZdXFfdUR2T1BvaWVmT2xadDlySTRPcXBmWDdOdEY3bkRVamY1ajd5VnJKYU80WGQ2ZXNZNDdQQU51UmEyR1ZHTWZTTHctRGh3OWsyZDJnSFh3?oc=5" target="_blank" rel="noopener">Flashfood appoints Jordan Schenck as CEO - Produce News</a>
+        </div>
+        <div class="article-meta">
+          <span>Produce News</span>
+          <span>Thu, 01 May 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxOMkZ2dVRLMmg5SkJsalFjTncxZkJkZFlnRnUzTWVrZFFhX3NBUnpjRU9qNDhBMUllcUFrMDVMQy13bmZPQ01jNHBWSWxEQS1OU2NiMEpudEo2THlPRmV6aFllNnRWZG56RHp6aWpjVkpiN2VoX09lQlM0d3JTMDV2LTAta3JBSGFseTE4?oc=5" target="_blank" rel="noopener">OLIO launches revolutionary food sharing app to reduce waste - Inhabitat</a></h3>
-      <footer>
-        <span class="source">Inhabitat</span>
-        <span class="date">Tue, 26 Dec 2017</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxNOTZRZUpiMWlmaEx0Q3RmQk5zQ3pSNi1fYnViak9Vbm1FY1BkQVlRWHFGdnhiRnZOMVdrVHR3TlV1MUtZYjFFVjRBenh6MGNFd2htZFpiU29hQ2gtYlN4LUc0RS1hU0F6UzBWSHV0UktGRmVSLTBmd3A2S2l5RTBFeQ?oc=5" target="_blank" rel="noopener">Flashfood appoints Jordan Schenck as CEO - The Packer</a>
+        </div>
+        <div class="article-meta">
+          <span>The Packer</span>
+          <span>Thu, 01 May 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxPVzhsb0pZM0tuZ2NOUXZOSGxMRExHVFg1ZHdjMmd4N01ldEs4NWtrczY5TTNXRXBtMjE1SVp3WlpaZUVaQzU4Z1V2aWRYZXBmdFI2NGMzbGlWZG9JcFJkd3JUMFp1c1BkTTJEdUg2S3RBSDQyQXRMSW40RHRvdXJvR2pKdVg0bWxYS1B0ek9fbWdUYmRBWmhz?oc=5" target="_blank" rel="noopener">Olio partners with Whole Foods Market in London - New Food</a></h3>
-      <footer>
-        <span class="source">New Food</span>
-        <span class="date">Fri, 02 Jun 2023</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxORnZqVl96RDFmTVhuQzBubXVZWFoyMnlja1pkWEhuWGRldzZ0TTE5WGFXdnZhclZ0M2Rua2FWb0swSGNsUHc5cW5IRWZPV1M1SVNUcDcxb1pUYUpXUUxBX2x4dEQtNHRXSHFGcU9zRlhWbHM5dnozUk5hZnh0S2NHUUxFM2czQUFiaEVJ?oc=5" target="_blank" rel="noopener">3 apps that can save you money on supper tonight while also fighting food waste - CBC</a>
+        </div>
+        <div class="article-meta">
+          <span>CBC</span>
+          <span>Sat, 31 May 2025</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxNdFdGZGpiSHFReUpUN3lRbnZPQnNCSmFEUGcwSnhQRXp1ZzVSaGMzNkJMZVlrOHk5S3k5c1Z3TFluWTR6VVd3QVVKQ1dxVTZRQUdmb0pnUUdCYlFjR2pkVVljbWRhZ254Rl9EUVptdW5pVHVsU3ZuWklkMTZJNFYxM2lPU09nbWIwV0RsVw?oc=5" target="_blank" rel="noopener">Food sharing app asks Muslims to get involved during Ramadan - DiversityQ</a></h3>
-      <footer>
-        <span class="source">DiversityQ</span>
-        <span class="date">Wed, 06 Apr 2022</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxNQmh0c2liWTlENmRMbm5jblBJT3VXSFJDMmh3dTZlWTJRZi0wdkRtMW1lVWZTYUVvR3F2YlZwNnhwUVRDVWNLd3luanloUzFRdXYzeXJvdldBUUZiYU1DOVZKSGNpVDF5T2pfc2lsZU0yTmVlZVNySG4ydFAweVlYNldhcVE2OGNENlpTbDFKVkdCMHFONmhHUFZIc2FrU2pUdWhSeGtnZW1MVnpu?oc=5" target="_blank" rel="noopener">The Giant Company targets food waste with Flashfood app pilot - Supermarket News</a>
+        </div>
+        <div class="article-meta">
+          <span>Supermarket News</span>
+          <span>Fri, 06 Sep 2024</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMingFBVV95cUxNck1QczZrVEV1S0ZueWROeWp2a2hwbDBzaTVMZmZLbFp4bmxneU53VDdjVTk2TTRTVE9NczBVSDZTS0trM2paRUxRbWpLU2FVLXJmYUtidTE0MUlNNllVOHU4ZlQza1JHakVlc1p3aHRvQjlzOUtTeUVYblU2UU1tYl9hNWFPZlphTXN4cWJJR3F1dnoxd09ab0FWclhiQQ?oc=5" target="_blank" rel="noopener">12 Apps Preventing Household Food Waste and Protecting the Planet - Food Tank</a></h3>
-      <footer>
-        <span class="source">Food Tank</span>
-        <span class="date">Tue, 28 Sep 2021</span>
-      </footer>
-    </article>
+    <div class="article-row">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxNQ3VSZ1FUOVJ2UzlpeUVqeWNtOTAzRjhNT1lOYlh2dHg5SWxCSFN3YjloQnlmR1luZG9rNlA5NWtFbDhscVItdXhiY2NjS0R5TmptdjlUamx6ck1YWGtDTzdzbGlWLUtUOENBS2plSDhNdW9oclBBRUxJNTRrdVJ0aFVLeXRUdVXSAY8BQVVfeXFMTTJZNk5FRjh1b2hnYjh2M1RXalY5MFYyOVFZVk1GRTdtdXZQMFVEZElDVEphY3FWUFIwNU00UkxEMGNMSm8ySGVubjBSbXl6R19XY1FCbV9IbGRWaFlaZXo0V0xlUHhfdS1Td2dTNjV4WWxEZ25hb0NNdjJtemppRm93aHMwcTBjTWE0TndaM2M?oc=5" target="_blank" rel="noopener">App works with grocery stores to offer discounts for food - NBC Bay Area</a>
+        </div>
+        <div class="article-meta">
+          <span>NBC Bay Area</span>
+          <span>Wed, 20 Mar 2024</span>
+        </div>
+      </div>
+    </div>
 
-    <article class="card">
-      <span class="tag" style="background:#4CAF50">Olio</span>
-      <h3><a href="https://news.google.com/rss/articles/CBMi2gFBVV95cUxQWXJuUTJSQzFUQ21yTmc3V19pVGFfVHZqSHNVaWVIbXlna3hMNE82Wi1mX2Mxd2tQWlRqbl9KNS1zTktJekF2VUYtU1UwajhlNTduNnFfWDVzLVZCc0pKdlZ4RmVlcm56aDZib2x0YV9JVW95ZVJKMW1oWWdpQlVXYnBYR3N0X05CZVFpUldmWHp2WVp1ZjczNW9EbW9FTmk5SFFMS0ZCTWk0YUlzR2tlSlhNMkJtaFhkSUpwc1RUZ2trbi1TQmVxTnh5Y05fYWhzdDQwMWcwLVJEUQ?oc=5" target="_blank" rel="noopener">Boots partners with Olio to further tackle food waste and distribute surplus food to local communities - boots-uk.com</a></h3>
-      <footer>
-        <span class="source">boots-uk.com</span>
-        <span class="date">Thu, 21 Nov 2024</span>
-      </footer>
-    </article></div>
+    <div class="article-row">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxOeFIzRjUzLVFEcHNiaDRNWEdSbG0zaU40bEphZEhza0xlUVR5UzI5Rk00WUw3NVFJSWUyMGxzVEwzVXpkajBpTDhZWGJUSXhlLU92VlFROXdLWWd6bXRaeGVlRjAySTJmd0YycFZQZ3dQRkMtWlRjVGp5UENlM2RFRXExcm9EYnFmTVJzUkJ1c0dRM1FtYVFLNnJrUTBDNC05aS1pMXEtcVVEZGNoUUFNS0NnUHFTdw?oc=5" target="_blank" rel="noopener">Millennial CEO of Too Good To Go started investing money from her first job at age 12—it went towards her first company which sold to Under Armour for $85 million - Fortune</a>
+        </div>
+        <div class="article-meta">
+          <span>Fortune</span>
+          <span>Tue, 28 Jan 2025</span>
+        </div>
+      </div>
+    </div></div>
+      </div>
     </section>
     <aside>
-      <h2>Weekly Issues</h2>
-      <div class='empty'>No issues yet.</div>
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Weekly Issues</h2>
+        </div>
+        <div class='empty'>No issues yet.</div>
+      </div>
     </aside>
-  </main>
+  </div>
   <script>
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       btn.classList.toggle('active');
       const active = [...document.querySelectorAll('.filter-btn.active')].map(b => b.dataset.filter);
-      document.querySelectorAll('.card').forEach(card => {
-        const tag = card.querySelector('.tag')?.textContent.trim();
-        card.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
+      document.querySelectorAll('.article-row').forEach(row => {
+        const tag = row.querySelector('.article-tag')?.textContent.trim();
+        row.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
       });
     });
   });
