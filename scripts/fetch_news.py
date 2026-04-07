@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -80,6 +81,23 @@ def article_id(article: dict) -> str:
     return hashlib.md5(article["link"].encode()).hexdigest()
 
 
+def pub_date_key(article: dict) -> datetime:
+    """Parse RSS pub_date for sorting; falls back to fetched_at, then epoch."""
+    for field in ("pub_date", "fetched_at"):
+        val = article.get(field, "")
+        if not val:
+            continue
+        try:
+            return parsedate_to_datetime(val).astimezone(timezone.utc)
+        except Exception:
+            pass
+        try:
+            return datetime.fromisoformat(val).astimezone(timezone.utc)
+        except Exception:
+            pass
+    return datetime.fromtimestamp(0, tz=timezone.utc)
+
+
 def load_data() -> dict:
     if DATA_FILE.exists():
         return json.loads(DATA_FILE.read_text())
@@ -111,9 +129,9 @@ def fetch_all() -> list[dict]:
                     new_articles.append(a)
                     print(f"  + {a['title'][:80]}")
 
-    # Persist
+    # Persist — sort by pub_date descending, then cap
     all_articles = new_articles + data.get("articles", [])
-    # Keep last 500 articles to avoid unbounded growth
+    all_articles.sort(key=pub_date_key, reverse=True)
     all_articles = all_articles[:500]
     # Prune seen_ids to match kept articles so the list doesn't grow without bound
     kept_ids = {a["id"] for a in all_articles}
@@ -682,7 +700,10 @@ def main():
 
         # Filter articles from last 7 days
         cutoff = (today - timedelta(days=7)).isoformat()
-        weekly_articles = [a for a in all_articles if a.get("fetched_at", "") >= cutoff]
+        weekly_articles = sorted(
+            [a for a in all_articles if a.get("fetched_at", "") >= cutoff],
+            key=pub_date_key, reverse=True,
+        )
 
         build_issue_page(weekly_articles, week_start)
         issue_dates.append(week_start)
