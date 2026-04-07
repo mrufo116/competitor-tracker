@@ -154,14 +154,25 @@
     padding: 0.15rem 0.6rem;
   }
 
-  /* ── Filter bar ── */
+  /* ── Filter bars ── */
   .filter-bar {
-    padding: 0.75rem 1.25rem;
+    padding: 0.6rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.4rem;
     background: #faf8f6;
+  }
+  .filter-bar:last-of-type { border-bottom: 1px solid var(--border); }
+  .filter-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-right: 0.25rem;
+    white-space: nowrap;
   }
   .filter-btn {
     background: var(--surface);
@@ -287,9 +298,10 @@
         <div class="legend">
           <div class="legend-item"><div class="legend-dot" style="background:#2d7a4f"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#1d5fa8"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#b45309"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#b91c1c"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#00615f"></div>Too Good To Go</div>
         </div>
-        <div class="filter-bar"><button class="filter-btn" data-filter="Olio">Olio</button><button class="filter-btn" data-filter="Flashfood">Flashfood</button><button class="filter-btn" data-filter="Karma">Karma</button><button class="filter-btn" data-filter="Phenix">Phenix</button><button class="filter-btn" data-filter="ResQ Club">ResQ Club</button><button class="filter-btn" data-filter="Wasteless">Wasteless</button><button class="filter-btn" data-filter="Too Good To Go">Too Good To Go</button></div>
+        <div class="filter-bar"><span class="filter-label">Competitor</span><button class="filter-btn" data-type="competitor" data-filter="Olio">Olio</button><button class="filter-btn" data-type="competitor" data-filter="Flashfood">Flashfood</button><button class="filter-btn" data-type="competitor" data-filter="Karma">Karma</button><button class="filter-btn" data-type="competitor" data-filter="Phenix">Phenix</button><button class="filter-btn" data-type="competitor" data-filter="ResQ Club">ResQ Club</button><button class="filter-btn" data-type="competitor" data-filter="Wasteless">Wasteless</button><button class="filter-btn" data-type="competitor" data-filter="Too Good To Go">Too Good To Go</button></div>
+        <div class="filter-bar"><span class="filter-label">Country</span><button class="filter-btn" data-type="country" data-filter="United States">🇺🇸 United States</button></div>
         <div class='article-list'>
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -299,12 +311,14 @@
         <div class="article-meta">
           <span>herald-dispatch.com</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Sat, 04 Apr 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -314,12 +328,14 @@
         <div class="article-meta">
           <span>WWF Brasil</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Fri, 03 Apr 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -329,12 +345,14 @@
         <div class="article-meta">
           <span>The Portland Tribune</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Fri, 03 Apr 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -344,12 +362,14 @@
         <div class="article-meta">
           <span>central.radio</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Wed, 01 Apr 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Olio" data-country="United States">
       <div class="article-accent" style="background:#2d7a4f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#2d7a4f">Olio</span>
@@ -359,12 +379,14 @@
         <div class="article-meta">
           <span>Indian Retailer</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Tue, 31 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -374,12 +396,14 @@
         <div class="article-meta">
           <span>UNEP - UN Environment Programme</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Mon, 30 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -389,12 +413,14 @@
         <div class="article-meta">
           <span>Tracxn</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Sat, 28 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Phenix" data-country="United States">
       <div class="article-accent" style="background:#6d28d9"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#6d28d9">Phenix</span>
@@ -404,12 +430,14 @@
         <div class="article-meta">
           <span>FruitToday</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Fri, 27 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -419,12 +447,14 @@
         <div class="article-meta">
           <span>Chatelaine</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Thu, 19 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -434,12 +464,14 @@
         <div class="article-meta">
           <span>Princeton School of Public and International Affairs</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Wed, 18 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -449,12 +481,14 @@
         <div class="article-meta">
           <span>virginialiving.com</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Mon, 16 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -464,12 +498,14 @@
         <div class="article-meta">
           <span>VOCM</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Sat, 14 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -479,12 +515,14 @@
         <div class="article-meta">
           <span>TIME for Kids</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Fri, 13 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -494,12 +532,14 @@
         <div class="article-meta">
           <span>SaskToday.ca</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Fri, 13 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -509,12 +549,14 @@
         <div class="article-meta">
           <span>The National Law Review</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Tue, 10 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -524,12 +566,14 @@
         <div class="article-meta">
           <span>winnipeg.ca</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Mon, 09 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -539,12 +583,14 @@
         <div class="article-meta">
           <span>Chain Store Age</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Tue, 03 Mar 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Phenix" data-country="United States">
       <div class="article-accent" style="background:#6d28d9"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#6d28d9">Phenix</span>
@@ -554,12 +600,14 @@
         <div class="article-meta">
           <span>AL.com</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Sat, 28 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -569,12 +617,14 @@
         <div class="article-meta">
           <span>Business Wire</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Thu, 26 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -584,12 +634,14 @@
         <div class="article-meta">
           <span>Park Record</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Wed, 18 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Olio" data-country="United States">
       <div class="article-accent" style="background:#2d7a4f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#2d7a4f">Olio</span>
@@ -599,12 +651,14 @@
         <div class="article-meta">
           <span>The Irish Sun</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Thu, 12 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -614,12 +668,14 @@
         <div class="article-meta">
           <span>Anadolu Ajansı</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Sat, 07 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -629,12 +685,14 @@
         <div class="article-meta">
           <span>startupticker.ch</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Fri, 06 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Olio" data-country="United States">
       <div class="article-accent" style="background:#2d7a4f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#2d7a4f">Olio</span>
@@ -644,12 +702,14 @@
         <div class="article-meta">
           <span>EU-Startups</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Thu, 05 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -659,12 +719,14 @@
         <div class="article-meta">
           <span>conveniencestore.co.uk</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Tue, 03 Feb 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -674,12 +736,14 @@
         <div class="article-meta">
           <span>PR Newswire</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Wed, 28 Jan 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -689,12 +753,14 @@
         <div class="article-meta">
           <span>KUSA.com</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Tue, 27 Jan 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -704,12 +770,14 @@
         <div class="article-meta">
           <span>Sun Community News</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Tue, 20 Jan 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -719,12 +787,14 @@
         <div class="article-meta">
           <span>The Consumer Goods Forum</span>
           <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
           <span>Tue, 20 Jan 2026</span>
         </div>
       </div>
     </div>
 
-    <div class="article-row">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -733,6 +803,8 @@
         </div>
         <div class="article-meta">
           <span>The Consumer Goods Forum</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
           <span class="article-meta-sep">·</span>
           <span>Tue, 20 Jan 2026</span>
         </div>
@@ -750,15 +822,17 @@
     </aside>
   </div>
   <script>
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('active');
-      const active = [...document.querySelectorAll('.filter-btn.active')].map(b => b.dataset.filter);
-      document.querySelectorAll('.article-row').forEach(row => {
-        const tag = row.querySelector('.article-tag')?.textContent.trim();
-        row.style.display = (active.length === 0 || active.includes(tag)) ? '' : 'none';
-      });
+  function applyFilters() {
+    const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
+    const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
+    document.querySelectorAll('.article-row').forEach(row => {
+      const mc = ac.length === 0 || ac.includes(row.dataset.competitor);
+      const mk = ak.length === 0 || ak.includes(row.dataset.country);
+      row.style.display = (mc && mk) ? '' : 'none';
     });
+  }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
   });
   </script>
 </body>
