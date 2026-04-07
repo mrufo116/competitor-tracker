@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Competitor Intelligence — Too Good To Go</title>
+  <title>Competitor Intel · Too Good To Go</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #f3f4f6;
+    --bg: #f9f3f0;
     --surface: #ffffff;
-    --border: #e5e7eb;
-    --text: #111827;
+    --border: #dee3e3;
+    --text: #222222;
     --muted: #6b7280;
-    --accent: #059669;
-    --accent-light: #d1fae5;
+    --accent: #00615f;
+    --accent-mid: #03a97b;
+    --accent-light: #ddf3e4;
+    --topbar-bg: #00615f;
   }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: Inter, system-ui, -apple-system, sans-serif;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     line-height: 1.5;
     min-height: 100vh;
@@ -29,47 +31,73 @@
 
   /* ── Top bar ── */
   .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: var(--topbar-bg);
     padding: 0 2rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    height: 52px;
+    gap: 1rem;
+    height: 56px;
   }
-  .topbar-logo {
-    width: 22px; height: 22px;
-    background: var(--accent);
-    border-radius: 5px;
+  .topbar-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+  /* TGTG heart-bag icon, simplified as SVG inline via background */
+  .topbar-icon {
+    width: 30px; height: 30px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--topbar-bg);
+    letter-spacing: -0.03em;
   }
-  .topbar-title {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--text);
+  .topbar-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #ffffff;
+    letter-spacing: -0.01em;
   }
-  .topbar-sep { color: var(--border); margin: 0 0.25rem; }
-  .topbar-sub { font-size: 0.8rem; color: var(--muted); }
+  .topbar-divider {
+    width: 1px; height: 20px;
+    background: rgba(255,255,255,0.25);
+    margin: 0 0.25rem;
+  }
+  .topbar-section {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
 
   /* ── Page header ── */
   .page-header {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 1.75rem 2rem 1.25rem;
+    padding: 2rem 2rem 1.25rem;
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
   }
   .page-header h1 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--text);
+    letter-spacing: -0.02em;
   }
   .page-header .meta {
     font-size: 0.78rem;
     color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 120px;
+    padding: 0.3rem 0.85rem;
   }
   .back-link {
     font-size: 0.8rem;
@@ -78,6 +106,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
+    font-weight: 500;
   }
   .back-link:hover { text-decoration: underline; }
 
@@ -85,7 +114,7 @@
   .layout {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 0 2rem 3rem;
+    padding: 1.5rem 2rem 3rem;
     display: grid;
     grid-template-columns: 1fr 260px;
     gap: 1.5rem;
@@ -97,30 +126,32 @@
   .section-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,97,95,0.06);
   }
   .section-header {
-    padding: 0.875rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: #faf8f6;
   }
   .section-header h2 {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
+    letter-spacing: 0.08em;
+    color: var(--accent);
   }
   .section-count {
-    font-size: 0.75rem;
-    color: var(--muted);
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 0.1rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    border-radius: 120px;
+    padding: 0.15rem 0.6rem;
   }
 
   /* ── Filter bar ── */
@@ -130,65 +161,74 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    background: #fafafa;
+    background: #faf8f6;
   }
   .filter-btn {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     color: var(--text);
-    padding: 0.25rem 0.65rem;
-    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    border-radius: 120px;
     font-size: 0.72rem;
+    font-weight: 500;
     cursor: pointer;
     font-family: inherit;
     transition: all 0.12s;
   }
-  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .filter-btn:hover { border-color: var(--accent-mid); color: var(--accent); }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+  }
 
   /* ── Article rows ── */
   .article-list { display: flex; flex-direction: column; }
   .article-row {
-    padding: 0.9rem 1.25rem;
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
-    gap: 1rem;
+    gap: 0.875rem;
     align-items: flex-start;
     transition: background 0.1s;
   }
   .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: #fafafa; }
+  .article-row:hover { background: #faf8f6; }
   .article-accent {
     width: 3px;
-    min-height: 100%;
-    border-radius: 2px;
+    border-radius: 3px;
     flex-shrink: 0;
     align-self: stretch;
+    min-height: 40px;
   }
   .article-body { flex: 1; min-width: 0; }
   .article-tag {
     display: inline-block;
-    font-size: 0.68rem;
-    font-weight: 600;
-    padding: 0.15rem 0.5rem;
-    border-radius: 20px;
-    margin-bottom: 0.35rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+    border-radius: 120px;
+    margin-bottom: 0.4rem;
     color: #fff;
+    letter-spacing: 0.02em;
   }
   .article-title {
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.45;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
   }
   .article-title a { text-decoration: none; color: var(--text); }
   .article-title a:hover { color: var(--accent); }
-  .article-meta { font-size: 0.72rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .article-meta { font-size: 0.7rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .article-meta-sep { color: var(--border); }
 
   /* ── Issues sidebar ── */
   .issue-list { display: flex; flex-direction: column; }
   .issue-row {
-    padding: 0.75rem 1.25rem;
+    padding: 0.8rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -201,7 +241,7 @@
   }
   .issue-row:last-child { border-bottom: none; }
   .issue-row:hover { background: var(--accent-light); color: var(--accent); }
-  .issue-arrow { color: var(--muted); font-size: 0.8rem; }
+  .issue-arrow { color: var(--muted); font-size: 0.75rem; }
 
   /* ── Legend ── */
   .legend {
@@ -210,10 +250,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    background: #fafafa;
+    background: #faf8f6;
   }
-  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--muted); }
-  .legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; color: var(--muted); font-weight: 500; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
   /* ── Empty state ── */
   .empty {
@@ -226,10 +266,12 @@
 </head>
 <body>
   <nav class="topbar">
-    <div class="topbar-logo"></div>
-    <span class="topbar-title">Too Good To Go</span>
-    <span class="topbar-sep">/</span>
-    <span class="topbar-sub">Competitive Intelligence</span>
+    <div class="topbar-wordmark">
+      <div class="topbar-icon">TG</div>
+      <span class="topbar-name">Too Good To Go</span>
+    </div>
+    <div class="topbar-divider"></div>
+    <span class="topbar-section">Competitive Intelligence</span>
   </nav>
   <div class="page-header">
     <h1>Competitor News Tracker</h1>
@@ -243,426 +285,456 @@
           <span class="section-count">30 of 500</span>
         </div>
         <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#059669"></div>Too Good To Go</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2d7a4f"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#1d5fa8"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#b45309"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#b91c1c"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#00615f"></div>Too Good To Go</div>
         </div>
         <div class="filter-bar"><button class="filter-btn" data-filter="Olio">Olio</button><button class="filter-btn" data-filter="Flashfood">Flashfood</button><button class="filter-btn" data-filter="Karma">Karma</button><button class="filter-btn" data-filter="Phenix">Phenix</button><button class="filter-btn" data-filter="ResQ Club">ResQ Club</button><button class="filter-btn" data-filter="Wasteless">Wasteless</button><button class="filter-btn" data-filter="Too Good To Go">Too Good To Go</button></div>
         <div class='article-list'>
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#2d7a4f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#2d7a4f">Olio</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbWZ3clg2WXp4cVlabDN6OWtqR3NtRmx1aDZVLWJDUV9mdVFtUmxpSEVRWmhPWEpPeGJFWEpBRk5aX2RORGd6Mkt3dEZ2V1hnYUlZcVNXbUh4VmNhdEZkejk0U2F4NVdoMFpSLXB5QTB4Wm1lLTdXX3pvaTJSNURaazljZHJtOE41WkNPOXJMOWNkUS10V1hYRVhhdkhkd1hGMW1hMVZHVDA4RDJtc1VzSDV6MTZkbVVR?oc=5" target="_blank" rel="noopener">Olio partners with Gander ‘to ease cost-of-living burden’ - Fruitnet</a>
+          <a href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5mVWQtRVgtcF9ubGh2S3Fjd21JQ3lKSEVOMmNGM0U3dUhJNjZ5cERValNvS3RDOFVUVlVBbkItOW1nYUlENmJuejJRckE4TkVNTk1RM05oQUZZYXcyVDRrTlNGeTlUQ2h4cFBmTA?oc=5" target="_blank" rel="noopener">8. Transatlantic - TechRound</a>
         </div>
         <div class="article-meta">
-          <span>Fruitnet</span>
-          <span>Mon, 29 Jul 2024</span>
+          <span>TechRound</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 06 Jul 2021</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#b45309"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#b45309">Karma</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxPT1VlVzBJcVptR2xzbTgxbUpnSjFNTlJNOXhzamZQMFJvU2ZBM0ZSRmtRd0tVVFNVQXhxN0lMdUxuTmVFQk9fUmVRam4yc0FEaE5TSzNQWlZVVkRLTm9DaHpyb2Z3aWJ0MnBRb0l0WC10aGpFZXZ4SEdINkdiQ05PUTJyVm9LbjVqRlBBUDdfWThsRFJmeEZuTlotdFFMR2lR0gGmAUFVX3lxTFBDQjNFQm1BLUpRek9XNzNWdndSQy1IUXZNdkhZTEJkWktIRjU4WjhfU1lZRE8taGZfSG1jU0U2Q1U0MVoweWxvdlpjRUVNYWk2cTZ4djZrOC1Hakh1SXl5SXItaE5kd0VsWkdKaFRZQno4NWw2RGJUUGNnTG5fdDB5b1NERFd0RzlLLXUxaG9ydDBDbS1HTVVLSmgzWE14Ql9VZHd0d2c?oc=5" target="_blank" rel="noopener">Discover Olio: the food sharing app aiming to tackle food waste - deliciousmagazine.co.uk</a>
+          <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxQV0l5dVJtRGVKbnpDTkdDMVVlbFlUMGFoVXJFVlF5c0lPbjdjaV9maEV5SEdwMVFGeFdOZzVpemF1d1g3U3I0SzEteElxdGMyckE1S1pFbGhyYXlIaHFUYW1FclgyQ085R2tCa3JyQzRZblIyTnhBYW05SlJTeGppUVZCakZqQnNweXZQLVdQV2cwT1llaE9MVGYxOFZNVlpzLVdN?oc=5" target="_blank" rel="noopener">This New Food App Lets You Dine Ethically For Less - Harper&#x27;s Bazaar Arabia</a>
         </div>
         <div class="article-meta">
-          <span>deliciousmagazine.co.uk</span>
-          <span>Fri, 30 Oct 2020</span>
+          <span>Harper&#x27;s Bazaar Arabia</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 02 Mar 2020</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxOY0J6cDNMd2NWSEQyYUFfWWl0ZjhEc3hqMnFQS0p0Qmx5QzBMTTd3UWhSdWdRYk5MZllxUTFFS01xalpTZFNiYlVqR013amdVaXpFZlpNMU90djJzYl9ndWRPTTg3UktUY0RmcFpRQ1ZHeVhsWkN5RVhpQzBYTF9YajVB?oc=5" target="_blank" rel="noopener">What went right this week: the UK’s four-day week, plus more positive news - Positive News</a>
+          <a href="https://news.google.com/rss/articles/CBMickFVX3lxTFBuQ1pNQ3k1bEFRTWV4eF8teGFGdXdHOVNOMk41dTNVY1prcnNGaXNZV0pHS2ZuWk1UTDVUckRYNEtWWnpGa2htNTNMVy0tRXJfVFR4Ui1hV2pITzVFS2tZa1J5N05LbGR1U0tOd3ljOGVfQQ?oc=5" target="_blank" rel="noopener">Tackling food waste on college campuses - Stone Pier Press</a>
         </div>
         <div class="article-meta">
-          <span>Positive News</span>
-          <span>Thu, 20 Jan 2022</span>
+          <span>Stone Pier Press</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Feb 2023</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE05WWp1ZWZRWk1oOE1EeV9xUTBGSzlZT0NaSlhhcFZIWUpLUjZ6SmN0YzlDYXJNdmxNOXc2R3ppSGhHTElrRThzekhYdW5EQ3phOXZlRGpKRHVqZnFKT242TklPcXd6bmZ5eS0wUjBkR3FITEFDSHBRU2NB?oc=5" target="_blank" rel="noopener">Morpholio 2.0: 7 New Tools for the Creative World - eVolo | Architecture Magazine</a>
+          <a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxOaFhMelRFR2RlSVhTNGp5czVVeGo3dzBRQUpoU3U4WDV2NzY3d1lKYzZNMXVXOU82SFFPc21DNmNzQ2NyVHJBby1zN204YkhRZlRRckJRdXBGV0QxS3hNSmNwNHZNZ0E0RXdGYTg5THd6djlyYlp3ak1Hb3J5ZW9tR3FUbkhTQTUyYjNQYzRjUUZiYllSaWZWcVM3TjJZVlFQ?oc=5" target="_blank" rel="noopener">Food Waste Coalition Welcomes New Member: Danone - The Consumer Goods Forum</a>
         </div>
         <div class="article-meta">
-          <span>eVolo | Architecture Magazine</span>
-          <span>Thu, 02 May 2013</span>
+          <span>The Consumer Goods Forum</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 09 Jul 2024</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiU0FVX3lxTE5tQjc3eDlWVXBSN25zZVkxbWd0M1pRbWszRDRYQl8walRERXlxMXZ6eWVhQnBrYm16eV81MjNsMWVsSTFKQmw1THYwUi1NMDYtdTBZ?oc=5" target="_blank" rel="noopener">Saudi women must share their stories with pride, Princess Noura Al-Saud tells London forum - Arab News</a>
+          <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxPdkdsakpYc2VpbGtLaDJfcEk2V0RFUTEwYUVoRmptZS0yRUg0TnU4eWJvUEZrYUlLWlVGcHdDel9UWFFnV2h3MjlBdS1wa21STW5sNDlPc1NXd1lNd0ZNLUVvRWZRS3Nzck04M1gycEZOcVFLU3dObXUyRzNpaENNYjdmV1BXQTBoYUc1YjJHRE9oZ3Z3ak9uaFkxaU9CSTdhQnBJ?oc=5" target="_blank" rel="noopener">Solutions for Food Waste: How Emerging Technologies Reduce Waste From Farm to Table - Earth.Org</a>
         </div>
         <div class="article-meta">
-          <span>Arab News</span>
-          <span>Fri, 09 May 2025</span>
+          <span>Earth.Org</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 26 Dec 2021</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOVnNzbkRaczNtWGdyb0V4MHZFZDk3TTA1TXZMdFNzRHJOaFo3RlhSMHNMV2RXQ1ZVYjBmRUZTbnJxbUYyMldBcU9IeHRTMkJMeWpzQmRfWWE5S2l4M0JxVzdqMUNlaUVLckFJcDBGYWw1UHNvSUVJcWp1M004Y2VTY1pjTjBvX1BCbVpMZV9kMlM?oc=5" target="_blank" rel="noopener">Up and coming: Food, glorious, food! Tessa Cook co-founder of OLIO - talk-business.co.uk</a>
+          <a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE94LW5yaXE2aGp4WEsyWjVSZGVXZFpVUWFQSElYRmNpSGZadUp2M1B3cFFiYTBicG5tMnFqc1JyVnA1aW1kVXpmenBTcTJUYnhiaGxUeVhfbTZkZ3hJdldxU0dzUUlCUjBRaTYybjE2YWVzS09RVENGSnJ4SlJXZw?oc=5" target="_blank" rel="noopener">How Central Ohio Got People to Eat Their Leftovers (Published 2023) - The New York Times</a>
         </div>
         <div class="article-meta">
-          <span>talk-business.co.uk</span>
-          <span>Tue, 16 Feb 2016</span>
+          <span>The New York Times</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 01 Jan 2023</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxNaF8tbmlfMGM1VkhyQUFqSFVUWDB4cm5ITU02MTV3aDRub1NhbnJQMUVkWFMySVJqSkZ3b2NlcmhmWDR1UzZHc04yTldMdVlzN0RvRDg3VkxNdWNsS3ZKSk5vbFdmbkpEVzdQUW1CNHpVMlBLTHNkc0x2NE4teW51Nm84TzlxcUlIaUxLLTVNVWEwWTJEeGRXTkRxYWpvRktaM3R6Y25pU21rMWlpR0lMbTZZdUZ4T25QZmt2WjRZZlFZVXhWLTFvSHdxb1hBOTQzOWp6M1ZB?oc=5" target="_blank" rel="noopener">Olio Pizza Renews Rajasthan Royals Partnership, Launches SLICE MAAR Campaign - Indian Retailer</a>
+          <a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxPeEZQR0VhSmhYQl9vQUVKZXJ5c0tMeElwSU9oVHIzSm1zamwwbDdGVHZoWnpJLW9ULXdsZGhzOEJpVTYxOEdlWVgzU21NRGFGMk4zcE0xeGNXZ04tbnNTRFgzcWZqYzIyOU5hVTZDWVpqWXVWUGl2VnpITWRmR1FsbHVaVVNkcjhvRWF6UkIxY0VGUDBCNGxGV05CR2FVdk1BckF4Z2ROWQ?oc=5" target="_blank" rel="noopener">Chef Launches Ends+Stems to Help Consumers Plan Their Meals and Waste Less Food - AgFunderNews</a>
         </div>
         <div class="article-meta">
-          <span>Indian Retailer</span>
-          <span>Tue, 31 Mar 2026</span>
+          <span>AgFunderNews</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 27 Jun 2019</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxNT3llaWQwVVRxdEdRTWJSdDBVTm1HZFc1WUNfTHhaWUtFUFcwRlJPcFRTekZjTms4c1NRSVpWb2hhLVVjdmYyS3dPc2lRVWJLQ1g3Y0RDVDVVSTl3eHpfbUlkV0JJcHQ5UnFCemFUalBLczNMRmI0QzRVNXpJdEhrMzJYTldtalFFa1daOXR6NlU2ajdId2I1ZHBjakFTNTVxWXdIOTA3c0JNNGVaRjdabkdYYkJuZw?oc=5" target="_blank" rel="noopener">Retail India News: Olio Pizza&#x27;s 100th Locations Signals a Shift in India&#x27;s Pizza Landscape - Indian Retailer</a>
+          <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxNZHM3Tmxsb3dUX2huWVEyajhlcy1CNUxhbjZiQXpEbndqVm42cWRIVElxYld0c18zRGpRSVZMYXE0WWtjOVZVUHYzWWY5bmVfd29tUk1nXzVpNnVMUlA5NTRqU1VzQ3NjZHZ4bEpScmRzMGR1THpQS3FrVWxyeWdOUGZ5SnJWODFaUzdHRjFLZ9IBkgFBVV95cUxQYnFGS0k3a1lSYlVrMkI2UmVBSkV4RmZQdy1mMjluNlhwdlBhQUR2VEVjZkE1R000cmJRM096NkZaamFKWHNVdzdOamluUFB1dVBqWnMyUExrS3VNNFB1ZlRFdi1wUW5vaGlEUGRNeVRfc3F1T3hrdlNha3dqcTlndk5sWkVwSlc2UHNGMXFWV08xZw?oc=5" target="_blank" rel="noopener">Simple things you can do to waste less food | lovefood.com - lovefood.com</a>
         </div>
         <div class="article-meta">
-          <span>Indian Retailer</span>
-          <span>Thu, 08 Feb 2024</span>
+          <span>lovefood.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 27 Mar 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMingFBVV95cUxOc212OWlEMWctNGlDWjNCQU1RZlZjalFGci1RUjNycU92Tll0b3NrTU03UXRxczVaZXdqNWJvdTNkaS1TRlliZVdZNjVqZ05Rb2doUVNoaTRrTmN1ekRON0xyZ2ZjMVlFRHNDZ2ZyLVhVTy0yVC1jUk1URldzRjVEemEzWmtFQ0Y2cXV5SVJmZjM5MEVIVEdRVWZ6aVJNQdIBowFBVV95cUxQak5IRzBRZk40R1F1UFBGRjdiYWUtTDhjeGxyallOMjZTX0dCR241MXpGYXNjbWdNR0tRZVBNYm10RkI5UlBiZWk5MW1JRzZfM040MDBQMkhHdmkwRE80TGlWYWNkSVlXdDRVQ0lkZkItWHZKb0o2bE5wTVVTVnNHRkZVRzZFRV9LQ2xITmd1SDdodWtrYUFIenJVeWVISEw0S0Rv?oc=5" target="_blank" rel="noopener">Free plants, prams, school uniform and toys - I got the Olio app and some of the stuff on offer is amazing - Birmingham Live</a>
+          <a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxPOEhtdWZ1VmprU1JQYlNuUlhuMWhaM1hlV082UjJFelJmeDFYQUVQczQtRS1NRExWaVRKWDM0Tkl2M2ZyR2ZXdm9JcHRWRzRCcm5NVlBpRkhZQ0FPMnVoLVR4UXBrUzh6Wmdyd2JTYVJPSTdpRjYwVktlRG5zTjl3UWRoeGlnOGVTUWJuaWF1eFoyQQ?oc=5" target="_blank" rel="noopener">How we’re saving food from going to waste - Unilever</a>
         </div>
         <div class="article-meta">
-          <span>Birmingham Live</span>
-          <span>Wed, 17 May 2023</span>
+          <span>Unilever</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 29 Sep 2020</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMif0FVX3lxTE9Dc2xJR3M5RDlpQnJDMW9fMXItODF6VTM1dXlfRXQ1bktfdXQtYVpkaWg4MWZtNmFrdDJiZnlmNDc1WWJHUHJsRzVfRzdqb01sZTQ0NkhuczAxMk1uZnhpRWxWc0ZNZXlKN2J6TmhJVVAxWTVUOXdjVkd5ZEZBdGs?oc=5" target="_blank" rel="noopener">10 tech-for-good apps to help during lockdown - Sync NI</a>
+          <a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxPaWFCakZISnBsdlhaTWJ6aHJtcXB4Ymg1cDlJdHdCSkY2dVZkSmlvY0NudmNNMi1KUEhUZTNUUzduRi1jNXY2M1JuXzVtSWN0R29Qa1ZLZ2xlbm80MzJWMjJsSWxVekZRNDFwcmwwcU1wT3pQR2lzemNONTZCTGtTRUZ2X3NZTThnVWxXMldiOUllaFlRMW5GSjFKUF9nRUxsc1REd0VfVFdJNGxKZDZv?oc=5" target="_blank" rel="noopener">Too Good To Go - 2026 Funding Rounds &amp; List of Investors - Tracxn</a>
         </div>
         <div class="article-meta">
-          <span>Sync NI</span>
-          <span>Fri, 05 Jun 2020</span>
+          <span>Tracxn</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 28 Mar 2026</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE1yVmx6UXNjUzVhVWh2UjhHNW9GM05qdVNMcGc0NEtaTHFLbTZqa3hlb0F4OHNtVFZfUWFDOGdKa2V4SUN6UWRUQlFaYVdlSC1Hb1lOWjFrRVJZU3p4azdOajh0d2t0TFhza3g3MjNGN3c3MVEtNjc2RGln0gF_QVVfeXFMUE1kT01vU00zQ2RVeDBWV2VkRkhubWEzYkhGblV0SXhzWEpDRjJ4ZXh0OVZFSVVaN1l2WGdLb1pXeE1lYWgtOHllV2pRaDR0a1dQRmRnNm9TTU1DSzcwT3BnQW9QNWR2VFJsbmtac3cyMlNReWlFRXFxaWVnaHNFVQ?oc=5" target="_blank" rel="noopener">Dad shares yellow sticker tips that save him almost £1,000 every year in supermarkets - The Mirror</a>
+          <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxPV0JUOUlldklkX0JxdEpXUHpCSDE0WGx0ZWJ6QllpUzRGNEJTd3ZmTDN4YS1rQ05GdVpsZUl3TGtXMVY3NTRJX0dYZWhNQ3QxT1djbkloNDMyaW1GODRQdFZtZEQ2RFdvem5jTjJlVVFVcmhTempVTWlyOVdrNzZOa2gwMU1aWnRCcGdhRWhJZkQ2Vm1HWEQ4REVLRG8yeWFYUzAtbDFFRTlpb2wzQlUyd0Q4Z29sRVIt0gG-AUFVX3lxTFBQaEJlWThQeWpieWhPNnBKYnlOUlBkQzQyd29hTFV2ZzFPYnRmUi1Uc1dvSUt0ODk4X0huV081dVdYRGh6dXE4a3loNmg3X0ZqcGcxMlI4aWd2d3VXRGcwYWphbWgtWjkteUpYS3YzRC14RVVjSU1oNEFyNTFnVDE0d0gtX1d4UF9fZHVxU2N6dVpjS2NGcXItQjlYUFctTjcxMTQ3aDQ1STlXcG5yV2lFTGtmVXZibzJ2b2t4T0E?oc=5" target="_blank" rel="noopener">SNAP benefits delays, South LA restaurant uses Too Good to Go app to distribute discounted meals - ABC7 Los Angeles</a>
         </div>
         <div class="article-meta">
-          <span>The Mirror</span>
-          <span>Wed, 20 Oct 2021</span>
+          <span>ABC7 Los Angeles</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 05 Nov 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#16a34a"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#16a34a">Olio</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMicEFVX3lxTE13ajdZTjlxWkFPcWJGckZBTEhVNTdoai1KTnNVV0VEdWxjMVY0SEhVWU91eDFfYTdBMjZNeDlPTzZZYWFzbkwxcUhaOUp2RER2TGNOMTc5bDc3b3NXTFV3UnVrZnBQM1FkeDBXTWRmSzA?oc=5" target="_blank" rel="noopener">Challenger brands to watch in 2020 - MyJoyOnline</a>
+          <a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxOZFFuaTl0VXhRTl9zSXY3Q0xJV296dFNtRFZmOUt4c1AyMVNRU2wwU05zWUxOUmVPSHE2dkJyTk9KSUpzdWhSN0p5VUFqRlFMUFIwZkZ6RnllelloTVZUaDN5Zm5odE9KR2Nra2FjNVdGLWRFSzRlLWdWNDEzQmxPS3UwcGY5bWxvZzU0?oc=5" target="_blank" rel="noopener">Oxara welcomes investment from Medley Ventures - startupticker.ch</a>
         </div>
         <div class="article-meta">
-          <span>MyJoyOnline</span>
-          <span>Mon, 17 Feb 2020</span>
+          <span>startupticker.ch</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 06 Feb 2026</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxNZnlQbEhzd2RPOWdvQldFTjBEOThJeXp3Zi1CTEFZZTRsa0MyNnRyVV9pSVQtQVoyTWdkaGRNU2gxMFo2VjNQUVNLWVhHN3F1ZTIwSzgwRUZwN3A0aUpKRnU5cFltbmRHUmRpcXFTNGNmNTU1UXFJN1h3aTAxOVRSRzUzcw?oc=5" target="_blank" rel="noopener">Richmond Scores Grocery Deals with Flashfood - virginialiving.com</a>
+          <a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxQYzdaYUk0NXZCMVROU0ZqRnNlUWp5V3dobTdyYlQ5QWxRMzktd0x4ZG9PX1dzVkp1ZGRBN2FJaVZMQnJITGUyZjZmUXdaOGt5WjlYZkhJNllfOWxCS1gzRUVGM1RkNFoxbW1DTmdDMUlaNWFOaUkycHRWOTl4VExMSjNlRmZCdGpZcGfSAY8BQVVfeXFMTXlCaFdmSTJyS1cxeGhMcFFWS1NUMXhKRGhlb3MxRXB6dlhoTmVSazN6cDNyNmZBY1FvUnZCNDg2R0xfb2x4ZmU4OXFNTjZDVHcwcThncjJRTHl0Z19yalpQWkNmXzRYS3hpall1am1NaHE0TnowV19BdWZiY2RNZzJ3T19tNC05T085TDJ6VGs?oc=5" target="_blank" rel="noopener">While SNAP battle leaves Americans fearing hunger, near $400 billion in food at risk of waste every year - CNBC</a>
         </div>
         <div class="article-meta">
-          <span>virginialiving.com</span>
-          <span>Mon, 16 Mar 2026</span>
+          <span>CNBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 02 Nov 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxPenpfZURaSTBSemJYN1hFT2NCd045Z3NzZHlTMDRDbXFWMURKUDdHQ3BSNkFrRHdkUUozTDR2dWJCSTh2MkFsaWl0U21EMkNOeUUtWFJ2OGw5TGJUaXpiNUU0TkhiX0pjaEN1MWFHYlVvOGZ5N1dTbi1ISVVvUGlwUlljOFg0cWZ0SmxrWnRjWWI?oc=5" target="_blank" rel="noopener">Canada’s Loblaw saves shoppers almost $300M by reducing food waste - Chain Store Age</a>
+          <a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxNWnZZZzhLeHV5TV9xZkI4eXBPWnQtZkdnTHgzRkcxeG45a1ZnQVRJTWxaZ3dKM0NFRlRXVV9Nc1BTVjhUbk5MRHVjU1JpVGRnY1djTTRvZzdEZ0ZWa0NTQmcwMVpFSW5yX29INnZhQWpGdlpuZHV2MjRBaDQxTEtqWmpyZlJRNGNqcWpZdmJyWkhvQUJhcTZ0ZHUzY0xJVUJ3dy1DWkNZYWl1LXBPQmJuU1k4MA?oc=5" target="_blank" rel="noopener">Startup Too Good To Go Said to Weigh €300 Million Funding Round - Bloomberg.com</a>
         </div>
         <div class="article-meta">
-          <span>Chain Store Age</span>
-          <span>Tue, 03 Mar 2026</span>
+          <span>Bloomberg.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 20 Jun 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxOTlNTVWsxTVNndEczZnVhODJMSkNsYk0wVHNOQ2lyaG85TTJ0ZExFT2xiRkprSklXWE80a0ZqRDJWTEZ0NzBvaDZFRUJLSFNpd1BseVZKdk1JYXVLV3hyVVRLOVVpZDc0YzRWbEFXS3ZzY1ZHT01GRUNRc1ZxRVFvMjdkQXlXREFMcGVLTkQ0a0VGQ1k?oc=5" target="_blank" rel="noopener">Gelson’s Markets Offers Affordable Produce Boxes to L.A. Shoppers - Progressive Grocer</a>
+          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOVGRYUUZHZzVvRTI5Um9NMzlqcFRmWWV2cERRSTBhQlFpazk5Ym02MzJHcDZ0amdtXzF6a3JLcWlLSmVXTWpfSzFmREhXeEw1WGhubWMtS2d3WHFLMXRHdE5ESG9nOGxwQnM3UFB4WjQtekQ1amFjdU9ZYVZSbFZmV1dDaWl6czZrVDZxaTdveDU?oc=5" target="_blank" rel="noopener">Too Good To Go raises $31 million to fight food waste - techcrunch.com</a>
         </div>
         <div class="article-meta">
-          <span>Progressive Grocer</span>
-          <span>Wed, 29 Oct 2025</span>
+          <span>techcrunch.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 07 Jan 2021</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxObnNhSUljSW9ySmxSQmVWMjBWV01HZUM2dzM4UGU1al82aTRXS0dQdEtVNkVVNTlZNkk4ZG1aQm5WVGRNblhveTdTdVlSUTk5ZVVfanMxblRIN1BsM3ZUY3FzNnF0QUt5c3k2QlFUUWJPSGFIcFBaUTFxSVZ2Y2NYTW13?oc=5" target="_blank" rel="noopener">Grocery Chain Ends Flashfood Partnership - NewtownPANow.com</a>
+          <a href="https://news.google.com/rss/articles/CBMijAJBVV95cUxOMjV6N3VDQlVxYl9XelB6ZmNMdXA4TThEUktjYzFLSTNxT05FcVJJRDFLSWRLS0lvVHkzN2g0RkdMLXMwMGk5NjNUU0YtXzZCRHpUeS0yb2hDbkt3azk5RHlQZERxWDZTUXJVVFBjenhBRjNQU1lZNXVtbTczeUhIci0wcnVsNW5hMjhaZTJFZjEwZmtxanhnTWFJOGxFMGFVcUt4TmxSTFZfOWNxS1Awcm12TFRaR004QzhmeDU0MmR1OHVTeUxkV3FaRDNXdmFfbXBpY0JZUVR5aXlJZlIzTWlYYnVMaEVoNlV1MjM3QnV0eVBGOEN0RE14bXROcVRmNV9JNVBnYnBxQTZk?oc=5" target="_blank" rel="noopener">Too Good To Go Expands In The United States, Another Example Of A Fast-Growing Company That Helps Consumers And The Planet - Forbes</a>
         </div>
         <div class="article-meta">
-          <span>NewtownPANow.com</span>
-          <span>Mon, 28 Jul 2025</span>
+          <span>Forbes</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 28 Jun 2023</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMirAJBVV95cUxQbERfdXpIakJXVDlUWWZaTEhIZU56WU1pYm8zM0pzSkV5ZXRqS19rT0JkWEprSDBJRXhxc3pxRFA1S2JYNER3d2VVWmF2d2g5amtJV19RZmxXSFZWX0g5VHJvNDhoQVYwOFFGZDhjbTkzSG9qNTVzeklmTkpid3l3UnBMcm9uQXo2YURWVWpOSG9HLVpmS1dnZzhOS0UtNTkzMGFJelFiRnZjV0NGNWNJdE5RWmdDc0pZMEUyVGxLTTVJenBZTi15ay1FcnFKZnBRNW85VlpBU2xjOGJSVDBzMVRFck9GaEZ6b0w5bTJZbVh5OFFqWm1lbnZoclRZZFpiZEZlWERydmxsR0FaRWsyQXFKZV83ZlQ0VzhtbEcyb1FGYTV3cXVDTUVRSGo?oc=5" target="_blank" rel="noopener">Save Mart Fights Food Waste with Expanded Rollout of Flashfood Partnership in Stanislaus County; Jordan Schenck and Tamara Pattison Comment - Deli Market News</a>
+          <a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxNaGJtOVNYckl2MXI1S0JYV3BiQV9yeXdMcUhYTXFqd3B3WTZXTEx2RmRkYUZLUHhtQmVuNzNrN2VvZFdob1JQamxSWGpjMnpTYUR6WmYzTzNQYjJ0MWt6N1NITUtCc1pFMTYzdmRhOG93dFZIS1Yzbk9iUkpNTnFFaXd4bWJSUHRnUzNLSERoYTgyTTQ1ck0tbA?oc=5" target="_blank" rel="noopener">Denmark-based Food-waste startup said to seek unicorn funding - Tech in Asia</a>
         </div>
         <div class="article-meta">
-          <span>Deli Market News</span>
-          <span>Tue, 09 Sep 2025</span>
+          <span>Tech in Asia</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 21 Jun 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxOWHdFOVpORzNGeG9xTWFqSTlSUEV4OVN6UGt2SnUtMnpuVmw3OEp6RVlHZlNRTnBUR1AxcGhLVk0xMGp6RldWNWktZXd3Wml4bm5kT0N2QVh2aENuWENOdzNkc1A0bzdOUm5MWjZpZC1xUC1pYV9UdkpIanEtWWtRZkdEVVBjVldwemRLNEVIS2xIWlE0ZlVOUXgwZlRhU3N3NDQ1T0x3a3F4QVJ4OEROM005dmlPQWFaUktfTkJzVVZpQkJqODhIYW5yVWFxZ3c3R1N2cl9KejBCc2xJal9qY2FJM1ZhSTQwOGRhRWo0QQ?oc=5" target="_blank" rel="noopener">The Independent Grocers Alliance (IGA) &amp; Flashfood Partner to Help Independents Reduce Shrink &amp; Feed Their Communities - Perishable News</a>
+          <a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxOa2l5NmZoTUZhLWNxemFKWW5rbF8yM1dwd2s4RVpOVndlOFo3NzlkLUI5V2ZuanFuVUExaC01dk9ja0lhUklha19Hc21pYVhIemFCNFkweWF6TlJXenlobEFDLVZQRGpyaGhYYUF2TG93WnVJQjhNZWVXNV9HaTdvT1V4OWVEYVMyY2l0a2tBRFJfUi0tcldTQ3JqdmlIUVJVWFduNmFiNGdLZDR3ZVY0?oc=5" target="_blank" rel="noopener">With a fresh $31m, Too Good To Go wants to make saving food as easy as throwing it away - AgFunderNews</a>
         </div>
         <div class="article-meta">
-          <span>Perishable News</span>
-          <span>Mon, 15 Sep 2025</span>
+          <span>AgFunderNews</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 15 Jan 2021</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxOaDJodmF4dFhZUDhCSzlwUWZXYTJ1NnRtMlZfT3RGSU1hdjd0V3RoSWxtdThBbDdFdmJyb3cwajJUb1dFZUEzVWQtTzFoUHhKcHB3RF9SQUlGcU01Q0poN2tPSWcxem1yV0RhRFdBYmxWMEFJZkp3SEJLbUtSR3FGYzFNOWNvaUI1NUYyejIxTmpNSFhMSWZwbjdadWQ1OTlBaWdnOFh5WWN4Z2dRVi1HWUswd0F2cFl4ZnNkb0Y5WHpGdw?oc=5" target="_blank" rel="noopener">Flashfood Releases 2024 Impact Report: &quot;The Future of Waste is Health&quot; - Business Wire</a>
+          <a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxNNHY1NXp5bG55Vm5qRjUxOFJXOWdHblZuaWhvZGFqVzNlQ3E4M1VVMjZVak5iMHJPSHJiTXJaa0VTdmxVblNNX3RuVHZuWm90RGdIVXBGTHZDdjZMMkZENUJTTDRGcVVZU2dlSzJhcWdIQlpNVGltWjZVZGVZMmxPNFo1cWI1eHdxTElYMm9yU3V3ZWlWYkJDbWpFdHA?oc=5" target="_blank" rel="noopener">Too Good To Go, a Copenhagen-based startup that lets user buy food before it goes to waste gets £23M funding - UKTN</a>
         </div>
         <div class="article-meta">
-          <span>Business Wire</span>
+          <span>UKTN</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 07 Jan 2021</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxOdTQ4SmgyYW9jSzZQYS1QUjQxVnB5VXZzVklzNFM0QnFIbGpOQTQ0cUF2b2xlZm9TcE5IU3RPbWt6c0oyWmp0RlBTbl9QYUdOczFsdnlLTGRzMGgyM1oyLXMyUjRObk1hVUNjQU1aOC1TR3hic09yUi1zeHhIVXIzVHZ0NVBNTVdFbC1ydU1fMWVCRU04VUZRUjlPRVdmdDN4Ykdhem93T09JMEo1N1cta1pLVGNmY1B6?oc=5" target="_blank" rel="noopener">Too Good To Go considers €300 million funding round - Bloomberg By Investing.com - Investing.com UK</a>
+        </div>
+        <div class="article-meta">
+          <span>Investing.com UK</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 20 Jun 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxNUUlvcEphNEZqYkdyVV96SHF0VlhaQjNzak1QWXJDWW9yVVExNDBnNjJKMC1lQUFrYmduYmNZdmJ4bWJtbHVtMUdUbTVUTDhrd1VGalh4WW9QZ0hrcE9QSUFkdXRwY2RKVmFuaEJ4akgta0JIcGFFLUpBZlE3bUZ5cExYZElVRi11MWREN21DazhuTGkzeGpWdjM0MkUwTEg3cTlEdmZPYw?oc=5" target="_blank" rel="noopener">Anti-Food Waste Startup Too Good To Go Bags US$31.1M To Fuel U.S. Expansion - Green Queen Media</a>
+        </div>
+        <div class="article-meta">
+          <span>Green Queen Media</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 20 Jan 2021</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxPNkxuWmN1aGhMVDNCYTY1RUc5WE04Ym5qRUhOcUpsSkxuNndqRkp4dHFrYmh5bDhmQVBuUThCVGFqdERYUW13MGpGU0d4MmlPWHRFVThjcVB6Y1RXR3FlS29FaVpKTDZQQ2w4NXJObzRESzhJVmxabDBFcHBDbHBhSGZUZHRXRmIwMTBCLUV1bTBRdEdNdmFDSUNhVWlaU0xKQzRpN1NCMWrSAa4BQVVfeXFMTkhfOHFnVHQzN2xnS0JySkRNT21JcTluX095RDJmMGtKSXVyME5SOG9sVFJ6bnhHVFJEOHpFeWRyMzU5MktCd2ZXTUpCUGZKRDNBMmc1ZnpqZWZyeTlJVmJHSGxYYXBybmF4U2tocmRyRDJkakJST3psRG1GQTFCX29hd3JLWmhmaENVUG1CYW9YYVZIZE0xUVdid3pvaFUxbGxXSGpBMmY3bnN1RVRR?oc=5" target="_blank" rel="noopener">This startup brings in $162 million a year helping people find food at huge discounts: It&#x27;s &#x27;the most genius app&#x27; - CNBC</a>
+        </div>
+        <div class="article-meta">
+          <span>CNBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 16 Nov 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxQTGFxVlcyeXBNaHZja3FXQmd1ZGZpd1lCQ3Z2Q204SUxKWTBsM242YVkyZDhibmFTNHV0aG5LRUpyU21uakJUU3R1dXpXcjMzemcyVEVveExmdGV1Mk4xb01MaUtOcmNGQk4zSHR3WjNjaWI0SERhRkZqOUlJbUlxcUJOMmstYUw4NVAwemcxeXh1MkRzZ3E1R0ZXOTdiNjlXVVJzOTZMR3ZwdjJrY2lrN0VHc0lUd243YjJvWE5B?oc=5" target="_blank" rel="noopener">Too Good To Go Eyes Expansion to More Markets - Specialty Food Association</a>
+        </div>
+        <div class="article-meta">
+          <span>Specialty Food Association</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 19 Mar 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxObTcyVmhxOUZlWUhVbF9YUVhIQmVIajNpR0dSZW52bXhmenV6M2xhcExXNWwyVEN5N19Zd1RmVlVpdEZwOWVQOGs3bElZUEdUVF9NdmR3T1VGV0JxdC1LdkhaS0RMazZxd3FWajVjNWhqMmh5c1lVa1FZYm54dEJoZw?oc=5" target="_blank" rel="noopener">Can the Answer to Cutting Down on Food Waste Be in This App? - Eater</a>
+        </div>
+        <div class="article-meta">
+          <span>Eater</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 21 Nov 2022</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQZmhPSC02eWlWekc3Tk9ieFZDb1ZESlo5eExWMzdaU0I0SDVndnFsMTBoeEt0bWJBRjVjRGpPZGZCVVFRUDJnR1lqVFVNdEFUazk5aDRaQzYzelMtcWY5NUJSelVsY1hZNUdUT3ZWWHBuTGlfd09BZXhsaGpHczZUTjJNYnpMQ1pyZjR2Q1VHQUdwZEZDQ0ZYbHM2djg?oc=5" target="_blank" rel="noopener">Too Good To Go reportedly preparing for €200m fundraise - World Coffee Portal</a>
+        </div>
+        <div class="article-meta">
+          <span>World Coffee Portal</span>
+          <span class="article-meta-sep">·</span>
           <span>Mon, 23 Jun 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxONWZTSjNHVUhfbFNzSVcxY3pQYUt1eFRmZ3lGT1BGcndYVG15NFdwaU82VHZWV1VZS1NKWVRZbWtjTG5nLVpzQ01hUVpJbDg3eE12eUFMM2FzX0VuQkE4MDU2XzhqbGFpT3hkYlhSemhJbjJYR1M0bXR1a3QxOWY5M05aUmVIQ05XRkJFUHZ3akJnaU9xSmhkZEx3VXU2MFQ0NnBvOTVOQ0Y4SFY1SkNxbExtYW5WbHR2dG5hRWdnTE9qcnBs?oc=5" target="_blank" rel="noopener">A quiet grocery revolution is saving Saskatchewan shoppers millions - SaskToday.ca</a>
+          <a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxNRmNSVnJJM19YMDFEMHpHYnd6QUxXY0NVZnoxeWdpdGdIblBYNGFzRHNFN3NSd1BQWHl3NklJNGxHVFdhVUlnNHZQS2t1SXJBS043eUtkMWlZdUMwVFpYTXBGSW51ZWk4a3VyWXdNYUhuWWZSZE1GNWJURmJhSzBoT3ZDYw?oc=5" target="_blank" rel="noopener">Millennial CEO of Too Good To Go started investing money from her first job at age 12—it went towards her first company which sold to Under Armour for $85 million - Yahoo Finance</a>
         </div>
         <div class="article-meta">
-          <span>SaskToday.ca</span>
-          <span>Fri, 13 Mar 2026</span>
+          <span>Yahoo Finance</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 27 Jan 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbnFYUl9BV0xFOVRWek1RQWpMN0FCYkRzMVJVMUFlNl9DZ1l1VVJTcTdvVlJfYUhLTXNqS3FvRG1pN3pWdE5LSVNYaEtSNTE4TEZSUndfcXJfeHRqQ1hJeWZtc0tVVEUxQUQzbjY0RE5ZNjRxano4VlJVTXA5al9vSC1HbFhSVWQxVk02Zl9fbVhBNlgyVmdWblVZZTlKRWtFTlpxbmp1eU1MWnZmTEtmSFI5RjdXdXdj?oc=5" target="_blank" rel="noopener">Flashfood Appoints Jordan Schenck as Chief Executive Officer - Business Wire</a>
+          <a href="https://news.google.com/rss/articles/CBMihAFBVV95cUxPdkRLSjBmQ2hMNTB3Qzd4WXI5YU1OcG5rTEtRcDJtOF9fMEsyTFdsTmxqMC0tNm03MC0xZlZraGswcEo3Q05ualR1eTllcnpGdnlONExOT1lrSjMxQllmemQ4M3NKTWQ3MW5UUWZIay1kenRHWmlJQmplMlo5aGZWNGh1TGk?oc=5" target="_blank" rel="noopener">Too much uneaten food goes to waste. Lucie Basch is working to change that. - National Geographic</a>
         </div>
         <div class="article-meta">
-          <span>Business Wire</span>
-          <span>Thu, 01 May 2025</span>
+          <span>National Geographic</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 18 Mar 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxQTG9PMHNVWGwtWndkSnNIWnRlZEZDNnlVMnRndnlGWkNLbFhEdHctbzFoZUR1RVJVaG5fZGVSMHc5VGdZWVRMUGxGSnp1TUVQMFJsT1o0XzhEQ3U1czQ3MmhLc3JSdHU2Z21YX0QwTXhRUTdnUG1ubEc2dFdKYUlPdENjOUQxWFRMMmlkYnYzZGR5a2tlLUhUcDZVYW9ycTRWOEc1UXhGdG81WjlFNm14cjZBN3JRY28?oc=5" target="_blank" rel="noopener">How a Mission to Cut Food Waste Launched a Multimillion-Dollar Venture - Harvard Business School</a>
+          <a href="https://news.google.com/rss/articles/CBMijgFBVV95cUxQN1pYZE9GVk1FN0JONHhxbTB3QzRDdGxyTks1NlBtVHYxRE9HamtfSmtFbmM1MVhqMVVZdjNKZEVQMDRJNWF2WHJHRW5GUld2VGFkN1VUcHUxZ1BMTEpaNjg3b0F4Y3VSeGtnVjlGa19KWTh3ZWF0dmdWTWZxdGV3Mm8tTzZoY2M3Y1NDbDRn0gGTAUFVX3lxTFBRZUQ3NWk0cU9JNTZkWjdaVWFuaXgtZHhrZElBdzA2YzFfVGRFellGWnJxOGxZRF9NME5KdjIwTk96LXFkNlgtbGlPZG1tMUZLZFFmMjlIX19ScmNkLTdDbEw1SHhrd2JjTzk3cWxSY0FTbkxNVlJoT21LcmktbVJqMnAzOVFud2tuVXZUWDBtNG14Zw?oc=5" target="_blank" rel="noopener">Too Good To Go launches grocery bags with Whole Foods as food costs climb - CNBC</a>
         </div>
         <div class="article-meta">
-          <span>Harvard Business School</span>
-          <span>Fri, 02 Aug 2024</span>
+          <span>CNBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMingFBVV95cUxOYVhTMVhiWDcyZlpVOUVMS3BOdENOYTlxQWdKVHZFdk40SHFJUlRoeEU3QmFZZWRkNnpDNkFTY3lLSWJqS3FLaFBaMDRVZGhFTTJCQVBFSjBTNmZmMXNIeEs4SGZIWlU5d2RIZmZkUy04a05sckJvclUwZHZleng5OU82TnJTUmhId2dmMUxPRHZsZF9IM1dLLTFvRnoyUQ?oc=5" target="_blank" rel="noopener">How to reduce food waste and save on grocery bills - PNI Atlantic News</a>
+          <a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQUElic0xZalQwTm1KTzd5VVN0N1RTVTUwR19RLUFCNjhlU0RTVjJHWnRsMmpXQzl6a0V4NkdsNEs4aE1BZnFOVjBkeUxvbDhNcnBfYVhZLXJKdTlEWDJIc1hJeEpYQ0tlZ3EyVUF2SHVnNGxqSUh3RzVBU3dOWExMTWY0bzhlSGZ4WmMyTHpfdE95dWpjWmR3a3lmME5HWlc1NjZzSFU0cHZWbmxpSExN?oc=5" target="_blank" rel="noopener">Too Good To Go (TGTG) Food Waste App Adds Circle K in US Expansion - Bloomberg.com</a>
         </div>
         <div class="article-meta">
-          <span>PNI Atlantic News</span>
-          <span>Sat, 16 Aug 2025</span>
+          <span>Bloomberg.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 06 Jun 2024</span>
         </div>
       </div>
     </div>
 
     <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
         <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1XNFM0SXJwbktUdUJLajkyQWZaZzc1cGRpR0FQYnA0OTljZk5UUmMtTkZyX3JNTzUwN3hjWG9fNlR4SUFPNDQtdlJRQUNHZlNxZWdsWVVuQjJHRUNDVUFoY0I2YUZWZFk?oc=5" target="_blank" rel="noopener">Flashfood appoints CEO - bluebookservices.com</a>
+          <a href="https://news.google.com/rss/articles/CBMiWEFVX3lxTE9UTHN4RjJLMkNEVGhVYVZIcGJXUkV6NFI2WTR6N2tpUUlRSUN1Wi0wUFdjUnNheFEwSXhReEtGUVQzSkVvV1laRVpKUjBhS0ZpOWtLRjlpVnU?oc=5" target="_blank" rel="noopener">How to afford food when money is tight : Life Kit - NPR</a>
         </div>
         <div class="article-meta">
-          <span>bluebookservices.com</span>
-          <span>Thu, 01 May 2025</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE9xbVVOYy1FeDFkVGU4ZmFXNEJCS0k1SDMzYUoyWUpMYjlZdXFfdUR2T1BvaWVmT2xadDlySTRPcXBmWDdOdEY3bkRVamY1ajd5VnJKYU80WGQ2ZXNZNDdQQU51UmEyR1ZHTWZTTHctRGh3OWsyZDJnSFh3?oc=5" target="_blank" rel="noopener">Flashfood appoints Jordan Schenck as CEO - Produce News</a>
-        </div>
-        <div class="article-meta">
-          <span>Produce News</span>
-          <span>Thu, 01 May 2025</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxNOTZRZUpiMWlmaEx0Q3RmQk5zQ3pSNi1fYnViak9Vbm1FY1BkQVlRWHFGdnhiRnZOMVdrVHR3TlV1MUtZYjFFVjRBenh6MGNFd2htZFpiU29hQ2gtYlN4LUc0RS1hU0F6UzBWSHV0UktGRmVSLTBmd3A2S2l5RTBFeQ?oc=5" target="_blank" rel="noopener">Flashfood appoints Jordan Schenck as CEO - The Packer</a>
-        </div>
-        <div class="article-meta">
-          <span>The Packer</span>
-          <span>Thu, 01 May 2025</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxORnZqVl96RDFmTVhuQzBubXVZWFoyMnlja1pkWEhuWGRldzZ0TTE5WGFXdnZhclZ0M2Rua2FWb0swSGNsUHc5cW5IRWZPV1M1SVNUcDcxb1pUYUpXUUxBX2x4dEQtNHRXSHFGcU9zRlhWbHM5dnozUk5hZnh0S2NHUUxFM2czQUFiaEVJ?oc=5" target="_blank" rel="noopener">3 apps that can save you money on supper tonight while also fighting food waste - CBC</a>
-        </div>
-        <div class="article-meta">
-          <span>CBC</span>
-          <span>Sat, 31 May 2025</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxNQmh0c2liWTlENmRMbm5jblBJT3VXSFJDMmh3dTZlWTJRZi0wdkRtMW1lVWZTYUVvR3F2YlZwNnhwUVRDVWNLd3luanloUzFRdXYzeXJvdldBUUZiYU1DOVZKSGNpVDF5T2pfc2lsZU0yTmVlZVNySG4ydFAweVlYNldhcVE2OGNENlpTbDFKVkdCMHFONmhHUFZIc2FrU2pUdWhSeGtnZW1MVnpu?oc=5" target="_blank" rel="noopener">The Giant Company targets food waste with Flashfood app pilot - Supermarket News</a>
-        </div>
-        <div class="article-meta">
-          <span>Supermarket News</span>
-          <span>Fri, 06 Sep 2024</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="article-row">
-      <div class="article-accent" style="background:#2563eb"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#2563eb">Flashfood</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxNQ3VSZ1FUOVJ2UzlpeUVqeWNtOTAzRjhNT1lOYlh2dHg5SWxCSFN3YjloQnlmR1luZG9rNlA5NWtFbDhscVItdXhiY2NjS0R5TmptdjlUamx6ck1YWGtDTzdzbGlWLUtUOENBS2plSDhNdW9oclBBRUxJNTRrdVJ0aFVLeXRUdVXSAY8BQVVfeXFMTTJZNk5FRjh1b2hnYjh2M1RXalY5MFYyOVFZVk1GRTdtdXZQMFVEZElDVEphY3FWUFIwNU00UkxEMGNMSm8ySGVubjBSbXl6R19XY1FCbV9IbGRWaFlaZXo0V0xlUHhfdS1Td2dTNjV4WWxEZ25hb0NNdjJtemppRm93aHMwcTBjTWE0TndaM2M?oc=5" target="_blank" rel="noopener">App works with grocery stores to offer discounts for food - NBC Bay Area</a>
-        </div>
-        <div class="article-meta">
-          <span>NBC Bay Area</span>
-          <span>Wed, 20 Mar 2024</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="article-row">
-      <div class="article-accent" style="background:#059669"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#059669">Too Good To Go</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxOeFIzRjUzLVFEcHNiaDRNWEdSbG0zaU40bEphZEhza0xlUVR5UzI5Rk00WUw3NVFJSWUyMGxzVEwzVXpkajBpTDhZWGJUSXhlLU92VlFROXdLWWd6bXRaeGVlRjAySTJmd0YycFZQZ3dQRkMtWlRjVGp5UENlM2RFRXExcm9EYnFmTVJzUkJ1c0dRM1FtYVFLNnJrUTBDNC05aS1pMXEtcVVEZGNoUUFNS0NnUHFTdw?oc=5" target="_blank" rel="noopener">Millennial CEO of Too Good To Go started investing money from her first job at age 12—it went towards her first company which sold to Under Armour for $85 million - Fortune</a>
-        </div>
-        <div class="article-meta">
-          <span>Fortune</span>
-          <span>Tue, 28 Jan 2025</span>
+          <span>NPR</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 10 Nov 2025</span>
         </div>
       </div>
     </div></div>
