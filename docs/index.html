@@ -29,6 +29,18 @@
   }
   a { color: inherit; }
 
+  /* ── Focus ── */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+
   /* ── Top bar ── */
   .topbar {
     background: var(--topbar-bg);
@@ -44,17 +56,14 @@
     gap: 0.6rem;
     text-decoration: none;
   }
-  /* TGTG heart-bag icon, simplified as SVG inline via background */
   .topbar-icon {
     width: 30px; height: 30px;
     background: #ffffff;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--topbar-bg);
-    letter-spacing: -0.03em;
+    font-size: 16px;
+    line-height: 1;
   }
   .topbar-name {
     font-weight: 700;
@@ -86,7 +95,7 @@
     border-bottom: 1px solid var(--border);
   }
   .page-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
     font-weight: 700;
     color: var(--text);
     letter-spacing: -0.02em;
@@ -120,6 +129,7 @@
     gap: 1.5rem;
     align-items: start;
   }
+  @media (max-width: 1024px) { .layout { grid-template-columns: 1fr 220px; } }
   @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
 
   /* ── Section card ── */
@@ -131,7 +141,7 @@
     box-shadow: 0 1px 3px rgba(0,97,95,0.06);
   }
   .section-header {
-    padding: 0.9rem 1.25rem;
+    padding: 0.875rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -139,7 +149,7 @@
     background: #faf8f6;
   }
   .section-header h2 {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -156,7 +166,7 @@
 
   /* ── Filter bars ── */
   .filter-bar {
-    padding: 0.6rem 1.25rem;
+    padding: 0.625rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     flex-wrap: wrap;
@@ -166,7 +176,7 @@
   }
   .filter-bar:last-of-type { border-bottom: 1px solid var(--border); }
   .filter-label {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
@@ -184,9 +194,13 @@
     font-weight: 500;
     cursor: pointer;
     font-family: inherit;
-    transition: all 0.12s;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   }
-  .filter-btn:hover { border-color: var(--accent-mid); color: var(--accent); }
+  .filter-btn:hover {
+    border-color: var(--accent-mid);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
   .filter-btn.active {
     background: var(--accent);
     border-color: var(--accent);
@@ -202,12 +216,12 @@
     display: flex;
     gap: 0.875rem;
     align-items: flex-start;
-    transition: background 0.1s;
+    transition: background-color 0.15s ease;
   }
   .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: #faf8f6; }
+  .article-row:hover { background: var(--accent-light); }
   .article-accent {
-    width: 3px;
+    width: 4px;
     border-radius: 3px;
     flex-shrink: 0;
     align-self: stretch;
@@ -225,8 +239,8 @@
     letter-spacing: 0.02em;
   }
   .article-title {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.9375rem;
+    font-weight: 700;
     line-height: 1.45;
     margin-bottom: 0.4rem;
     letter-spacing: -0.01em;
@@ -239,7 +253,7 @@
   /* ── Issues sidebar ── */
   .issue-list { display: flex; flex-direction: column; }
   .issue-row {
-    padding: 0.8rem 1.25rem;
+    padding: 0.875rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -248,7 +262,7 @@
     color: var(--text);
     font-size: 0.8rem;
     font-weight: 600;
-    transition: background 0.1s;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
   .issue-row:last-child { border-bottom: none; }
   .issue-row:hover { background: var(--accent-light); color: var(--accent); }
@@ -268,32 +282,34 @@
 
   /* ── Empty state ── */
   .empty {
-    padding: 2.5rem;
+    padding: 2.5rem 1.25rem;
     text-align: center;
     color: var(--muted);
     font-size: 0.8rem;
+    line-height: 1.6;
   }
+  .empty-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
 </style>
 </head>
 <body>
   <nav class="topbar">
     <div class="topbar-wordmark">
-      <div class="topbar-icon">TG</div>
+      <div class="topbar-icon">♻</div>
       <span class="topbar-name">Too Good To Go</span>
     </div>
     <div class="topbar-divider"></div>
     <span class="topbar-section">Competitive Intelligence</span>
   </nav>
-  <div class="page-header">
+  <header class="page-header">
     <h1>Competitor News Tracker</h1>
-    <span class="meta">500 articles tracked · Updated April 07, 2026</span>
-  </div>
-  <div class="layout">
+    <span class="meta">86 articles tracked · Updated April 07, 2026</span>
+  </header>
+  <main class="layout">
     <section>
       <div class="section-card">
         <div class="section-header">
           <h2>Recent Articles</h2>
-          <span class="section-count">30 of 500</span>
+          <span class="section-count">30 most recent · 86 total</span>
         </div>
         <div class="legend">
           <div class="legend-item"><div class="legend-dot" style="background:#2d7a4f"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#1d5fa8"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#b45309"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#b91c1c"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#00615f"></div>Too Good To Go</div>
@@ -726,6 +742,23 @@
       </div>
     </div>
 
+    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1FS0U5TTZRRXVfRTBnQ2JnNWhIbTUxTXM2aEhZRFlnYWxNR2JLOVA2SEozTEUwWW92T2dLY20wTDlzMFY4SVltdFRiZ0tKa3FPaHJVS3FaRkFmN1FlTHp2bHZYNDBqRU0?oc=5" target="_blank" rel="noopener">Freshness Prediction AI Market Size | CAGR of 18.4% - Market.us</a>
+        </div>
+        <div class="article-meta">
+          <span>Market.us</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 02 Feb 2026</span>
+        </div>
+      </div>
+    </div>
+
     <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
@@ -760,6 +793,23 @@
       </div>
     </div>
 
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxNY0xWYjNsV0FfODFRU0FhclJsTGdfY0IxbTZtSGdYakVBd2ZnOFNaY2tRby1DZ1JmMk9Ebzc1cXEtNmRsemk1aC1nRV9SaFBPdFA1LWxwVjVxQUQ2aHo3SzdlZ1BHTTlJSnhQWDg5amNqMDFXcTBfT3BybE84azBkY0wtMzhyVDNBSGx6MWpNT3VEWlBXeG9iWmMxVHM1aldESC1KVl9HUQ?oc=5" target="_blank" rel="noopener">Food waste, Too good to go surprise bags increased by 13% in 2025 - Il Sole 24 ORE</a>
+        </div>
+        <div class="article-meta">
+          <span>Il Sole 24 ORE</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 26 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
     <div class="article-row" data-competitor="Wasteless" data-country="United States">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
@@ -775,40 +825,6 @@
           <span>Tue, 20 Jan 2026</span>
         </div>
       </div>
-    </div>
-
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
-      <div class="article-accent" style="background:#0e7490"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#0e7490">Wasteless</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxORzc2MUV1WVdienZjcmEtUXNfWjZBdndHc0FXNWp6RzE1Zk11OTM3TWFya0c2QUVKemo1VWprRUJNSVh2ZjlrNDRwQWJLd3Q5SVpHWGN4cDVWVG9VZjhhTk90cE9Nak9TbzNpRjVTYkNpdE53Z01ZSDBQaXdDdDZTTTJTN1JXSjlxeEticXJJN1N4Q0dSSmdrSWUxOFpHUTB5YVE2MUtrRVlrM1BPU2JQcHpVc2VERWt2a0R3Z0VpOVJtbVE?oc=5" target="_blank" rel="noopener">Turning Food Waste Into Value: The CGF and Capgemini Release New Blueprint - The Consumer Goods Forum</a>
-        </div>
-        <div class="article-meta">
-          <span>The Consumer Goods Forum</span>
-          <span class="article-meta-sep">·</span>
-          <span>🇺🇸 United States</span>
-          <span class="article-meta-sep">·</span>
-          <span>Tue, 20 Jan 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
-      <div class="article-accent" style="background:#0e7490"></div>
-      <div class="article-body">
-        <span class="article-tag" style="background:#0e7490">Wasteless</span>
-        <div class="article-title">
-          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxPY3hDQU5ldlEtSW82c0dJRnljQlU0LU1zcGVGdkxISWdPMW1PWWloOFdpbFBkUEJ1cUM5eWFrd1F1eGhFU0hLT1FNRGFiSFAtZE1VOHNnMlFrN3hXaHlNYzNrbU1JSzRYQ01nWmlvb1RReWR4aVZaOGRzcUhrdzNGM1ItRGdpMUVsNElsQ0lPTXBtT1lRRm44dWN2b0pOSUtYTFFsZUlSNWU0WS1hbUdtZE44MzExdw?oc=5" target="_blank" rel="noopener">Supermercados Peruanos Joins the Food Waste Coalition of Action - The Consumer Goods Forum</a>
-        </div>
-        <div class="article-meta">
-          <span>The Consumer Goods Forum</span>
-          <span class="article-meta-sep">·</span>
-          <span>🇺🇸 United States</span>
-          <span class="article-meta-sep">·</span>
-          <span>Tue, 20 Jan 2026</span>
-        </div>
-      </div>
     </div></div>
       </div>
     </section>
@@ -817,10 +833,10 @@
         <div class="section-header">
           <h2>Weekly Issues</h2>
         </div>
-        <div class='empty'>No issues yet.</div>
+        <div class='empty'><div class='empty-icon'>📋</div>Weekly digests appear here every Monday.</div>
       </div>
     </aside>
-  </div>
+  </main>
   <script>
   function applyFilters() {
     const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);

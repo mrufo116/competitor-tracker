@@ -223,6 +223,18 @@ SHARED_CSS = """
   }
   a { color: inherit; }
 
+  /* ── Focus ── */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+
   /* ── Top bar ── */
   .topbar {
     background: var(--topbar-bg);
@@ -238,17 +250,14 @@ SHARED_CSS = """
     gap: 0.6rem;
     text-decoration: none;
   }
-  /* TGTG heart-bag icon, simplified as SVG inline via background */
   .topbar-icon {
     width: 30px; height: 30px;
     background: #ffffff;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--topbar-bg);
-    letter-spacing: -0.03em;
+    font-size: 16px;
+    line-height: 1;
   }
   .topbar-name {
     font-weight: 700;
@@ -280,7 +289,7 @@ SHARED_CSS = """
     border-bottom: 1px solid var(--border);
   }
   .page-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
     font-weight: 700;
     color: var(--text);
     letter-spacing: -0.02em;
@@ -314,6 +323,7 @@ SHARED_CSS = """
     gap: 1.5rem;
     align-items: start;
   }
+  @media (max-width: 1024px) { .layout { grid-template-columns: 1fr 220px; } }
   @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
 
   /* ── Section card ── */
@@ -325,7 +335,7 @@ SHARED_CSS = """
     box-shadow: 0 1px 3px rgba(0,97,95,0.06);
   }
   .section-header {
-    padding: 0.9rem 1.25rem;
+    padding: 0.875rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -333,7 +343,7 @@ SHARED_CSS = """
     background: #faf8f6;
   }
   .section-header h2 {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -350,7 +360,7 @@ SHARED_CSS = """
 
   /* ── Filter bars ── */
   .filter-bar {
-    padding: 0.6rem 1.25rem;
+    padding: 0.625rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     flex-wrap: wrap;
@@ -360,7 +370,7 @@ SHARED_CSS = """
   }
   .filter-bar:last-of-type { border-bottom: 1px solid var(--border); }
   .filter-label {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
@@ -378,9 +388,13 @@ SHARED_CSS = """
     font-weight: 500;
     cursor: pointer;
     font-family: inherit;
-    transition: all 0.12s;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   }
-  .filter-btn:hover { border-color: var(--accent-mid); color: var(--accent); }
+  .filter-btn:hover {
+    border-color: var(--accent-mid);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
   .filter-btn.active {
     background: var(--accent);
     border-color: var(--accent);
@@ -396,12 +410,12 @@ SHARED_CSS = """
     display: flex;
     gap: 0.875rem;
     align-items: flex-start;
-    transition: background 0.1s;
+    transition: background-color 0.15s ease;
   }
   .article-row:last-child { border-bottom: none; }
-  .article-row:hover { background: #faf8f6; }
+  .article-row:hover { background: var(--accent-light); }
   .article-accent {
-    width: 3px;
+    width: 4px;
     border-radius: 3px;
     flex-shrink: 0;
     align-self: stretch;
@@ -419,8 +433,8 @@ SHARED_CSS = """
     letter-spacing: 0.02em;
   }
   .article-title {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.9375rem;
+    font-weight: 700;
     line-height: 1.45;
     margin-bottom: 0.4rem;
     letter-spacing: -0.01em;
@@ -433,7 +447,7 @@ SHARED_CSS = """
   /* ── Issues sidebar ── */
   .issue-list { display: flex; flex-direction: column; }
   .issue-row {
-    padding: 0.8rem 1.25rem;
+    padding: 0.875rem 1.25rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -442,7 +456,7 @@ SHARED_CSS = """
     color: var(--text);
     font-size: 0.8rem;
     font-weight: 600;
-    transition: background 0.1s;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
   .issue-row:last-child { border-bottom: none; }
   .issue-row:hover { background: var(--accent-light); color: var(--accent); }
@@ -462,11 +476,13 @@ SHARED_CSS = """
 
   /* ── Empty state ── */
   .empty {
-    padding: 2.5rem;
+    padding: 2.5rem 1.25rem;
     text-align: center;
     color: var(--muted);
     font-size: 0.8rem;
+    line-height: 1.6;
   }
+  .empty-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
 """
 
 
@@ -531,20 +547,20 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
 <body>
   <nav class="topbar">
     <div class="topbar-wordmark">
-      <div class="topbar-icon">TG</div>
+      <div class="topbar-icon">♻</div>
       <span class="topbar-name">Too Good To Go</span>
     </div>
     <div class="topbar-divider"></div>
     <span class="topbar-section">Competitive Intelligence</span>
   </nav>
-  <div class="page-header" style="max-width:820px">
+  <header class="page-header" style="max-width:820px">
     <div>
       {back}
       <h1 style="margin-top:0.4rem">{html.escape(title)}</h1>
     </div>
     <span class="meta">{count} articles · {now}</span>
-  </div>
-  <div class="layout">
+  </header>
+  <main class="layout" style="display:block;max-width:820px;margin:0 auto;padding:0 2rem 3rem">
     <div class="section-card">
       <div class="section-header">
         <h2>Articles</h2>
@@ -557,7 +573,7 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
       <div class="filter-bar"><span class="filter-label">Country</span>{country_btns}</div>
       {"<div class='article-list'>" + rows + "</div>" if articles else "<div class='empty'>No articles for this period.</div>"}
     </div>
-  </div>
+  </main>
   <script>
   function applyFilters() {{
     const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
@@ -611,22 +627,22 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
 <body>
   <nav class="topbar">
     <div class="topbar-wordmark">
-      <div class="topbar-icon">TG</div>
+      <div class="topbar-icon">♻</div>
       <span class="topbar-name">Too Good To Go</span>
     </div>
     <div class="topbar-divider"></div>
     <span class="topbar-section">Competitive Intelligence</span>
   </nav>
-  <div class="page-header">
+  <header class="page-header">
     <h1>Competitor News Tracker</h1>
     <span class="meta">{total} articles tracked · Updated {now}</span>
-  </div>
-  <div class="layout">
+  </header>
+  <main class="layout">
     <section>
       <div class="section-card">
         <div class="section-header">
           <h2>Recent Articles</h2>
-          <span class="section-count">{len(recent)} of {total}</span>
+          <span class="section-count">{len(recent)} most recent · {total} total</span>
         </div>
         <div class="legend">
           {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
@@ -641,10 +657,10 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
         <div class="section-header">
           <h2>Weekly Issues</h2>
         </div>
-        {"<div class='issue-list'>" + issue_rows + "</div>" if issue_rows else "<div class='empty'>No issues yet.</div>"}
+        {"<div class='issue-list'>" + issue_rows + "</div>" if issue_rows else "<div class='empty'><div class='empty-icon'>📋</div>Weekly digests appear here every Monday.</div>"}
       </div>
     </aside>
-  </div>
+  </main>
   <script>
   function applyFilters() {{
     const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
