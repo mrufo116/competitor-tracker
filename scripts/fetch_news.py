@@ -680,6 +680,29 @@ SHARED_CSS = """
     font-weight: 600;
   }
 
+  /* ── Competitor dropdown ── */
+  .competitor-select {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 0.3rem 2.25rem 0.3rem 0.85rem;
+    border-radius: 120px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    background-size: 0.75rem;
+    transition: border-color 0.18s ease;
+    max-width: 260px;
+  }
+  .competitor-select:hover { border-color: var(--accent-mid); }
+  .competitor-select:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
   /* ── Article rows ── */
   .article-list { display: flex; flex-direction: column; }
   .article-row {
@@ -808,6 +831,26 @@ def _country_btns(articles: list[dict]) -> str:
     )
 
 
+def _competitor_select() -> str:
+    from collections import defaultdict
+    by_cat: dict[str, list[str]] = defaultdict(list)
+    for name in COMPETITORS:
+        cat = COMPETITOR_CATEGORIES.get(name, "Other")
+        by_cat[cat].append(name)
+
+    parts = ['<select id="competitor-select" class="competitor-select">',
+             '<option value="">All competitors</option>']
+    for cat in CATEGORY_COLORS:
+        names = sorted(by_cat.get(cat, []))
+        if names:
+            parts.append(f'<optgroup label="{html.escape(cat)}">')
+            for name in names:
+                parts.append(f'<option value="{html.escape(name, quote=True)}">{html.escape(name)}</option>')
+            parts.append('</optgroup>')
+    parts.append('</select>')
+    return "".join(parts)
+
+
 def _legend() -> str:
     return "".join(
         f'<div class="legend-item"><div class="legend-dot" style="background:{color}"></div>{html.escape(cat)}</div>'
@@ -819,15 +862,20 @@ _FILTER_JS = """
   function applyFilters() {
     const ac = [...document.querySelectorAll('.filter-btn[data-type="category"].active')].map(b => b.dataset.filter);
     const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
+    const sel = document.getElementById('competitor-select');
+    const comp = sel ? sel.value : '';
     document.querySelectorAll('.article-row').forEach(row => {
       const mc = ac.length === 0 || ac.includes(row.dataset.category);
       const mk = ak.length === 0 || ak.includes(row.dataset.country);
-      row.style.display = (mc && mk) ? '' : 'none';
+      const mcomp = comp === '' || row.dataset.competitor === comp;
+      row.style.display = (mc && mk && mcomp) ? '' : 'none';
     });
   }
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
   });
+  const sel = document.getElementById('competitor-select');
+  if (sel) sel.addEventListener('change', applyFilters);
 """
 
 
@@ -873,6 +921,7 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
       </div>
       <div class="legend">{_legend()}</div>
       <div class="filter-bar"><span class="filter-label">Category</span>{_category_btns()}</div>
+      <div class="filter-bar"><span class="filter-label">Competitor</span>{_competitor_select()}</div>
       <div class="filter-bar"><span class="filter-label">Country</span>{_country_btns(articles)}</div>
       {"<div class='article-list'>" + rows + "</div>" if articles else "<div class='empty'>No articles for this period.</div>"}
     </div>
@@ -926,6 +975,7 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
         </div>
         <div class="legend">{_legend()}</div>
         <div class="filter-bar"><span class="filter-label">Category</span>{_category_btns()}</div>
+        <div class="filter-bar"><span class="filter-label">Competitor</span>{_competitor_select()}</div>
         <div class="filter-bar"><span class="filter-label">Country</span>{_country_btns(recent)}</div>
         {"<div class='article-list'>" + rows + "</div>" if recent else "<div class='empty'>No articles yet. Run the scraper to populate.</div>"}
       </div>
