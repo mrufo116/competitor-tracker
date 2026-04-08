@@ -302,7 +302,7 @@ def load_data() -> dict:
     if DATA_FILE.exists():
         try:
             return json.loads(DATA_FILE.read_text())
-        except (json.JSONDecodeError, ValueError) as e:
+        except (UnicodeDecodeError, json.JSONDecodeError) as e:
             print(f"⚠ data.json corrupted ({e}), starting fresh")
     return {"seen_ids": [], "articles": []}
 
