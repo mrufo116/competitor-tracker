@@ -5,11 +5,13 @@ Fetches Google News RSS for competitor keywords, deduplicates,
 generates HTML archive, and sends weekly email digest.
 """
 
+import concurrent.futures
 import html
 import os
 import json
 import hashlib
 import smtplib
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -324,7 +326,7 @@ def save_data(data: dict):
 
 
 def fetch_all() -> list[dict]:
-    """Fetch all competitors, return deduplicated new articles."""
+    """Fetch all competitors in parallel, return deduplicated new articles."""
     data = load_data()
     seen = set(data["seen_ids"])
 
@@ -333,12 +335,15 @@ def fetch_all() -> list[dict]:
         if not a.get("category"):
             a["category"] = competitor_category(a.get("competitor", ""))
 
-    new_articles = []
+    # Build flat list of (competitor_name, query) work items
+    work = [(comp, query) for comp, queries in COMPETITORS.items() for query in queries]
 
-    for comp, queries in COMPETITORS.items():
-        print(f"Fetching: {comp}")
-        for query in queries:
-            articles = fetch_rss(query)
+    new_articles: list[dict] = []
+    lock = threading.Lock()
+
+    def fetch_one(comp: str, query: str) -> None:
+        articles = fetch_rss(query)
+        with lock:
             for a in articles:
                 aid = article_id(a)
                 if aid not in seen:
@@ -349,9 +354,19 @@ def fetch_all() -> list[dict]:
                     a["id"] = aid
                     a["fetched_at"] = datetime.now(timezone.utc).isoformat()
                     new_articles.append(a)
-                    print(f"  + {a['title'][:80]}")
+                    print(f"  + [{comp}] {a['title'][:70]}")
 
-    # Persist — sort by pub_date desc, drop >6 months old, cap at MAX_ARTICLES
+    print(f"Fetching {len(work)} queries across {len(COMPETITORS)} competitors (parallel, max 12 workers)…")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=12) as executor:
+        futures = [executor.submit(fetch_one, comp, query) for comp, query in work]
+        concurrent.futures.wait(futures)
+
+    # Re-raise any unexpected exceptions from workers
+    for f in futures:
+        if f.exception():
+            print(f"  ⚠ Worker exception: {f.exception()}")
+
+    # Persist — sort by pub_date desc, drop >retention days old, cap at MAX_ARTICLES
     cutoff = datetime.now(timezone.utc) - timedelta(days=ARTICLE_RETENTION_DAYS)
     all_articles = new_articles + data.get("articles", [])
     all_articles.sort(key=pub_date_key, reverse=True)
