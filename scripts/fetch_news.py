@@ -11,6 +11,7 @@ import json
 import hashlib
 import smtplib
 import time
+import urllib.error
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
