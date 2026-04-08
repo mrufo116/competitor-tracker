@@ -300,7 +300,10 @@ def pub_date_key(article: dict) -> datetime:
 
 def load_data() -> dict:
     if DATA_FILE.exists():
-        return json.loads(DATA_FILE.read_text())
+        try:
+            return json.loads(DATA_FILE.read_text())
+        except (json.JSONDecodeError, ValueError) as e:
+            print(f"⚠ data.json corrupted ({e}), starting fresh")
     return {"seen_ids": [], "articles": []}
 
 
