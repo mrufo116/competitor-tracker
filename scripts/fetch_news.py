@@ -308,6 +308,10 @@ DATA_FILE = Path("docs/data.json")
 INDEX_FILE = Path("docs/index.html")
 ISSUE_DIR = Path("docs/issues")
 
+MAX_ARTICLES = 2000
+ARTICLES_ON_INDEX = 60
+ARTICLE_RETENTION_DAYS = 183
+
 SEND_EMAIL = os.environ.get("SEND_EMAIL", "false").lower() == "true"
 EMAIL_FROM = os.environ.get("EMAIL_FROM", "")
 EMAIL_TO = os.environ.get("EMAIL_TO", "")
@@ -463,12 +467,12 @@ def fetch_all() -> list[dict]:
                     new_articles.append(a)
                     print(f"  + {a['title'][:80]}")
 
-    # Persist — sort by pub_date desc, drop >6 months old, cap at 2000
-    cutoff_6mo = datetime.now(timezone.utc) - timedelta(days=183)
+    # Persist — sort by pub_date desc, drop >6 months old, cap at MAX_ARTICLES
+    cutoff = datetime.now(timezone.utc) - timedelta(days=ARTICLE_RETENTION_DAYS)
     all_articles = new_articles + data.get("articles", [])
     all_articles.sort(key=pub_date_key, reverse=True)
-    all_articles = [a for a in all_articles if pub_date_key(a) >= cutoff_6mo]
-    all_articles = all_articles[:2000]
+    all_articles = [a for a in all_articles if pub_date_key(a) >= cutoff]
+    all_articles = all_articles[:MAX_ARTICLES]
     kept_ids = {a["id"] for a in all_articles}
     data["seen_ids"] = list(seen & kept_ids)
     data["articles"] = all_articles
@@ -935,7 +939,7 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
 
 def build_index(all_articles: list[dict], issue_dates: list[str]):
     """Build the main archive index page."""
-    recent = all_articles[:60]
+    recent = all_articles[:ARTICLES_ON_INDEX]
     rows = "\n".join(render_article_row(a) for a in recent)
     now = datetime.now(timezone.utc).strftime("%B %d, %Y")
     total = len(all_articles)
