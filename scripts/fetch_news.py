@@ -935,7 +935,10 @@ def build_email_html(articles: list[dict], week_str: str) -> str:
         </tr>"""
 
     return f"""<!DOCTYPE html>
-<html><head><meta charset="UTF-8"></head>
+<html><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 <body style="margin:0;padding:0;background:#f9f3f0;font-family:'Helvetica Neue',Arial,sans-serif;color:#222222;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9f3f0;padding:40px 20px;">
     <tr><td align="center">
