@@ -185,6 +185,7 @@ ISSUE_DIR = Path("docs/issues")
 MAX_ARTICLES = 2000
 ARTICLES_ON_INDEX = 60
 ARTICLE_RETENTION_DAYS = 183
+FETCH_WORKERS = 12
 
 SEND_EMAIL = os.environ.get("SEND_EMAIL", "false").lower() == "true"
 EMAIL_FROM = os.environ.get("EMAIL_FROM", "")
@@ -356,12 +357,11 @@ def fetch_all() -> list[dict]:
                     new_articles.append(a)
                     print(f"  + [{comp}] {a['title'][:70]}")
 
-    print(f"Fetching {len(work)} queries across {len(COMPETITORS)} competitors (parallel, max 12 workers)…")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=12) as executor:
+    print(f"Fetching {len(work)} queries across {len(COMPETITORS)} competitors (parallel, max {FETCH_WORKERS} workers)…")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=FETCH_WORKERS) as executor:
         futures = [executor.submit(fetch_one, comp, query) for comp, query in work]
-        concurrent.futures.wait(futures)
 
-    # Re-raise any unexpected exceptions from workers
+    # Log any unexpected exceptions from workers (fetch_rss handles most internally)
     for f in futures:
         if f.exception():
             print(f"  ⚠ Worker exception: {f.exception()}")
