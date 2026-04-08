@@ -65,6 +65,15 @@ gh secret set SMTP_PASS    # Gmail App Password (not login password)
 
 ## Updates
 
+### 2026-04-08 — Reliability & Performance Hardening (planned)
+Six targeted changes to `scripts/fetch_news.py` — plan at `docs/superpowers/plans/2026-04-08-reliability-and-performance.md`:
+- **Single source of truth** — `COMPETITORS` and `COMPETITOR_CATEGORIES` now derived from one `_COMPETITOR_DATA` list of `(name, queries, category)` tuples; adding a competitor requires editing one place only
+- **JSON guard** — `load_data()` wraps JSON parse in try/except; corrupted `data.json` now returns an empty structure instead of crashing the entire run
+- **Retry + backoff** — `fetch_rss()` retries up to 3 times with 2s/4s exponential backoff; catches `URLError` and `ET.ParseError` specifically
+- **Parallel fetching** — `fetch_all()` uses `ThreadPoolExecutor(max_workers=12)` with a threading lock; 240 sequential requests replaced by concurrent fetch, cutting worst-case runtime from ~1 hr to ~2 min
+- **Email branding** — `build_email_html()` updated from dark/neon theme to TGTG cream (`#f9f3f0`) / teal (`#00615f`) brand, matching the dashboard
+- **Named constants** — `MAX_ARTICLES = 2000`, `ARTICLES_ON_INDEX = 60`, `ARTICLE_RETENTION_DAYS = 183` extracted from inline magic numbers
+
 ### 2026-04-08 — Competitor Dropdown Filter
 Added a styled `<select>` dropdown in the filter bar listing all 120 competitors grouped by category. Selecting a competitor narrows results using AND logic with the category and country filters.
 
