@@ -25,8 +25,10 @@ from pathlib import Path
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-# Single source of truth: (name, [search queries], category)
-_COMPETITOR_DATA: list[tuple[str, list[str], str]] = [
+# Single source of truth: (name, [search queries], category) or (name, [search queries], category, "Primary Country")
+# Add a 4th element to override TLD-based country detection for competitors whose .com domain
+# doesn't reflect their actual primary market (e.g. a Korean app with a .com domain).
+_COMPETITOR_DATA: list[tuple] = [
     # ── Existing ──
     ("Olio",           ["Olio app food sharing", "Olio community sharing platform"],                "B2C Marketplaces"),
     ("Flashfood",      ["Flashfood grocery surplus", "Flashfood app"],                              "B2C Marketplaces"),
@@ -38,14 +40,14 @@ _COMPETITOR_DATA: list[tuple[str, list[str], str]] = [
     # ── B2C Marketplaces ──
     ("Vers Voor Vandaag", ["Vers Voor Vandaag food surplus", "Vers Voor Vandaag app"],                          "B2C Marketplaces"),
     ("Crumbs",            ["Crumbs food surplus app", "Crumbs food waste marketplace"],                        "B2C Marketplaces"),
-    ("Toriniko",          ["Toriniko food app", "Toriniko food waste Japan"],                                   "B2C Marketplaces"),
+    ("Toriniko",          ["Toriniko food app", "Toriniko food waste Japan"],                                   "B2C Marketplaces",  "Japan"),
     ("Still Good",        ["Still Good food surplus app", "Still Good food waste marketplace"],                 "B2C Marketplaces"),
     ("Gone Good",         ["Gone Good food surplus app", "Gone Good food waste"],                               "B2C Marketplaces"),
     ("Platable",          ["Platable food surplus app", "Platable food marketplace"],                           "B2C Marketplaces"),
     ("Foodbag",           ["Foodbag food surplus app", "Foodbag food delivery waste"],                          "B2C Marketplaces"),
     ("Leftovers",         ["Leftovers food surplus app", "Leftovers food waste marketplace"],                   "B2C Marketplaces"),
-    ("Hallowa",           ["Hallowa food app Korea", "Hallowa surplus food"],                                   "B2C Marketplaces"),
-    ("Lucky Meal",        ["Lucky Meal food app surplus", "Lucky Meal food waste Korea"],                       "B2C Marketplaces"),
+    ("Hallowa",           ["Hallowa food app Korea", "Hallowa surplus food"],                                   "B2C Marketplaces",  "South Korea"),
+    ("Lucky Meal",        ["Lucky Meal food app surplus", "Lucky Meal food waste Korea"],                       "B2C Marketplaces",  "South Korea"),
     ("Cirklua",           ["Cirklua food surplus marketplace", "Cirklua food app"],                             "B2C Marketplaces"),
     ("Second Plate",      ["Second Plate food surplus app", "Second Plate food waste"],                         "B2C Marketplaces"),
     ("Save Me",           ["Save Me food surplus app", "Save Me food waste app"],                               "B2C Marketplaces"),
@@ -114,13 +116,13 @@ _COMPETITOR_DATA: list[tuple[str, list[str], str]] = [
     ("Eco Looping",                    ["Eco Looping food donation", "Eco Looping food waste rescue"],                               "Retail Tech: Donation"),
     ("Caboodle",                       ["Caboodle food rescue app", "Caboodle food donation platform"],                              "Retail Tech: Donation"),
     ("Second Harvest Food Rescue App", ["Second Harvest food rescue app", "Second Harvest food donation"],                           "Retail Tech: Donation"),
-    ("Fome de Tudo",                   ["Fome de Tudo food app Brazil", "Fome de Tudo food rescue"],                                 "Retail Tech: Donation"),
+    ("Fome de Tudo",                   ["Fome de Tudo food app Brazil", "Fome de Tudo food rescue"],                                 "Retail Tech: Donation", "Brazil"),
     ("Hungree App",                    ["Hungree App food donation", "Hungree food rescue app"],                                     "Retail Tech: Donation"),
     ("Sharing Excess",                 ["Sharing Excess food rescue", "Sharing Excess food donation"],                               "Retail Tech: Donation"),
     ("BringtheFood",                   ["BringtheFood food donation app", "BringtheFood food rescue"],                               "Retail Tech: Donation"),
     ("Ecibo",                          ["Ecibo food donation app", "Ecibo food rescue technology"],                                  "Retail Tech: Donation"),
     ("BitGood",                        ["BitGood food donation app", "BitGood food rescue"],                                        "Retail Tech: Donation"),
-    ("Stasera Offro Io",               ["Stasera Offro Io food app Italy", "Stasera Offro food donation"],                          "Retail Tech: Donation"),
+    ("Stasera Offro Io",               ["Stasera Offro Io food app Italy", "Stasera Offro food donation"],                          "Retail Tech: Donation", "Italy"),
     ("OzHarvest Food App",             ["OzHarvest food rescue app", "OzHarvest food donation Australia"],                          "Retail Tech: Donation"),
     ("O Masa Calda",                   ["O Masa Calda food app", "O Masa Calda food rescue"],                                       "Retail Tech: Donation"),
     ("Food Recovery",                  ["Food Recovery app platform", "Food Recovery food rescue tech"],                             "Retail Tech: Donation"),
@@ -152,11 +154,12 @@ _COMPETITOR_DATA: list[tuple[str, list[str], str]] = [
     ("Querfeld",                  ["Querfeld food surplus Germany", "Querfeld imperfect produce"],                          "E-commerce"),
     ("LEROMA",                    ["LEROMA food surplus ecommerce", "LEROMA food waste"],                                   "E-commerce"),
     ("Wonky Veg Boxes",           ["Wonky Veg Boxes imperfect produce", "Wonky Veg food waste delivery"],                   "E-commerce"),
-    ("Coupang",                   ["Coupang fresh food ecommerce", "Coupang food delivery Korea"],                          "E-commerce"),
+    ("Coupang",                   ["Coupang fresh food ecommerce", "Coupang food delivery Korea"],                          "E-commerce",        "South Korea"),
 ]
 
-COMPETITORS = {name: queries for name, queries, _ in _COMPETITOR_DATA}
-COMPETITOR_CATEGORIES = {name: cat for name, _, cat in _COMPETITOR_DATA}
+COMPETITORS = {name: queries for name, queries, *_ in _COMPETITOR_DATA}
+COMPETITOR_CATEGORIES = {name: cat for name, _, cat, *_ in _COMPETITOR_DATA}
+COMPETITOR_COUNTRIES = {name: rest[0] for name, _, _, *rest in _COMPETITOR_DATA if rest}
 
 # Category colors — new competitors use these; original 7 keep distinct colors via CARD_COLORS
 CATEGORY_COLORS = {
@@ -350,7 +353,7 @@ def fetch_all() -> list[dict]:
                     seen.add(aid)
                     a["competitor"] = comp
                     a["category"] = competitor_category(comp)
-                    a["country"] = detect_country(a["link"])
+                    a["country"] = COMPETITOR_COUNTRIES.get(comp) or detect_country(a["link"])
                     a["id"] = aid
                     a["fetched_at"] = datetime.now(timezone.utc).isoformat()
                     new_articles.append(a)
