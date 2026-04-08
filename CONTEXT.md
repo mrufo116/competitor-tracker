@@ -9,15 +9,17 @@ An automated competitive intelligence tool for **Too Good To Go** that monitors 
 
 ### Competitors Tracked
 
-| Competitor | Focus |
-|---|---|
-| Olio | Community food sharing app |
-| Flashfood | Grocery surplus partnerships |
-| Karma | Food waste app, Nordics/EU |
-| Phenix | Anti-waste campaigns, France |
-| ResQ Club | Food rescue, Northern Europe |
-| Wasteless | Dynamic pricing, grocery tech |
-| Too Good To Go | Brand monitoring (own coverage) |
+120 competitors across 5 categories (see `scripts/fetch_news.py` for full list):
+
+| Category | Count | Color |
+|---|---|---|
+| B2C Marketplaces | 27 | #2563eb |
+| E-commerce | 20 | #7c3aed |
+| Other Surplus Optimisation | 48 | #059669 |
+| Retail Tech | 7 | #0891b2 |
+| Retail Tech: Donation | 18 | #d97706 |
+
+The original 7 competitors (Olio, Flashfood, Karma, Phenix, ResQ Club, Wasteless, Too Good To Go) keep their individual brand colors; all others use their category color.
 
 ### How It Works
 
@@ -42,6 +44,12 @@ An automated competitive intelligence tool for **Too Good To Go** that monitors 
 - **Font:** DM Sans via Google Fonts
 - **Email:** SMTP via Gmail App Password (secrets stored in Actions)
 
+### Local Copy
+
+Working files live at `/Users/mrufo/claude-projects/competitor-tracker/`.
+The `/tmp/competitor-tracker/` clone is stale — always work from `claude-projects`.
+Push to GitHub manually when ready (`git push origin main` from the local copy).
+
 ### Email Setup (if not yet configured)
 
 ```bash
@@ -56,6 +64,20 @@ gh secret set SMTP_PASS    # Gmail App Password (not login password)
 ---
 
 ## Updates
+
+### 2026-04-08 — Competitor Dropdown Filter
+Added a styled `<select>` dropdown in the filter bar listing all 120 competitors grouped by category. Selecting a competitor narrows results using AND logic with the category and country filters.
+
+### 2026-04-08 — Country Dropdown Filter
+Converted the country filter from pill buttons to a `<select>` dropdown matching the competitor dropdown. Shows only countries present in the current article set.
+
+### 2026-04-08 — Expanded to 120 Competitors (5 Categories)
+Added 113 new competitors organised into 5 categories: B2C Marketplaces, E-commerce, Other Surplus Optimisation, Retail Tech, and Retail Tech: Donation. Key structural changes:
+- Added `COMPETITOR_CATEGORIES` and `CATEGORY_COLORS` dicts in `fetch_news.py`
+- Replaced individual competitor filter buttons with a 5-button category filter bar
+- `competitor_color()` falls back to category color for new competitors; original 7 keep distinct colors
+- Article cap raised 500 → 2000; index shows 60 most recent (was 30)
+- `category` field backfilled on existing articles at fetch time
 
 ### 2026-04-07 — Country Filters
 Added country detection from article URL domain TLDs (`.co.uk` → 🇬🇧 UK, `.fr` → 🇫🇷 France, etc.). A second filter row now appears below the competitor filters. Both rows use AND logic — selecting UK + Olio shows only UK Olio articles. Countries shown are dynamic — only countries present in the current article set appear as buttons.
