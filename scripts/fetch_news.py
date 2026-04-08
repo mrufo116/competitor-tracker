@@ -22,13 +22,286 @@ from pathlib import Path
 # ── Config ────────────────────────────────────────────────────────────────────
 
 COMPETITORS = {
-    "Olio": ["Olio app food sharing", "Olio community sharing platform"],
-    "Flashfood": ["Flashfood grocery surplus", "Flashfood app"],
-    "Karma": ["Karma food waste app", "Karma surplus food"],
-    "Phenix": ["Phenix food waste France", "Phenix food rescue France"],
-    "ResQ Club": ["ResQ Club food rescue", "ResQ Club Finland food"],
-    "Wasteless": ["Wasteless dynamic pricing grocery", "Wasteless AI dynamic pricing"],
+    # ── Existing ──
+    "Olio":           ["Olio app food sharing", "Olio community sharing platform"],
+    "Flashfood":      ["Flashfood grocery surplus", "Flashfood app"],
+    "Karma":          ["Karma food waste app", "Karma surplus food"],
+    "Phenix":         ["Phenix food waste France", "Phenix food rescue France"],
+    "ResQ Club":      ["ResQ Club food rescue", "ResQ Club Finland food"],
+    "Wasteless":      ["Wasteless dynamic pricing grocery", "Wasteless AI dynamic pricing"],
     "Too Good To Go": ["Too Good To Go funding", "Too Good To Go expansion", "TGTG partnership"],
+
+    # ── B2C Marketplaces ──
+    "Vers Voor Vandaag": ["Vers Voor Vandaag food surplus", "Vers Voor Vandaag app"],
+    "Crumbs":            ["Crumbs food surplus app", "Crumbs food waste marketplace"],
+    "Toriniko":          ["Toriniko food app", "Toriniko food waste Japan"],
+    "Still Good":        ["Still Good food surplus app", "Still Good food waste marketplace"],
+    "Gone Good":         ["Gone Good food surplus app", "Gone Good food waste"],
+    "Platable":          ["Platable food surplus app", "Platable food marketplace"],
+    "Foodbag":           ["Foodbag food surplus app", "Foodbag food delivery waste"],
+    "Leftovers":         ["Leftovers food surplus app", "Leftovers food waste marketplace"],
+    "Hallowa":           ["Hallowa food app Korea", "Hallowa surplus food"],
+    "Lucky Meal":        ["Lucky Meal food app surplus", "Lucky Meal food waste Korea"],
+    "Cirklua":           ["Cirklua food surplus marketplace", "Cirklua food app"],
+    "Second Plate":      ["Second Plate food surplus app", "Second Plate food waste"],
+    "Save Me":           ["Save Me food surplus app", "Save Me food waste app"],
+    "Forsa":             ["Forsa food surplus marketplace", "Forsa food waste app"],
+    "OrderLemon":        ["OrderLemon food surplus app", "OrderLemon food marketplace"],
+    "Savefood":          ["Savefood food surplus app", "Savefood food waste platform"],
+    "SaveFOOD":          ["SaveFOOD food technology platform", "SaveFOOD food preservation app"],
+    "1plate1world":      ["1plate1world food surplus", "1plate1world food waste app"],
+    "Buen Provecho":     ["Buen Provecho food surplus app", "Buen Provecho food waste"],
+    "Reat":              ["Reat food surplus marketplace", "Reat food waste app"],
+    "Salveme!":          ["Salveme food surplus app", "Salveme food waste marketplace"],
+
+    # ── Other Surplus Optimisation ──
+    "KitchenPal":                    ["KitchenPal app food waste management", "KitchenPal food inventory"],
+    "Innovafeed":                    ["Innovafeed insect protein food waste", "Innovafeed food by-product feed"],
+    "Mottainai Food Tech":           ["Mottainai Food Tech food waste", "Mottainai food technology"],
+    "Rescube":                       ["Rescube food waste technology", "Rescube food surplus"],
+    "Fridge Friend":                 ["Fridge Friend food waste app", "Fridge Friend food expiry tracker"],
+    "Hulec":                         ["Hulec food waste technology", "Hulec food surplus"],
+    "ChicP":                         ["ChicP hummus food waste upcycled", "ChicP surplus food product"],
+    "Good Grub":                     ["Good Grub food waste", "Good Grub surplus food"],
+    "Ecosphere Organics":            ["Ecosphere Organics food waste", "Ecosphere Organics composting"],
+    "Vego":                          ["Vego food waste app", "Vego surplus food technology"],
+    "Lomi":                          ["Lomi food waste composter", "Lomi home composting device"],
+    "Reencle":                       ["Reencle food waste composter", "Reencle home composting"],
+    "Refood":                        ["Refood food waste rescue", "Refood food bank Portugal"],
+    "Proseed":                       ["Proseed food waste technology", "Proseed surplus ingredients"],
+    "Fonte Ingredients":             ["Fonte Ingredients food waste upcycled", "Fonte Ingredients surplus"],
+    "Wonky Coffee":                  ["Wonky Coffee surplus food waste", "Wonky Coffee imperfect coffee"],
+    "Ripe Guard":                    ["Ripe Guard food freshness technology", "Ripe Guard food waste preservation"],
+    "Vitesy":                        ["Vitesy food preservation device", "Vitesy food waste technology"],
+    "Topanga.io":                    ["Topanga food waste technology", "Topanga.io surplus food platform"],
+    "Liva":                          ["Liva food waste reduction app", "Liva food surplus optimisation"],
+    "Proteme":                       ["Proteme food waste technology", "Proteme food preservation"],
+    "Akorn Technology":              ["Akorn Technology food waste", "Akorn food surplus optimisation"],
+    "Cetogenix":                     ["Cetogenix food waste technology", "Cetogenix food surplus"],
+    "Volare":                        ["Volare food waste technology", "Volare food surplus"],
+    "YeastUp":                       ["YeastUp food waste yeast", "YeastUp fermentation food by-product"],
+    "No Waste App":                  ["No Waste App food inventory tracker", "No Waste food waste manager"],
+    "Mimica Lab":                    ["Mimica Lab food freshness technology", "Mimica expiry label food waste"],
+    "Cool Innovation":               ["Cool Innovation food waste", "Cool Innovation food freshness technology"],
+    "Bpacks":                        ["Bpacks sustainable food packaging", "Bpacks food waste packaging"],
+    "Viridian Renewable Technology": ["Viridian Renewable food waste technology", "Viridian food surplus"],
+    "Cerve":                         ["Cerve food waste technology", "Cerve surplus food"],
+    "Prism":                         ["Prism food waste optimisation", "Prism food surplus technology"],
+    "Hubcycled":                     ["Hubcycled food waste upcycled", "Hubcycled surplus food technology"],
+    "Edama Solutions":               ["Edama Solutions food waste", "Edama food technology"],
+    "Skonelabs":                     ["Skonelabs food waste technology", "Skonelabs food surplus"],
+    "Ipsago":                        ["Ipsago food waste technology", "Ipsago food surplus optimisation"],
+    "Green Spot Technologies":       ["Green Spot Technologies food waste", "Green Spot food tech"],
+    "Rscued":                        ["Rscued food surplus app", "Rscued food waste marketplace"],
+    "Unverschwendet":                ["Unverschwendet food waste Austria", "Unverschwendet surplus food"],
+    "BeBananas":                     ["BeBananas food waste app", "BeBananas surplus food"],
+    "FollowFood":                    ["FollowFood food waste app", "FollowFood food tracking"],
+    "B!POD":                         ["BPOD food waste technology", "BPOD food surplus"],
+    "FoodUp":                        ["FoodUp food waste app", "FoodUp surplus food platform"],
+    "ProNovo":                       ["ProNovo food waste technology", "ProNovo food surplus"],
+    "Cascara Foods":                 ["Cascara Foods food waste upcycled", "Cascara surplus ingredients"],
+    "Cook Forever":                  ["Cook Forever food preservation", "Cook Forever food waste"],
+    "Skip Shapiro":                  ["Skip Shapiro food waste", "Skip Shapiro food surplus"],
+
+    # ── Retail Tech: Donation ──
+    "Eatcloud":                       ["Eatcloud food donation technology", "Eatcloud food bank platform"],
+    "4MyCity":                        ["4MyCity food donation app", "4MyCity food sharing platform"],
+    "PDApp":                          ["PDApp food donation app", "PDApp food rescue platform"],
+    "We Don't Waste":                 ["We Don't Waste food donation", "We Don't Waste food rescue"],
+    "Knead Technologies":             ["Knead Technologies food waste donation", "Knead food rescue tech"],
+    "Eco Looping":                    ["Eco Looping food donation", "Eco Looping food waste rescue"],
+    "Caboodle":                       ["Caboodle food rescue app", "Caboodle food donation platform"],
+    "Second Harvest Food Rescue App": ["Second Harvest food rescue app", "Second Harvest food donation"],
+    "Fome de Tudo":                   ["Fome de Tudo food app Brazil", "Fome de Tudo food rescue"],
+    "Hungree App":                    ["Hungree App food donation", "Hungree food rescue app"],
+    "Sharing Excess":                 ["Sharing Excess food rescue", "Sharing Excess food donation"],
+    "BringtheFood":                   ["BringtheFood food donation app", "BringtheFood food rescue"],
+    "Ecibo":                          ["Ecibo food donation app", "Ecibo food rescue technology"],
+    "BitGood":                        ["BitGood food donation app", "BitGood food rescue"],
+    "Stasera Offro Io":               ["Stasera Offro Io food app Italy", "Stasera Offro food donation"],
+    "OzHarvest Food App":             ["OzHarvest food rescue app", "OzHarvest food donation Australia"],
+    "O Masa Calda":                   ["O Masa Calda food app", "O Masa Calda food rescue"],
+    "Food Recovery":                  ["Food Recovery app platform", "Food Recovery food rescue tech"],
+
+    # ── Retail Tech ──
+    "Platter":    ["Platter food retail technology", "Platter restaurant food management"],
+    "Restoke":    ["Restoke restaurant inventory management", "Restoke food waste retail"],
+    "Fresho":     ["Fresho food ordering platform wholesale", "Fresho fresh food supply tech"],
+    "FoodTracks": ["FoodTracks food retail analytics", "FoodTracks food waste retail"],
+    "Foodwise":   ["Foodwise food waste retail", "Foodwise food management platform"],
+    "Martee ai":  ["Martee AI food retail technology", "Martee food waste AI"],
+    "LinkRetail": ["LinkRetail food waste technology", "LinkRetail retail food platform"],
+
+    # ── E-commerce ──
+    "Best Before Store":         ["Best Before Store surplus food", "Best Before short dated food shop"],
+    "Leckerposten":              ["Leckerposten food discount Germany", "Leckerposten surplus food"],
+    "Lebensmittel-sonderposten": ["Lebensmittel-sonderposten surplus food", "Lebensmittel sonderposten Germany food"],
+    "Optifood":                  ["Optifood food ecommerce surplus", "Optifood online food shop"],
+    "Misfits Garden":            ["Misfits Garden food imperfect produce", "Misfits Garden food waste"],
+    "Wonky Box":                 ["Wonky Box imperfect produce food", "Wonky Box food waste delivery"],
+    "Circlr":                    ["Circlr food waste ecommerce", "Circlr surplus food online shop"],
+    "Veggiebox":                 ["Veggiebox food delivery surplus", "Veggiebox vegetable box"],
+    "Bella Dentro":              ["Bella Dentro imperfect produce food", "Bella Dentro food waste"],
+    "Equal Food":                ["Equal Food surplus imperfect produce", "Equal Food food waste ecommerce"],
+    "Veggie Specials":           ["Veggie Specials surplus food", "Veggie Specials vegetables discount"],
+    "Ruben Retter":              ["Ruben Retter food surplus", "Ruben Retter food waste"],
+    "Foodpass":                  ["Foodpass food subscription surplus", "Foodpass food ecommerce"],
+    "SuperOpa":                  ["SuperOpa food surplus discount", "SuperOpa food waste ecommerce"],
+    "Gooxxy":                    ["Gooxxy food surplus ecommerce", "Gooxxy food waste online"],
+    "Uglyfruits":                ["Uglyfruits imperfect produce delivery", "Uglyfruits food waste ecommerce"],
+    "Querfeld":                  ["Querfeld food surplus Germany", "Querfeld imperfect produce"],
+    "LEROMA":                    ["LEROMA food surplus ecommerce", "LEROMA food waste"],
+    "Wonky Veg Boxes":           ["Wonky Veg Boxes imperfect produce", "Wonky Veg food waste delivery"],
+    "Coupang":                   ["Coupang fresh food ecommerce", "Coupang food delivery Korea"],
+}
+
+COMPETITOR_CATEGORIES = {
+    # Existing
+    "Olio":           "B2C Marketplaces",
+    "Flashfood":      "B2C Marketplaces",
+    "Karma":          "B2C Marketplaces",
+    "Phenix":         "B2C Marketplaces",
+    "ResQ Club":      "B2C Marketplaces",
+    "Wasteless":      "Other Surplus Optimisation",
+    "Too Good To Go": "B2C Marketplaces",
+    # B2C Marketplaces
+    "Vers Voor Vandaag": "B2C Marketplaces",
+    "Crumbs":            "B2C Marketplaces",
+    "Toriniko":          "B2C Marketplaces",
+    "Still Good":        "B2C Marketplaces",
+    "Gone Good":         "B2C Marketplaces",
+    "Platable":          "B2C Marketplaces",
+    "Foodbag":           "B2C Marketplaces",
+    "Leftovers":         "B2C Marketplaces",
+    "Hallowa":           "B2C Marketplaces",
+    "Lucky Meal":        "B2C Marketplaces",
+    "Cirklua":           "B2C Marketplaces",
+    "Second Plate":      "B2C Marketplaces",
+    "Save Me":           "B2C Marketplaces",
+    "Forsa":             "B2C Marketplaces",
+    "OrderLemon":        "B2C Marketplaces",
+    "Savefood":          "B2C Marketplaces",
+    "SaveFOOD":          "B2C Marketplaces",
+    "1plate1world":      "B2C Marketplaces",
+    "Buen Provecho":     "B2C Marketplaces",
+    "Reat":              "B2C Marketplaces",
+    "Salveme!":          "B2C Marketplaces",
+    # Other Surplus Optimisation
+    "KitchenPal":                    "Other Surplus Optimisation",
+    "Innovafeed":                    "Other Surplus Optimisation",
+    "Mottainai Food Tech":           "Other Surplus Optimisation",
+    "Rescube":                       "Other Surplus Optimisation",
+    "Fridge Friend":                 "Other Surplus Optimisation",
+    "Hulec":                         "Other Surplus Optimisation",
+    "ChicP":                         "Other Surplus Optimisation",
+    "Good Grub":                     "Other Surplus Optimisation",
+    "Ecosphere Organics":            "Other Surplus Optimisation",
+    "Vego":                          "Other Surplus Optimisation",
+    "Lomi":                          "Other Surplus Optimisation",
+    "Reencle":                       "Other Surplus Optimisation",
+    "Refood":                        "Other Surplus Optimisation",
+    "Proseed":                       "Other Surplus Optimisation",
+    "Fonte Ingredients":             "Other Surplus Optimisation",
+    "Wonky Coffee":                  "Other Surplus Optimisation",
+    "Ripe Guard":                    "Other Surplus Optimisation",
+    "Vitesy":                        "Other Surplus Optimisation",
+    "Topanga.io":                    "Other Surplus Optimisation",
+    "Liva":                          "Other Surplus Optimisation",
+    "Proteme":                       "Other Surplus Optimisation",
+    "Akorn Technology":              "Other Surplus Optimisation",
+    "Cetogenix":                     "Other Surplus Optimisation",
+    "Volare":                        "Other Surplus Optimisation",
+    "YeastUp":                       "Other Surplus Optimisation",
+    "No Waste App":                  "Other Surplus Optimisation",
+    "Mimica Lab":                    "Other Surplus Optimisation",
+    "Cool Innovation":               "Other Surplus Optimisation",
+    "Bpacks":                        "Other Surplus Optimisation",
+    "Viridian Renewable Technology": "Other Surplus Optimisation",
+    "Cerve":                         "Other Surplus Optimisation",
+    "Prism":                         "Other Surplus Optimisation",
+    "Hubcycled":                     "Other Surplus Optimisation",
+    "Edama Solutions":               "Other Surplus Optimisation",
+    "Skonelabs":                     "Other Surplus Optimisation",
+    "Ipsago":                        "Other Surplus Optimisation",
+    "Green Spot Technologies":       "Other Surplus Optimisation",
+    "Rscued":                        "Other Surplus Optimisation",
+    "Unverschwendet":                "Other Surplus Optimisation",
+    "BeBananas":                     "Other Surplus Optimisation",
+    "FollowFood":                    "Other Surplus Optimisation",
+    "B!POD":                         "Other Surplus Optimisation",
+    "FoodUp":                        "Other Surplus Optimisation",
+    "ProNovo":                       "Other Surplus Optimisation",
+    "Cascara Foods":                 "Other Surplus Optimisation",
+    "Cook Forever":                  "Other Surplus Optimisation",
+    "Skip Shapiro":                  "Other Surplus Optimisation",
+    # Retail Tech: Donation
+    "Eatcloud":                       "Retail Tech: Donation",
+    "4MyCity":                        "Retail Tech: Donation",
+    "PDApp":                          "Retail Tech: Donation",
+    "We Don't Waste":                 "Retail Tech: Donation",
+    "Knead Technologies":             "Retail Tech: Donation",
+    "Eco Looping":                    "Retail Tech: Donation",
+    "Caboodle":                       "Retail Tech: Donation",
+    "Second Harvest Food Rescue App": "Retail Tech: Donation",
+    "Fome de Tudo":                   "Retail Tech: Donation",
+    "Hungree App":                    "Retail Tech: Donation",
+    "Sharing Excess":                 "Retail Tech: Donation",
+    "BringtheFood":                   "Retail Tech: Donation",
+    "Ecibo":                          "Retail Tech: Donation",
+    "BitGood":                        "Retail Tech: Donation",
+    "Stasera Offro Io":               "Retail Tech: Donation",
+    "OzHarvest Food App":             "Retail Tech: Donation",
+    "O Masa Calda":                   "Retail Tech: Donation",
+    "Food Recovery":                  "Retail Tech: Donation",
+    # Retail Tech
+    "Platter":    "Retail Tech",
+    "Restoke":    "Retail Tech",
+    "Fresho":     "Retail Tech",
+    "FoodTracks": "Retail Tech",
+    "Foodwise":   "Retail Tech",
+    "Martee ai":  "Retail Tech",
+    "LinkRetail": "Retail Tech",
+    # E-commerce
+    "Best Before Store":         "E-commerce",
+    "Leckerposten":              "E-commerce",
+    "Lebensmittel-sonderposten": "E-commerce",
+    "Optifood":                  "E-commerce",
+    "Misfits Garden":            "E-commerce",
+    "Wonky Box":                 "E-commerce",
+    "Circlr":                    "E-commerce",
+    "Veggiebox":                 "E-commerce",
+    "Bella Dentro":              "E-commerce",
+    "Equal Food":                "E-commerce",
+    "Veggie Specials":           "E-commerce",
+    "Ruben Retter":              "E-commerce",
+    "Foodpass":                  "E-commerce",
+    "SuperOpa":                  "E-commerce",
+    "Gooxxy":                    "E-commerce",
+    "Uglyfruits":                "E-commerce",
+    "Querfeld":                  "E-commerce",
+    "LEROMA":                    "E-commerce",
+    "Wonky Veg Boxes":           "E-commerce",
+    "Coupang":                   "E-commerce",
+}
+
+# Category colors — new competitors use these; original 7 keep distinct colors via CARD_COLORS
+CATEGORY_COLORS = {
+    "B2C Marketplaces":           "#2563eb",
+    "E-commerce":                 "#7c3aed",
+    "Other Surplus Optimisation": "#059669",
+    "Retail Tech":                "#0891b2",
+    "Retail Tech: Donation":      "#d97706",
+}
+
+# Original 7 keep their distinct brand colors
+CARD_COLORS = {
+    "Olio":           "#2d7a4f",
+    "Flashfood":      "#1d5fa8",
+    "Karma":          "#b45309",
+    "Phenix":         "#6d28d9",
+    "ResQ Club":      "#b91c1c",
+    "Wasteless":      "#0e7490",
+    "Too Good To Go": "#00615f",
 }
 
 DATA_FILE = Path("docs/data.json")
@@ -106,7 +379,6 @@ def detect_country(link: str) -> str:
     try:
         host = urllib.parse.urlparse(link).hostname or ""
         host = host.lower().removeprefix("www.")
-        # Check two-part TLDs first (e.g. co.uk, com.au)
         parts = host.split(".")
         if len(parts) >= 2:
             two = ".".join(parts[-2:])
@@ -117,11 +389,22 @@ def detect_country(link: str) -> str:
             return _TLD_TO_COUNTRY[tld]
     except Exception:
         pass
-    return "United States"  # .com / .org / .net default
+    return "United States"
 
 
 def country_flag(country: str) -> str:
     return _FLAG.get(country, "🌐")
+
+
+def competitor_color(name: str) -> str:
+    if name in CARD_COLORS:
+        return CARD_COLORS[name]
+    cat = COMPETITOR_CATEGORIES.get(name, "")
+    return CATEGORY_COLORS.get(cat, "#666")
+
+
+def competitor_category(name: str) -> str:
+    return COMPETITOR_CATEGORIES.get(name, "")
 
 
 def pub_date_key(article: dict) -> datetime:
@@ -156,30 +439,36 @@ def fetch_all() -> list[dict]:
     """Fetch all competitors, return deduplicated new articles."""
     data = load_data()
     seen = set(data["seen_ids"])
+
+    # Backfill category for existing articles that predate this field
+    for a in data.get("articles", []):
+        if not a.get("category"):
+            a["category"] = competitor_category(a.get("competitor", ""))
+
     new_articles = []
 
-    for competitor, queries in COMPETITORS.items():
-        print(f"Fetching: {competitor}")
+    for comp, queries in COMPETITORS.items():
+        print(f"Fetching: {comp}")
         for query in queries:
             articles = fetch_rss(query)
             for a in articles:
                 aid = article_id(a)
                 if aid not in seen:
                     seen.add(aid)
-                    a["competitor"] = competitor
+                    a["competitor"] = comp
+                    a["category"] = competitor_category(comp)
                     a["country"] = detect_country(a["link"])
                     a["id"] = aid
                     a["fetched_at"] = datetime.now(timezone.utc).isoformat()
                     new_articles.append(a)
                     print(f"  + {a['title'][:80]}")
 
-    # Persist — sort by pub_date descending, drop >6 months old, then cap
+    # Persist — sort by pub_date desc, drop >6 months old, cap at 2000
     cutoff_6mo = datetime.now(timezone.utc) - timedelta(days=183)
     all_articles = new_articles + data.get("articles", [])
     all_articles.sort(key=pub_date_key, reverse=True)
     all_articles = [a for a in all_articles if pub_date_key(a) >= cutoff_6mo]
-    all_articles = all_articles[:500]
-    # Prune seen_ids to match kept articles so the list doesn't grow without bound
+    all_articles = all_articles[:2000]
     kept_ids = {a["id"] for a in all_articles}
     data["seen_ids"] = list(seen & kept_ids)
     data["articles"] = all_articles
@@ -189,16 +478,6 @@ def fetch_all() -> list[dict]:
 
 
 # ── HTML Generation ───────────────────────────────────────────────────────────
-
-CARD_COLORS = {
-    "Olio": "#2d7a4f",
-    "Flashfood": "#1d5fa8",
-    "Karma": "#b45309",
-    "Phenix": "#6d28d9",
-    "ResQ Club": "#b91c1c",
-    "Wasteless": "#0e7490",
-    "Too Good To Go": "#00615f",
-}
 
 SHARED_CSS = """
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -368,7 +647,6 @@ SHARED_CSS = """
     gap: 0.4rem;
     background: #faf8f6;
   }
-  .filter-bar:last-of-type { border-bottom: 1px solid var(--border); }
   .filter-label {
     font-size: 0.7rem;
     font-weight: 700;
@@ -486,10 +764,6 @@ SHARED_CSS = """
 """
 
 
-def competitor_color(name: str) -> str:
-    return CARD_COLORS.get(name, "#666")
-
-
 def render_article_row(a: dict) -> str:
     color = competitor_color(a["competitor"])
     pub = html.escape(a.get("pub_date", "")[:16])
@@ -498,8 +772,10 @@ def render_article_row(a: dict) -> str:
     flag = country_flag(c)
     safe_competitor = html.escape(a["competitor"], quote=True)
     safe_country = html.escape(c, quote=True)
+    cat = a.get("category") or competitor_category(a["competitor"])
+    safe_category = html.escape(cat, quote=True)
     return f"""
-    <div class="article-row" data-competitor="{safe_competitor}" data-country="{safe_country}">
+    <div class="article-row" data-competitor="{safe_competitor}" data-country="{safe_country}" data-category="{safe_category}">
       <div class="article-accent" style="background:{color}"></div>
       <div class="article-body">
         <span class="article-tag" style="background:{color}">{html.escape(a['competitor'])}</span>
@@ -517,19 +793,48 @@ def render_article_row(a: dict) -> str:
     </div>"""
 
 
+def _category_btns() -> str:
+    return "".join(
+        f'<button class="filter-btn" data-type="category" data-filter="{html.escape(cat, quote=True)}">{html.escape(cat)}</button>'
+        for cat in CATEGORY_COLORS
+    )
+
+
+def _country_btns(articles: list[dict]) -> str:
+    present = sorted({a.get("country", "United States") for a in articles})
+    return "".join(
+        f'<button class="filter-btn" data-type="country" data-filter="{html.escape(c, quote=True)}">{country_flag(c)} {html.escape(c)}</button>'
+        for c in present
+    )
+
+
+def _legend() -> str:
+    return "".join(
+        f'<div class="legend-item"><div class="legend-dot" style="background:{color}"></div>{html.escape(cat)}</div>'
+        for cat, color in CATEGORY_COLORS.items()
+    )
+
+
+_FILTER_JS = """
+  function applyFilters() {
+    const ac = [...document.querySelectorAll('.filter-btn[data-type="category"].active')].map(b => b.dataset.filter);
+    const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
+    document.querySelectorAll('.article-row').forEach(row => {
+      const mc = ac.length === 0 || ac.includes(row.dataset.category);
+      const mk = ak.length === 0 || ak.includes(row.dataset.country);
+      row.style.display = (mc && mk) ? '' : 'none';
+    });
+  }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
+  });
+"""
+
+
 def render_page(articles: list[dict], title: str, back_link: bool = False) -> str:
     rows = "\n".join(render_article_row(a) for a in articles)
     now = datetime.now(timezone.utc).strftime("%B %d, %Y")
     count = len(articles)
-    competitor_btns = "".join(
-        f'<button class="filter-btn" data-type="competitor" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
-        for name in COMPETITORS
-    )
-    present_countries = sorted({a.get("country", "United States") for a in articles})
-    country_btns = "".join(
-        f'<button class="filter-btn" data-type="country" data-filter="{html.escape(c, quote=True)}">{country_flag(c)} {html.escape(c)}</button>'
-        for c in present_countries
-    )
     back = '<a class="back-link" href="../index.html">← Back to archive</a>' if back_link else ""
 
     return f"""<!DOCTYPE html>
@@ -566,35 +871,20 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
         <h2>Articles</h2>
         <span class="section-count">{count}</span>
       </div>
-      <div class="legend">
-        {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
-      </div>
-      <div class="filter-bar"><span class="filter-label">Competitor</span>{competitor_btns}</div>
-      <div class="filter-bar"><span class="filter-label">Country</span>{country_btns}</div>
+      <div class="legend">{_legend()}</div>
+      <div class="filter-bar"><span class="filter-label">Category</span>{_category_btns()}</div>
+      <div class="filter-bar"><span class="filter-label">Country</span>{_country_btns(articles)}</div>
       {"<div class='article-list'>" + rows + "</div>" if articles else "<div class='empty'>No articles for this period.</div>"}
     </div>
   </main>
-  <script>
-  function applyFilters() {{
-    const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
-    const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
-    document.querySelectorAll('.article-row').forEach(row => {{
-      const mc = ac.length === 0 || ac.includes(row.dataset.competitor);
-      const mk = ak.length === 0 || ak.includes(row.dataset.country);
-      row.style.display = (mc && mk) ? '' : 'none';
-    }});
-  }}
-  document.querySelectorAll('.filter-btn').forEach(btn => {{
-    btn.addEventListener('click', () => {{ btn.classList.toggle('active'); applyFilters(); }});
-  }});
-  </script>
+  <script>{_FILTER_JS}</script>
 </body>
 </html>"""
 
 
 def build_index(all_articles: list[dict], issue_dates: list[str]):
     """Build the main archive index page."""
-    recent = all_articles[:30]
+    recent = all_articles[:60]
     rows = "\n".join(render_article_row(a) for a in recent)
     now = datetime.now(timezone.utc).strftime("%B %d, %Y")
     total = len(all_articles)
@@ -603,16 +893,6 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
     for d in sorted(issue_dates, reverse=True)[:12]:
         display = datetime.strptime(d, "%Y-%m-%d").strftime("%B %d, %Y")
         issue_rows += f'<a class="issue-row" href="issues/{d}.html">Week of {display}<span class="issue-arrow">→</span></a>\n'
-
-    competitor_btns = "".join(
-        f'<button class="filter-btn" data-type="competitor" data-filter="{html.escape(name, quote=True)}">{html.escape(name)}</button>'
-        for name in COMPETITORS
-    )
-    present_countries = sorted({a.get("country", "United States") for a in recent})
-    country_btns = "".join(
-        f'<button class="filter-btn" data-type="country" data-filter="{html.escape(c, quote=True)}">{country_flag(c)} {html.escape(c)}</button>'
-        for c in present_countries
-    )
 
     page = f"""<!DOCTYPE html>
 <html lang="en">
@@ -644,11 +924,9 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
           <h2>Recent Articles</h2>
           <span class="section-count">{len(recent)} most recent · {total} total</span>
         </div>
-        <div class="legend">
-          {''.join(f'<div class="legend-item"><div class="legend-dot" style="background:{v}"></div>{k}</div>' for k,v in CARD_COLORS.items())}
-        </div>
-        <div class="filter-bar"><span class="filter-label">Competitor</span>{competitor_btns}</div>
-        <div class="filter-bar"><span class="filter-label">Country</span>{country_btns}</div>
+        <div class="legend">{_legend()}</div>
+        <div class="filter-bar"><span class="filter-label">Category</span>{_category_btns()}</div>
+        <div class="filter-bar"><span class="filter-label">Country</span>{_country_btns(recent)}</div>
         {"<div class='article-list'>" + rows + "</div>" if recent else "<div class='empty'>No articles yet. Run the scraper to populate.</div>"}
       </div>
     </section>
@@ -661,20 +939,7 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
       </div>
     </aside>
   </main>
-  <script>
-  function applyFilters() {{
-    const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
-    const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
-    document.querySelectorAll('.article-row').forEach(row => {{
-      const mc = ac.length === 0 || ac.includes(row.dataset.competitor);
-      const mk = ak.length === 0 || ak.includes(row.dataset.country);
-      row.style.display = (mc && mk) ? '' : 'none';
-    }});
-  }}
-  document.querySelectorAll('.filter-btn').forEach(btn => {{
-    btn.addEventListener('click', () => {{ btn.classList.toggle('active'); applyFilters(); }});
-  }});
-  </script>
+  <script>{_FILTER_JS}</script>
 </body>
 </html>"""
 
@@ -776,24 +1041,21 @@ def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "daily"
 
     print(f"\n── Running in '{mode}' mode ──\n")
+    print(f"Tracking {len(COMPETITORS)} competitors across {len(CATEGORY_COLORS)} categories\n")
 
     new_articles = fetch_all()
     print(f"\n✓ {len(new_articles)} new articles fetched")
 
-    # Load all articles for index
     data = load_data()
     all_articles = data["articles"]
 
-    # Discover existing issue pages
     ISSUE_DIR.mkdir(parents=True, exist_ok=True)
     issue_dates = [f.stem for f in ISSUE_DIR.glob("*.html")]
 
     if mode == "weekly":
-        # Build a weekly issue page
         today = datetime.now(timezone.utc)
         week_start = (today - timedelta(days=today.weekday())).strftime("%Y-%m-%d")
 
-        # Filter articles from last 7 days
         cutoff = (today - timedelta(days=7)).isoformat()
         weekly_articles = sorted(
             [a for a in all_articles if a.get("fetched_at", "") >= cutoff],
@@ -806,7 +1068,6 @@ def main():
         if SEND_EMAIL:
             send_weekly_email(weekly_articles)
 
-    # Always rebuild index
     build_index(all_articles, issue_dates)
     print("\n── Done ──\n")
 

@@ -174,7 +174,6 @@
     gap: 0.4rem;
     background: #faf8f6;
   }
-  .filter-bar:last-of-type { border-bottom: 1px solid var(--border); }
   .filter-label {
     font-size: 0.7rem;
     font-weight: 700;
@@ -309,15 +308,13 @@
       <div class="section-card">
         <div class="section-header">
           <h2>Recent Articles</h2>
-          <span class="section-count">30 most recent · 91 total</span>
+          <span class="section-count">60 most recent · 91 total</span>
         </div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#2d7a4f"></div>Olio</div><div class="legend-item"><div class="legend-dot" style="background:#1d5fa8"></div>Flashfood</div><div class="legend-item"><div class="legend-dot" style="background:#b45309"></div>Karma</div><div class="legend-item"><div class="legend-dot" style="background:#6d28d9"></div>Phenix</div><div class="legend-item"><div class="legend-dot" style="background:#b91c1c"></div>ResQ Club</div><div class="legend-item"><div class="legend-dot" style="background:#0e7490"></div>Wasteless</div><div class="legend-item"><div class="legend-dot" style="background:#00615f"></div>Too Good To Go</div>
-        </div>
-        <div class="filter-bar"><span class="filter-label">Competitor</span><button class="filter-btn" data-type="competitor" data-filter="Olio">Olio</button><button class="filter-btn" data-type="competitor" data-filter="Flashfood">Flashfood</button><button class="filter-btn" data-type="competitor" data-filter="Karma">Karma</button><button class="filter-btn" data-type="competitor" data-filter="Phenix">Phenix</button><button class="filter-btn" data-type="competitor" data-filter="ResQ Club">ResQ Club</button><button class="filter-btn" data-type="competitor" data-filter="Wasteless">Wasteless</button><button class="filter-btn" data-type="competitor" data-filter="Too Good To Go">Too Good To Go</button></div>
+        <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>B2C Marketplaces</div><div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>E-commerce</div><div class="legend-item"><div class="legend-dot" style="background:#059669"></div>Other Surplus Optimisation</div><div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Retail Tech</div><div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Retail Tech: Donation</div></div>
+        <div class="filter-bar"><span class="filter-label">Category</span><button class="filter-btn" data-type="category" data-filter="B2C Marketplaces">B2C Marketplaces</button><button class="filter-btn" data-type="category" data-filter="E-commerce">E-commerce</button><button class="filter-btn" data-type="category" data-filter="Other Surplus Optimisation">Other Surplus Optimisation</button><button class="filter-btn" data-type="category" data-filter="Retail Tech">Retail Tech</button><button class="filter-btn" data-type="category" data-filter="Retail Tech: Donation">Retail Tech: Donation</button></div>
         <div class="filter-bar"><span class="filter-label">Country</span><button class="filter-btn" data-type="country" data-filter="United States">🇺🇸 United States</button></div>
         <div class='article-list'>
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -334,7 +331,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -351,7 +348,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -368,7 +365,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -385,7 +382,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Olio" data-country="United States">
+    <div class="article-row" data-competitor="Olio" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#2d7a4f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#2d7a4f">Olio</span>
@@ -402,7 +399,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -419,7 +416,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -436,7 +433,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Phenix" data-country="United States">
+    <div class="article-row" data-competitor="Phenix" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#6d28d9"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#6d28d9">Phenix</span>
@@ -453,7 +450,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -470,7 +467,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -487,7 +484,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -504,7 +501,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -521,7 +518,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -538,7 +535,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -555,7 +552,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -572,7 +569,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -589,7 +586,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -606,7 +603,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Phenix" data-country="United States">
+    <div class="article-row" data-competitor="Phenix" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#6d28d9"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#6d28d9">Phenix</span>
@@ -623,7 +620,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -640,7 +637,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -657,7 +654,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Olio" data-country="United States">
+    <div class="article-row" data-competitor="Olio" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#2d7a4f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#2d7a4f">Olio</span>
@@ -674,7 +671,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -691,7 +688,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -708,7 +705,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Olio" data-country="United States">
+    <div class="article-row" data-competitor="Olio" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#2d7a4f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#2d7a4f">Olio</span>
@@ -725,7 +722,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -742,7 +739,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -759,7 +756,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -776,7 +773,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Flashfood" data-country="United States">
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#1d5fa8"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
@@ -793,7 +790,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Too Good To Go" data-country="United States">
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
       <div class="article-accent" style="background:#00615f"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#00615f">Too Good To Go</span>
@@ -810,7 +807,7 @@
       </div>
     </div>
 
-    <div class="article-row" data-competitor="Wasteless" data-country="United States">
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
       <div class="article-accent" style="background:#0e7490"></div>
       <div class="article-body">
         <span class="article-tag" style="background:#0e7490">Wasteless</span>
@@ -823,6 +820,516 @@
           <span>🇺🇸 United States</span>
           <span class="article-meta-sep">·</span>
           <span>Tue, 20 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxORzc2MUV1WVdienZjcmEtUXNfWjZBdndHc0FXNWp6RzE1Zk11OTM3TWFya0c2QUVKemo1VWprRUJNSVh2ZjlrNDRwQWJLd3Q5SVpHWGN4cDVWVG9VZjhhTk90cE9Nak9TbzNpRjVTYkNpdE53Z01ZSDBQaXdDdDZTTTJTN1JXSjlxeEticXJJN1N4Q0dSSmdrSWUxOFpHUTB5YVE2MUtrRVlrM1BPU2JQcHpVc2VERWt2a0R3Z0VpOVJtbVE?oc=5" target="_blank" rel="noopener">Turning Food Waste Into Value: The CGF and Capgemini Release New Blueprint - The Consumer Goods Forum</a>
+        </div>
+        <div class="article-meta">
+          <span>The Consumer Goods Forum</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 20 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxPY3hDQU5ldlEtSW82c0dJRnljQlU0LU1zcGVGdkxISWdPMW1PWWloOFdpbFBkUEJ1cUM5eWFrd1F1eGhFU0hLT1FNRGFiSFAtZE1VOHNnMlFrN3hXaHlNYzNrbU1JSzRYQ01nWmlvb1RReWR4aVZaOGRzcUhrdzNGM1ItRGdpMUVsNElsQ0lPTXBtT1lRRm44dWN2b0pOSUtYTFFsZUlSNWU0WS1hbUdtZE44MzExdw?oc=5" target="_blank" rel="noopener">Supermercados Peruanos Joins the Food Waste Coalition of Action - The Consumer Goods Forum</a>
+        </div>
+        <div class="article-meta">
+          <span>The Consumer Goods Forum</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 20 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiyAFBVV95cUxQeFh2a21XQjgzUVhLUGtEaUJ1Ulo0OXJaZnJMSDBVLThseWU0Q3ItUlN0UFJvcFBWcUdkbHFsSkJxSHlXYTZYVkdYNnROSXg2eExKb1JrSzdDMmpSN2xKektXZW9KekRXbk50ZDQtVFRPM2h4ME03c293c2hSdE9JR2RKa1hPSmMta1ZDVmczRWc4Q0V6X1NkdHFKa0puWTc1N252VUtBUnhVbnJXako0VkxnbElLOVlJRDZlcXFPSFpvcUg1VVFpRw?oc=5" target="_blank" rel="noopener">Turning Waste Into Value: A Blueprint for Collective Food Waste Transformation - The Consumer Goods Forum</a>
+        </div>
+        <div class="article-meta">
+          <span>The Consumer Goods Forum</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 20 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Phenix" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#6d28d9"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#6d28d9">Phenix</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMilAFBVV95cUxPaEU2UzZQWWNCX2pRUlVxVU13dTVwTlNmMXhPVzNjN3cwN2EzOFVEbHNwWFlETDliN19TdjAwRmxkLTNRbzFlTjJCSVFhYkgtYkp6UGpGNEZHS000c3J2R0lGemcwSVV4LWx5R3R2UmRRc1h1cXh2OVNtT3JRU29YQjJxT21MVmZ3cUFkMDFpRmRmeE0z?oc=5" target="_blank" rel="noopener">Detroit Auto Show brings excitement and business to downtown - WXYZ Channel 7</a>
+        </div>
+        <div class="article-meta">
+          <span>WXYZ Channel 7</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 15 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Olio" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2d7a4f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2d7a4f">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxQVEZVLUJoSGpFVWZpbXBab09UQ2F2VDhPQXJvMFMzanhyOVJtNVh1U2djNHFkTFVsOFhoWkhGODF5UHdZNjdweHhXXzVUSVRKRDM3R3BVa2NWZ2FaaXVrR3NoZHB0b0QwT3dXaFNnWDZxRi1fNlowSTl6MkxHS3hBU29jUjFFZ2xNaGNNYWdGS01teFBHM1BzTWY1VjROZGFYcERLcHljcWk4eVdveEpydVY2c2pRUQ?oc=5" target="_blank" rel="noopener">- Cyprus Shipping News - Cyprus Shipping News</a>
+        </div>
+        <div class="article-meta">
+          <span>Cyprus Shipping News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 13 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Olio" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2d7a4f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2d7a4f">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxQUnFLXzY2OW5JR2VLX3dPV2VJSUk3RVhUOGVZNTNjZERxb092STFKOG1KTzRIMnl6em1hUG5oMURWdTh2a1Ezc1lyMFBIMVJIaTA2Q040VG5IUVdGenZZak1GQktPd0xhYnpFYTFEaXdfTlRlMV9VRVdoaW9qV3lqMmlkc2lTcmZiVG9RX2NXYXE?oc=5" target="_blank" rel="noopener">Cruise line saves thousands of meals from going to waste - Daily Echo</a>
+        </div>
+        <div class="article-meta">
+          <span>Daily Echo</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 10 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Olio" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2d7a4f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2d7a4f">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxPbk5ZVi1yenhLMnEyRXRzd2lmU0ItdmVyTC1PM3pWVU9ydzdiMHZOaTJNR2ZZOGQ1Wjc4M1Z1WVRHMFNUcjVqM0ZIMFY2NHVvcnlXczZ6UWhURnRwU2NjQkdBb08zUWlBNzFUWE9xY3NVQlRBd3ZMbGd2NEo0QVZsNGNybm5oMEctRkRjYmNrek5wZHRhOXIxMkhTbHNyeXJsUkh4UUFMU2JlREdBdWtIeQ?oc=5" target="_blank" rel="noopener">P&amp;O Donates Over 10,000 Meals to Southampton Families in 2025 - Cruise Industry News</a>
+        </div>
+        <div class="article-meta">
+          <span>Cruise Industry News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 10 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxPMjVxaW12SnZiQWg5QnU3Nk9VRkVsUjZNY1V6MUxNN2M4ZjNWSkREalQ2c0Mtbk1ROURpSkk1Q3dKd0RTU1FOUUFmS0NMeVdycDZ6QVctenRvZlZkUjRiSEVjbHBXTlZyanBZYlpHODl0QzQ1LVFEU0dWZEMtMXQ1dEhJWnZLSG9ZU1d0OURLV29EVmplSS1KQ0dPa2ZvMGlfUkFXQlJEMzJ2N1lI?oc=5" target="_blank" rel="noopener">Too Good To Go app helps sell surplus food at discounted prices - Anadolu Ajansı</a>
+        </div>
+        <div class="article-meta">
+          <span>Anadolu Ajansı</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 02 Jan 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOa1htQjhRRWlzM3c0eVMySU5ZWm5zMWZ0WDh3QUxHZHR1Q3NOOHNmV1p3UlBraTBSVThQNFJoUlB6aVFFU01Ta3VWWlM5WGpGTVhrZVNwa09ydE1HcEpRUnZLbkg0MGFMVldqRmw1WlhYVk56bmRvUzE0UDNVWlpNTzhUNjM2ZTR2Z2tYeDVLdnJmekp5QXQ2QzdkbURhS05FUjhDMw?oc=5" target="_blank" rel="noopener">Aldi announces changes to its popular Too Good to Go service this Christmas - Retail Times</a>
+        </div>
+        <div class="article-meta">
+          <span>Retail Times</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 18 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMifEFVX3lxTFBjYjBEUmd5M3lxYVdmaU9RNkFkVlZlTm5qZTJNWTEyYTREYnpWaUZqVGppN3JycWRnbnppR0htQ2tnaXZHaVpmWW1kX3NHVDZkWDFFME55eXB3S3h1R0hsWWd5UFB1amhIRmpORHdVV0JGSEZsQ3NVcjZ6Y3A?oc=5" target="_blank" rel="noopener">23 Smart Ways to Cut Food Waste—and Trim Your Grocery Bill - marthastewart.com</a>
+        </div>
+        <div class="article-meta">
+          <span>marthastewart.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 17 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxNNnNvUk5HbGh4UFZKdU5Sd01tNHliVElUa0RmNmhNdjFlbkhvMG5kRnJDdjhOUTMyclB0NENXRHM4Y0hzMTdTaVdsLUFhS3JZOEpBMDd1RlF3RDJzdTlmZllRNlluWWhRTXZVdVFsVEVVOHk0VEo3UXZpSENNa2ZmdnRxbW5nVGN0ZVpneWpVTUJuNks0THlHdUxFdWhhSHp1TzNnQXQ2bHIzNnd0Y08wQg?oc=5" target="_blank" rel="noopener">Aldi extends availability of Too Good To Go offer - fruitnet.com</a>
+        </div>
+        <div class="article-meta">
+          <span>fruitnet.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 17 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Phenix" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#6d28d9"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#6d28d9">Phenix</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxPNUsyT2NBdm50aDhId01DekRkUzR5SXZaM1JyN25DZWR6LVktRXlLVG0waUs5VDE3YW01ZVhWd0ZVSV9aUV8yQ3M4SXUxMTFRU3FZalZnMHpGOWZYeFhCM21KZjJXcFN0LTJ4ZUpmekZSaVJ3UmJ3T3hwOVh2aHJlek5MTXZ6cGpIclZVZWJqMW5wbzItRHB6RU5VMVJORUZmcDNIUTZB?oc=5" target="_blank" rel="noopener">ARRC Gold Coast completes acquisition of Yatala organics facility - Waste Management Review</a>
+        </div>
+        <div class="article-meta">
+          <span>Waste Management Review</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 15 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE9FckYxUGR2eDY5S2I4VlN4VXFnbzJ6c2pxY2lkMlNET1cyME5iZjhZdjZ4VzVDR0ttdmlrTC1OclJjTGlneFBScXBwVFpwLVpfZVJSZWdIeTJ6VXAwZk1vT09UU3E5RFJ1VG81eTd0TzRyZ3lNWG1F?oc=5" target="_blank" rel="noopener">Tips for wasting less this holiday season - PIRG</a>
+        </div>
+        <div class="article-meta">
+          <span>PIRG</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 12 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxQNUFjeGh1V0NzZWpLNFlkdHJBd3RENkM2ZHVBc0NIVlQtTm1lZ0xfWEFsU0lCTzQ2a2VrR2pYeXN6dGVQN1UyVnNOc1A1SmJ6Y2lRY1VLdXhxQTVXWmxrOWdTVXY5REswTFFvaG1NY2E0UjhhbHRwZ0U1RWM1a3M5UGFUU0JKS05nYUpWRmIzVWlqR19ZX2FkZ1FZMmg5Qmh6eUpCUHdUYXM2ZEtmLUE?oc=5" target="_blank" rel="noopener">Love your leftovers: feast smart and waste less in Bedford Borough this Christmas - Bedford Borough Council</a>
+        </div>
+        <div class="article-meta">
+          <span>Bedford Borough Council</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 11 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxPQlR5Q1dnTDRpQVVMdVFwTWp4a1ptekRaWEJ6UWFQOXdlMjhjbkFidHh3dGVJR3hzeV9EU1d5WGRWUlZQMGx0eHFQOUtHVnpPbkxJMWhIMEp2UWszMWFiWlJhSUtrVTVJelAxbVRvUmxUbW5wRmhRWTd0UmlSRWZLNzBrUm1DbGg1RHBKZk84M1JBcU5JVGhqNEwzSDFkYm1NWFlHaVM4eW1iNEVpNDZaZnpqdTdxMnFKZ25RQXFvQVJaVktvWXZGc0JhVmNWVUdJ?oc=5" target="_blank" rel="noopener">Food Waste Management Strategies - The National Environment Agency</a>
+        </div>
+        <div class="article-meta">
+          <span>The National Environment Agency</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 11 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxOdVowcGVDR1lTRDQzcm9EcVRPWXQyNTdLMklucjlXUExHMVhfSWN3R0lIS2FPUlBKLVE0aE9IcUtQNm1ad053ZWdJY0JqWnFGVURsXzlMVHRvSzNZajBSTEhpcThVS2laSFhwWm51MEhuM3pibGlINnE2RkdhV2cydU5Qa0l3SUlZS2tLZkluZE82VmvSAZgBQVVfeXFMTW96Y1R0XzdNN3prWGxqbzVYeU1vNTdSNnRnSEU4cWhsQWp1eXFFOC1abUlvbXpOVEc2bG9NcDd0dkQzT3A2OEJBQVNHbm5JTDNjdnlmYk51WE5DRFFLa3RrR0VCNnZSbTlZcUZ2R0ZianMzc3ptTFZpclkxNlY3c3R6ZWdVWENkcmN0UEI0WDBseE1rMFVmR20?oc=5" target="_blank" rel="noopener">Catalans waste less food than ten years ago, 21% less. - Diari ARA</a>
+        </div>
+        <div class="article-meta">
+          <span>Diari ARA</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 07 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi0wFBVV95cUxPSzdvdnBOYnZZLUZ0YnF0dHpoLVdFcnJFcGlVNWFFTEgxc2ItZ1FlT2liT0NqU2RwdE5XcnM2dHhodXlEck4wS2dVN0JIVVBWTGtNVlV0UW1YalRCY3NVZXI4ck1rMWFYbW5rMndsWEN5YnRvSmw3ZEtZYmpfR0lfS1ByWnRqclh1UWZEMXFkWWdyU3AxdTNPeWVhbjZpUkx4cFVKcDg4MnVVWk8zcnhObVRMNVYtaUpqZVhTWTY5N2M3Q2dkby1uTjZnOFZpNEhHdE13?oc=5" target="_blank" rel="noopener">Will it save on groceries? This app lets users order surplus food for delivery - IndyStar</a>
+        </div>
+        <div class="article-meta">
+          <span>IndyStar</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 02 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxNNnlIaENkR2t5OXp0Yk5kRXN5ZWhkbHlKQ0lZOEk0Qm9ja25IT3Y2TjVHUFNRTE5PUWpQZ09XcFItR1V5b1NzOEJENG1Ic3ZSVnpta2xoSzgwT1JfQ24tNlRhVVk1ZDlYLXp3Ui1qclZVUFU5eUdGZjR1X0czRlJfeGc0UElETVZ0Y0pEWXQ3TFJjZ0tDZDR4RFplbTdTOVdaT0RIRGowZE15a0xqdjNyekFvcDRwNm1VOEFwemxGampBcEoxY0hlTmVuaWd3MFMtQzFZNV9uM0x6MDdjRlZiRTJnRzVOazF3YWxNTGZ3Zw?oc=5" target="_blank" rel="noopener">How to enjoy a waste less Christmas - Southampton City Council</a>
+        </div>
+        <div class="article-meta">
+          <span>Southampton City Council</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 01 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#1d5fa8"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE1leTNISHp2WlF2QVpvNzlBUkJWaGdRVHRtM0dPSTF6MXVqMDRuVGVmWmx4RjI4UFpwNnNoV1FKMmFLYUpuYjhCcDNCa1FBM3ZvOVBfelJaYlVkZjBIdi1GSkE4djhRcURCeWx5SFA2SkhnVUVZR1RyVw?oc=5" target="_blank" rel="noopener">Gelson’s Launches Discount Boxes - Los Angeles Business Journal</a>
+        </div>
+        <div class="article-meta">
+          <span>Los Angeles Business Journal</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 01 Dec 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxPdzJIQXl1cTZ0RW9xVEIzUDFpOFRNSklqWWFqMm1oSTU1NzFPZEdua3VCSWV2SENIdUEzNEV2Wi1iQVptM1dvdElYWVg3MjZhSjAwQTY3Q19NeWR2WlpybEtKZW9FZHdvdzFPMnkyRkpVRnpwb2VHUmZ5NklOd3p1R2JnZHltMlFWYV9GNXhrb3JkbGI0ZzlyU2RzWU84ZHgwb1VFbU84cUF0dDQ?oc=5" target="_blank" rel="noopener">This Thanksgiving, Congress should help families waste less food - World Wildlife Fund</a>
+        </div>
+        <div class="article-meta">
+          <span>World Wildlife Fund</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 25 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiywFBVV95cUxNdy0zaks5WnVZQ0wxYVRmRXo2N3ZIUmtVZVc3emYzWE92cW9vNGE5azBEbkZVQ29RVmt5c19OV24wQzIwcDNmMnAzVE1JUE9HRkRvamRIendxZHQ2S2VMS1lhYnl5cXUydUxjNGZKRGo2T09zVDRsdmJKRkNyZ0lzRzFVUk1yWk00bmN1Yk1QOHR1STBDR29QUk5wLWhROHRaMURFeUtuQ1FXd3l1NWwwX0dUX2prMnRTSXYxNTN0UDhNdHFuTE12bFcxaw?oc=5" target="_blank" rel="noopener">Driving Change Locally: CGF Japan’s Efforts to Combat Consumer Food Waste in 2025 - The Consumer Goods Forum</a>
+        </div>
+        <div class="article-meta">
+          <span>The Consumer Goods Forum</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 25 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE1FMk9PZU5CcXhzNksyMnpxOUo3N044Q29DVlJxc0t2RzhXcWx3eHFzVUVjeUtGYmw5S0V3cVRXckFRT0hicWt3eHBCeXdpaENVVk5EazJCOGZnbkpSeHc?oc=5" target="_blank" rel="noopener">All to the good - Retail Brew</a>
+        </div>
+        <div class="article-meta">
+          <span>Retail Brew</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 17 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxNbHRJdnpMbjAyWndDT1NNd3ZtTFhsc2hqallNa2M3dFJ1a2p4cjZCQXFQY3Z2dEM0TXZYdjFmUUxteEd3Y0dxaHBjLU5sejJ5UDhJR2tPdnIxVmxnaG5YM3BlM0cydmFVdnpmM05TMW5ZY1M5WFRwU0NsTVlRUDVMVC1fdFltSHJMWGdtSlh5ZVdTeXlxSHpNV01pRTczQnhV?oc=5" target="_blank" rel="noopener">Whole Foods adds grocery categories to Too Good to Go - Retail Brew</a>
+        </div>
+        <div class="article-meta">
+          <span>Retail Brew</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 14 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxOc2E1VVZScGZNalBRdmxHZ0phRXUxMFRnUVVyR19VOHdlQkdEREJVV2liVHJ0UWdMVGV2SUU3LUZibTJROUk4elpiMFlwYjNqS2s3LVdraEg0VnZuZkhzSVJYY1Q2a2JxMnZoa2toZ2NDYUJIelhjV3U5SXgtbm9rWGRTN3d6QjBQV2wtUFFrWlJVZw?oc=5" target="_blank" rel="noopener">Whole Foods launches new plan to help shoppers stretch their food budget - independent.co.uk</a>
+        </div>
+        <div class="article-meta">
+          <span>independent.co.uk</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE82eFBEQjBoc0lxQzVkb0VQN254X1IzamdRcm9EN2wzcjdYRGp3TWNkWEtzeW9qWGJfT0FTemJXUzQxWXBBZVVkMUxNMGFhMVpHTzYxd0poOWNxU093SkFjdlVsNUFLUktlLVRFRVEtQmYwWjBOcWR4UDZUTHJ1Zw?oc=5" target="_blank" rel="noopener">Too Good To Go and Whole Foods Market Add Seven New Surprise Bag Offerings, Expanding Food-Saving Efforts Nationwide - Yahoo Finance</a>
+        </div>
+        <div class="article-meta">
+          <span>Yahoo Finance</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wasteless" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#0e7490"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0e7490">Wasteless</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE11ZXpibEVDdjEzRXlRNjRtblc3UmNDbUlQTDMxRENtU09FeTZiS3ZfTE5KamE5RGFESWluYnJicTUxRlE5WmVCaXVkVk12Wk5VSTJOc2syTDdQcFBoUFAtTFFrdFZaeU5hNWJ3OVY4YlVjeHdjZnp2eA?oc=5" target="_blank" rel="noopener">A Lens on Food Waste: How Raccoon Eyes Tackles the Problem with Vision AI - Hypepotamus</a>
+        </div>
+        <div class="article-meta">
+          <span>Hypepotamus</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMijgFBVV95cUxQN1pYZE9GVk1FN0JONHhxbTB3QzRDdGxyTks1NlBtVHYxRE9HamtfSmtFbmM1MVhqMVVZdjNKZEVQMDRJNWF2WHJHRW5GUld2VGFkN1VUcHUxZ1BMTEpaNjg3b0F4Y3VSeGtnVjlGa19KWTh3ZWF0dmdWTWZxdGV3Mm8tTzZoY2M3Y1NDbDRn0gGTAUFVX3lxTFBRZUQ3NWk0cU9JNTZkWjdaVWFuaXgtZHhrZElBdzA2YzFfVGRFellGWnJxOGxZRF9NME5KdjIwTk96LXFkNlgtbGlPZG1tMUZLZFFmMjlIX19ScmNkLTdDbEw1SHhrd2JjTzk3cWxSY0FTbkxNVlJoT21LcmktbVJqMnAzOVFud2tuVXZUWDBtNG14Zw?oc=5" target="_blank" rel="noopener">Too Good To Go launches grocery bags with Whole Foods as food costs climb - CNBC</a>
+        </div>
+        <div class="article-meta">
+          <span>CNBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMigAJBVV95cUxQZGFmVm9FUFY2R2JZLWhJSWJ1VVFFUDB2WWctcXVCVjRfdWh3ZE5lXzFiTFROOHc2RjFpV0JILXlWT3FUcWg5Ym8wQTNLbjRYQ2wyM2R0d0tHTG1wSGpWTWhZbEZ5YkNSUE1NSWJ3S1VqRjZpSWxERWxZeGVfbVl2dHE1ZG1oelVEY1pYa2dfdW52NmtaTUdQT3R3WVBUSTZsRThJcG5hdFpTX0FrempsejhSdXozRy1NeTMtRFo4VzY5Y2Fpel8xeUNwWmtoMXNTYWIxRlcyYzJkWFl6M3BuTWJhU3hWZ3hUSEpiYV9fRXEwa2J5MEtvZGJiS1N1QU9k?oc=5" target="_blank" rel="noopener">Too Good To Go and Whole Foods Market Add Seven New Surprise Bag Offerings, Expanding Food-Saving Efforts Nationwide - PR Newswire</a>
+        </div>
+        <div class="article-meta">
+          <span>PR Newswire</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxOR3F4WXIwaFlibUNXZVlsOUc4UlRIODQ5blF6WWVUSE9iQ21tYXd2YUpYbWpDaThlX0dnRHJhNE1BZVVCWEhpVEk1Y2NyZk91b3ppQnRyUXE3ZzgzUUpNcGkyazcwM3dFSGFjSUN4dnd6bXRRWmNKZll3QjdEQWROOWJkbV91WmMzb0FSM3oxcXIyeFltWE9Xc09oWFc?oc=5" target="_blank" rel="noopener">Too Good To Go, Whole Foods expand deal for discounted ‘surprise’ bags of groceries - Chain Store Age</a>
+        </div>
+        <div class="article-meta">
+          <span>Chain Store Age</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxOenA2UWNxWHE5ZHNndzhZd2pheTlFWGNXSjI5ZXhOOWtMOVB5LXBXQmJoS0tITHgwT1h3ZTJEZWl2dkFGSUI4Nkl5YWxjNUNYd0ctakhNc1lpdnI2TG1XVjdwano2VTJCbTJfRU80ZkJWRC12TkZYNUpzWnhva3BaQVdlTTlfTF9ydEkyUTRtS3BZeE1zSFIw?oc=5" target="_blank" rel="noopener">Whole Foods Market Adds 7 Surprise Bag Categories for Surplus Food - Progressive Grocer</a>
+        </div>
+        <div class="article-meta">
+          <span>Progressive Grocer</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 12 Nov 2025</span>
         </div>
       </div>
     </div></div>
@@ -839,10 +1346,10 @@
   </main>
   <script>
   function applyFilters() {
-    const ac = [...document.querySelectorAll('.filter-btn[data-type="competitor"].active')].map(b => b.dataset.filter);
+    const ac = [...document.querySelectorAll('.filter-btn[data-type="category"].active')].map(b => b.dataset.filter);
     const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
     document.querySelectorAll('.article-row').forEach(row => {
-      const mc = ac.length === 0 || ac.includes(row.dataset.competitor);
+      const mc = ac.length === 0 || ac.includes(row.dataset.category);
       const mk = ak.length === 0 || ak.includes(row.dataset.country);
       row.style.display = (mc && mk) ? '' : 'none';
     });
@@ -850,6 +1357,6 @@
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
   });
-  </script>
+</script>
 </body>
 </html>
