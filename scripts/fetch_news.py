@@ -823,12 +823,12 @@ def _category_btns() -> str:
     )
 
 
-def _country_btns(articles: list[dict]) -> str:
+def _country_select(articles: list[dict]) -> str:
     present = sorted({a.get("country", "United States") for a in articles})
-    return "".join(
-        f'<button class="filter-btn" data-type="country" data-filter="{html.escape(c, quote=True)}">{country_flag(c)} {html.escape(c)}</button>'
-        for c in present
-    )
+    options = ['<option value="">All countries</option>']
+    for c in present:
+        options.append(f'<option value="{html.escape(c, quote=True)}">{country_flag(c)} {html.escape(c)}</option>')
+    return f'<select id="country-select" class="competitor-select">{"".join(options)}</select>'
 
 
 def _competitor_select() -> str:
@@ -861,12 +861,13 @@ def _legend() -> str:
 _FILTER_JS = """
   function applyFilters() {
     const ac = [...document.querySelectorAll('.filter-btn[data-type="category"].active')].map(b => b.dataset.filter);
-    const ak = [...document.querySelectorAll('.filter-btn[data-type="country"].active')].map(b => b.dataset.filter);
-    const sel = document.getElementById('competitor-select');
-    const comp = sel ? sel.value : '';
+    const countrySel = document.getElementById('country-select');
+    const country = countrySel ? countrySel.value : '';
+    const compSel = document.getElementById('competitor-select');
+    const comp = compSel ? compSel.value : '';
     document.querySelectorAll('.article-row').forEach(row => {
       const mc = ac.length === 0 || ac.includes(row.dataset.category);
-      const mk = ak.length === 0 || ak.includes(row.dataset.country);
+      const mk = country === '' || row.dataset.country === country;
       const mcomp = comp === '' || row.dataset.competitor === comp;
       row.style.display = (mc && mk && mcomp) ? '' : 'none';
     });
@@ -874,8 +875,9 @@ _FILTER_JS = """
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
   });
-  const sel = document.getElementById('competitor-select');
-  if (sel) sel.addEventListener('change', applyFilters);
+  document.querySelectorAll('#competitor-select, #country-select').forEach(s => {
+    s.addEventListener('change', applyFilters);
+  });
 """
 
 
@@ -922,7 +924,7 @@ def render_page(articles: list[dict], title: str, back_link: bool = False) -> st
       <div class="legend">{_legend()}</div>
       <div class="filter-bar"><span class="filter-label">Category</span>{_category_btns()}</div>
       <div class="filter-bar"><span class="filter-label">Competitor</span>{_competitor_select()}</div>
-      <div class="filter-bar"><span class="filter-label">Country</span>{_country_btns(articles)}</div>
+      <div class="filter-bar"><span class="filter-label">Country</span>{_country_select(articles)}</div>
       {"<div class='article-list'>" + rows + "</div>" if articles else "<div class='empty'>No articles for this period.</div>"}
     </div>
   </main>
@@ -976,7 +978,7 @@ def build_index(all_articles: list[dict], issue_dates: list[str]):
         <div class="legend">{_legend()}</div>
         <div class="filter-bar"><span class="filter-label">Category</span>{_category_btns()}</div>
         <div class="filter-bar"><span class="filter-label">Competitor</span>{_competitor_select()}</div>
-        <div class="filter-bar"><span class="filter-label">Country</span>{_country_btns(recent)}</div>
+        <div class="filter-bar"><span class="filter-label">Country</span>{_country_select(recent)}</div>
         {"<div class='article-list'>" + rows + "</div>" if recent else "<div class='empty'>No articles yet. Run the scraper to populate.</div>"}
       </div>
     </section>
