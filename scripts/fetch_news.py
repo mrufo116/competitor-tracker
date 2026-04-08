@@ -10,6 +10,7 @@ import os
 import json
 import hashlib
 import smtplib
+import time
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
@@ -193,35 +194,44 @@ SMTP_PASS = os.environ.get("SMTP_PASS", "")
 # ── Fetch ─────────────────────────────────────────────────────────────────────
 
 def fetch_rss(query: str) -> list[dict]:
-    """Fetch Google News RSS for a query string."""
+    """Fetch Google News RSS for a query string, with retry and backoff."""
     encoded = urllib.parse.quote(query)
     url = f"https://news.google.com/rss/search?q={encoded}&hl=en-US&gl=US&ceid=US:en"
     headers = {"User-Agent": "Mozilla/5.0 (compatible; NewsBot/1.0)"}
     req = urllib.request.Request(url, headers=headers)
 
-    articles = []
-    try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            tree = ET.parse(resp)
-            root = tree.getroot()
-            channel = root.find("channel")
-            if channel is None:
-                return []
-            for item in channel.findall("item"):
-                title = (item.findtext("title") or "").strip()
-                link = (item.findtext("link") or "").strip()
-                pub_date = (item.findtext("pubDate") or "").strip()
-                source_el = item.find("source")
-                source = source_el.text.strip() if source_el is not None else "Unknown"
-                articles.append({
-                    "title": title,
-                    "link": link,
-                    "pub_date": pub_date,
-                    "source": source,
-                })
-    except Exception as e:
-        print(f"  ⚠ Error fetching '{query}': {e}")
-    return articles
+    for attempt in range(3):
+        if attempt > 0:
+            wait = 2 ** attempt  # 2s, then 4s
+            print(f"  ↺ Retry {attempt}/2 for '{query}' (waiting {wait}s)")
+            time.sleep(wait)
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                tree = ET.parse(resp)
+                root = tree.getroot()
+                channel = root.find("channel")
+                if channel is None:
+                    return []
+                articles = []
+                for item in channel.findall("item"):
+                    title = (item.findtext("title") or "").strip()
+                    link = (item.findtext("link") or "").strip()
+                    pub_date = (item.findtext("pubDate") or "").strip()
+                    source_el = item.find("source")
+                    source = source_el.text.strip() if source_el is not None else "Unknown"
+                    articles.append({
+                        "title": title,
+                        "link": link,
+                        "pub_date": pub_date,
+                        "source": source,
+                    })
+                return articles
+        except (urllib.error.URLError, ET.ParseError) as e:
+            print(f"  ⚠ Attempt {attempt + 1}/3 failed for '{query}': {e}")
+        except Exception as e:
+            print(f"  ⚠ Unexpected error for '{query}': {e}")
+            return []
+    return []
 
 
 def article_id(article: dict) -> str:
