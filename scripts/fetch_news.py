@@ -921,43 +921,46 @@ def build_email_html(articles: list[dict], week_str: str) -> str:
         safe_link = html.escape(a["link"], quote=True)
         rows += f"""
         <tr>
-          <td style="padding:12px 0; border-bottom:1px solid #1e1e1e; vertical-align:top;">
-            <span style="display:inline-block;background:{color};color:#000;font-size:10px;font-weight:700;
-              padding:2px 6px;border-radius:2px;letter-spacing:0.08em;text-transform:uppercase;
-              margin-bottom:6px;">{html.escape(a['competitor'])}</span><br>
-            <a href="{safe_link}" style="color:#c8f550;font-size:14px;font-weight:700;
+          <td style="padding:12px 20px 12px 17px;border-bottom:1px solid #dee3e3;
+                     vertical-align:top;border-left:3px solid {color};">
+            <span style="display:inline-block;background:{color};color:#ffffff;font-size:10px;
+              font-weight:700;padding:2px 8px;border-radius:120px;letter-spacing:0.04em;
+              text-transform:uppercase;margin-bottom:6px;">{html.escape(a['competitor'])}</span><br>
+            <a href="{safe_link}" style="color:#00615f;font-size:14px;font-weight:700;
               text-decoration:none;line-height:1.4;">{html.escape(a['title'])}</a><br>
-            <span style="color:#555;font-size:11px;font-family:monospace;">
-              {html.escape(a['source'])} · {html.escape(a.get('pub_date','')[:16])}
+            <span style="color:#6b7280;font-size:11px;">
+              {html.escape(a['source'])} · {html.escape(a.get('pub_date', '')[:16])}
             </span>
           </td>
         </tr>"""
 
     return f"""<!DOCTYPE html>
 <html><head><meta charset="UTF-8"></head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Helvetica Neue',sans-serif;color:#e8e8e8;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 20px;">
+<body style="margin:0;padding:0;background:#f9f3f0;font-family:'Helvetica Neue',Arial,sans-serif;color:#222222;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9f3f0;padding:40px 20px;">
     <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
-        <tr><td style="padding-bottom:24px;border-bottom:1px solid #222;">
-          <p style="margin:0 0 8px;font-size:10px;color:#c8f550;letter-spacing:0.15em;
-            text-transform:uppercase;font-family:monospace;">
+      <table width="600" cellpadding="0" cellspacing="0"
+             style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;
+                    overflow:hidden;border:1px solid #dee3e3;">
+        <tr><td style="background:#00615f;padding:20px 24px;">
+          <p style="margin:0 0 4px;font-size:10px;color:rgba(255,255,255,0.7);
+                    letter-spacing:0.12em;text-transform:uppercase;">
             Too Good To Go · Competitive Intelligence
           </p>
-          <h1 style="margin:0;font-size:28px;font-weight:800;line-height:1.1;">
-            Weekly Roundup<br><span style="color:#555;">Week of {week_str}</span>
+          <h1 style="margin:0;font-size:22px;font-weight:700;color:#ffffff;line-height:1.2;">
+            Weekly Roundup · <span style="opacity:0.75;font-weight:400;">{week_str}</span>
           </h1>
-          <p style="margin:12px 0 0;font-size:12px;color:#555;font-family:monospace;">
+          <p style="margin:8px 0 0;font-size:12px;color:rgba(255,255,255,0.7);">
             {len(articles)} new articles this week
           </p>
         </td></tr>
-        <tr><td>
+        <tr><td style="padding:0 0 8px;">
           <table width="100%" cellpadding="0" cellspacing="0">
-            {rows if rows else '<tr><td style="padding:24px 0;color:#555;font-size:13px;">No new articles this week.</td></tr>'}
+            {rows if rows else '<tr><td style="padding:24px;color:#6b7280;font-size:13px;">No new articles this week.</td></tr>'}
           </table>
         </td></tr>
-        <tr><td style="padding-top:24px;border-top:1px solid #222;">
-          <p style="margin:0;font-size:11px;color:#333;font-family:monospace;">
+        <tr><td style="padding:14px 24px;border-top:1px solid #dee3e3;background:#faf8f6;">
+          <p style="margin:0;font-size:11px;color:#6b7280;">
             TGTG Competitor Tracker · Auto-generated
           </p>
         </td></tr>
