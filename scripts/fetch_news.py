@@ -234,7 +234,6 @@ def fetch_rss(query: str) -> list[dict]:
             print(f"  ⚠ Attempt {attempt + 1}/3 failed for '{query}': {e}")
         except Exception as e:
             print(f"  ⚠ Unexpected error for '{query}': {e}")
-            return []
     return []
 
 
