@@ -1,0 +1,2527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week of July 20, 2026 — TGTG Intel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f9f3f0;
+    --surface: #ffffff;
+    --border: #dee3e3;
+    --text: #222222;
+    --muted: #6b7280;
+    --accent: #00615f;
+    --accent-mid: #03a97b;
+    --accent-light: #ddf3e4;
+    --topbar-bg: #00615f;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  a { color: inherit; }
+
+  /* ── Focus ── */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--topbar-bg);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 56px;
+  }
+  .topbar-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+  .topbar-icon {
+    width: 30px; height: 30px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .topbar-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+  .topbar-divider {
+    width: 1px; height: 20px;
+    background: rgba(255,255,255,0.25);
+    margin: 0 0.25rem;
+  }
+  .topbar-section {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+
+  /* ── Page header ── */
+  .page-header {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2rem 2rem 1.25rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header h1 {
+    font-size: 1.625rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .page-header .meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 120px;
+    padding: 0.3rem 0.85rem;
+  }
+  .back-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 500;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* ── Layout ── */
+  .layout {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 1024px) { .layout { grid-template-columns: 1fr 220px; } }
+  @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+
+  /* ── Section card ── */
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,97,95,0.06);
+  }
+  .section-header {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #faf8f6;
+  }
+  .section-header h2 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .section-count {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    border-radius: 120px;
+    padding: 0.15rem 0.6rem;
+  }
+
+  /* ── Filter bars ── */
+  .filter-bar {
+    padding: 0.625rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    background: #faf8f6;
+  }
+  .filter-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-right: 0.25rem;
+    white-space: nowrap;
+  }
+  .filter-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 0.3rem 0.85rem;
+    border-radius: 120px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  }
+  .filter-btn:hover {
+    border-color: var(--accent-mid);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  /* ── Competitor dropdown ── */
+  .competitor-select {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 0.3rem 2.25rem 0.3rem 0.85rem;
+    border-radius: 120px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    background-size: 0.75rem;
+    transition: border-color 0.18s ease;
+    max-width: 260px;
+  }
+  .competitor-select:hover { border-color: var(--accent-mid); }
+  .competitor-select:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ── Article rows ── */
+  .article-list { display: flex; flex-direction: column; }
+  .article-row {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    transition: background-color 0.15s ease;
+  }
+  .article-row:last-child { border-bottom: none; }
+  .article-row:hover { background: var(--accent-light); }
+  .article-accent {
+    width: 4px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    align-self: stretch;
+    min-height: 40px;
+  }
+  .article-body { flex: 1; min-width: 0; }
+  .article-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+    border-radius: 120px;
+    margin-bottom: 0.4rem;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .article-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1.45;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .article-title a { text-decoration: none; color: var(--text); }
+  .article-title a:hover { color: var(--accent); }
+  .article-meta { font-size: 0.7rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .article-meta-sep { color: var(--border); }
+
+  /* ── Issues sidebar ── */
+  .issue-list { display: flex; flex-direction: column; }
+  .issue-row {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .issue-row:last-child { border-bottom: none; }
+  .issue-row:hover { background: var(--accent-light); color: var(--accent); }
+  .issue-arrow { color: var(--muted); font-size: 0.75rem; }
+
+  /* ── Legend ── */
+  .legend {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    background: #faf8f6;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; color: var(--muted); font-weight: 500; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Empty state ── */
+  .empty {
+    padding: 2.5rem 1.25rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  .empty-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+    .layout { display: block; max-width: 820px; margin: 0 auto; padding: 0 2rem 3rem; }
+  </style>
+</head>
+<body>
+  <nav class="topbar">
+    <div class="topbar-wordmark">
+      <div class="topbar-icon">♻</div>
+      <span class="topbar-name">Too Good To Go</span>
+    </div>
+    <div class="topbar-divider"></div>
+    <span class="topbar-section">Competitive Intelligence</span>
+  </nav>
+  <header class="page-header" style="max-width:820px">
+    <div>
+      <a class="back-link" href="../index.html">← Back to archive</a>
+      <h1 style="margin-top:0.4rem">Week of July 20, 2026</h1>
+    </div>
+    <span class="meta">127 articles · July 20, 2026</span>
+  </header>
+  <main class="layout" style="display:block;max-width:820px;margin:0 auto;padding:0 2rem 3rem">
+    <div class="section-card">
+      <div class="section-header">
+        <h2>Articles</h2>
+        <span class="section-count">127</span>
+      </div>
+      <div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>B2C Marketplaces</div><div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>E-commerce</div><div class="legend-item"><div class="legend-dot" style="background:#059669"></div>Other Surplus Optimisation</div><div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Retail Tech</div><div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Retail Tech: Donation</div></div>
+      <div class="filter-bar"><span class="filter-label">Category</span><button class="filter-btn" data-type="category" data-filter="B2C Marketplaces">B2C Marketplaces</button><button class="filter-btn" data-type="category" data-filter="E-commerce">E-commerce</button><button class="filter-btn" data-type="category" data-filter="Other Surplus Optimisation">Other Surplus Optimisation</button><button class="filter-btn" data-type="category" data-filter="Retail Tech">Retail Tech</button><button class="filter-btn" data-type="category" data-filter="Retail Tech: Donation">Retail Tech: Donation</button></div>
+      <div class="filter-bar"><span class="filter-label">Competitor</span><select id="competitor-select" class="competitor-select"><option value="">All competitors</option><optgroup label="B2C Marketplaces"><option value="1plate1world">1plate1world</option><option value="Buen Provecho">Buen Provecho</option><option value="Cirklua">Cirklua</option><option value="Crumbs">Crumbs</option><option value="Flashfood">Flashfood</option><option value="Foodbag">Foodbag</option><option value="Forsa">Forsa</option><option value="Gone Good">Gone Good</option><option value="Hallowa">Hallowa</option><option value="Karma">Karma</option><option value="Leftovers">Leftovers</option><option value="Lucky Meal">Lucky Meal</option><option value="Olio">Olio</option><option value="OrderLemon">OrderLemon</option><option value="Phenix">Phenix</option><option value="Platable">Platable</option><option value="Reat">Reat</option><option value="ResQ Club">ResQ Club</option><option value="Salveme!">Salveme!</option><option value="Save Me">Save Me</option><option value="SaveFOOD">SaveFOOD</option><option value="Savefood">Savefood</option><option value="Second Plate">Second Plate</option><option value="Still Good">Still Good</option><option value="Too Good To Go">Too Good To Go</option><option value="Toriniko">Toriniko</option><option value="Vers Voor Vandaag">Vers Voor Vandaag</option></optgroup><optgroup label="E-commerce"><option value="Bella Dentro">Bella Dentro</option><option value="Best Before Store">Best Before Store</option><option value="Circlr">Circlr</option><option value="Coupang">Coupang</option><option value="Equal Food">Equal Food</option><option value="Foodpass">Foodpass</option><option value="Gooxxy">Gooxxy</option><option value="LEROMA">LEROMA</option><option value="Lebensmittel-sonderposten">Lebensmittel-sonderposten</option><option value="Leckerposten">Leckerposten</option><option value="Misfits Garden">Misfits Garden</option><option value="Optifood">Optifood</option><option value="Querfeld">Querfeld</option><option value="Ruben Retter">Ruben Retter</option><option value="SuperOpa">SuperOpa</option><option value="Uglyfruits">Uglyfruits</option><option value="Veggie Specials">Veggie Specials</option><option value="Veggiebox">Veggiebox</option><option value="Wonky Box">Wonky Box</option><option value="Wonky Veg Boxes">Wonky Veg Boxes</option></optgroup><optgroup label="Other Surplus Optimisation"><option value="Akorn Technology">Akorn Technology</option><option value="B!POD">B!POD</option><option value="BeBananas">BeBananas</option><option value="Bpacks">Bpacks</option><option value="Cascara Foods">Cascara Foods</option><option value="Cerve">Cerve</option><option value="Cetogenix">Cetogenix</option><option value="ChicP">ChicP</option><option value="Cook Forever">Cook Forever</option><option value="Cool Innovation">Cool Innovation</option><option value="Ecosphere Organics">Ecosphere Organics</option><option value="Edama Solutions">Edama Solutions</option><option value="FollowFood">FollowFood</option><option value="Fonte Ingredients">Fonte Ingredients</option><option value="FoodUp">FoodUp</option><option value="Fridge Friend">Fridge Friend</option><option value="Good Grub">Good Grub</option><option value="Green Spot Technologies">Green Spot Technologies</option><option value="Hubcycled">Hubcycled</option><option value="Hulec">Hulec</option><option value="Innovafeed">Innovafeed</option><option value="Ipsago">Ipsago</option><option value="KitchenPal">KitchenPal</option><option value="Liva">Liva</option><option value="Lomi">Lomi</option><option value="Mimica Lab">Mimica Lab</option><option value="Mottainai Food Tech">Mottainai Food Tech</option><option value="No Waste App">No Waste App</option><option value="Prism">Prism</option><option value="ProNovo">ProNovo</option><option value="Proseed">Proseed</option><option value="Proteme">Proteme</option><option value="Reencle">Reencle</option><option value="Refood">Refood</option><option value="Rescube">Rescube</option><option value="Ripe Guard">Ripe Guard</option><option value="Rscued">Rscued</option><option value="Skip Shapiro">Skip Shapiro</option><option value="Skonelabs">Skonelabs</option><option value="Topanga.io">Topanga.io</option><option value="Unverschwendet">Unverschwendet</option><option value="Vego">Vego</option><option value="Viridian Renewable Technology">Viridian Renewable Technology</option><option value="Vitesy">Vitesy</option><option value="Volare">Volare</option><option value="Wasteless">Wasteless</option><option value="Wonky Coffee">Wonky Coffee</option><option value="YeastUp">YeastUp</option></optgroup><optgroup label="Retail Tech"><option value="FoodTracks">FoodTracks</option><option value="Foodwise">Foodwise</option><option value="Fresho">Fresho</option><option value="LinkRetail">LinkRetail</option><option value="Martee ai">Martee ai</option><option value="Platter">Platter</option><option value="Restoke">Restoke</option></optgroup><optgroup label="Retail Tech: Donation"><option value="4MyCity">4MyCity</option><option value="BitGood">BitGood</option><option value="BringtheFood">BringtheFood</option><option value="Caboodle">Caboodle</option><option value="Eatcloud">Eatcloud</option><option value="Ecibo">Ecibo</option><option value="Eco Looping">Eco Looping</option><option value="Fome de Tudo">Fome de Tudo</option><option value="Food Recovery">Food Recovery</option><option value="Hungree App">Hungree App</option><option value="Knead Technologies">Knead Technologies</option><option value="O Masa Calda">O Masa Calda</option><option value="OzHarvest Food App">OzHarvest Food App</option><option value="PDApp">PDApp</option><option value="Second Harvest Food Rescue App">Second Harvest Food Rescue App</option><option value="Sharing Excess">Sharing Excess</option><option value="Stasera Offro Io">Stasera Offro Io</option><option value="We Don&#x27;t Waste">We Don&#x27;t Waste</option></optgroup></select></div>
+      <div class="filter-bar"><span class="filter-label">Country</span><select id="country-select" class="competitor-select"><option value="">All countries</option><option value="South Korea">🌐 South Korea</option><option value="United States">🇺🇸 United States</option></select></div>
+      <div class='article-list'>
+    <div class="article-row" data-competitor="Mottainai Food Tech" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Mottainai Food Tech</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqgFBVV95cUxNVHAtYXI2RHBXRGR2SW43UFo2MjN3MzVxbVBxMkNabWpVV1g2eXNTMWY4Q2pMSHAtbS02SXJEMEc5THdjR1BQdmFoeGVjNktEb3gyVGx3RTItTWQ1TTB6Q21neXI4QzRRdzVtVmd6c1c2Y201ZlJCQ0FXY3hPWnNnbFh2VmVKci1TTGtWb0JRb3R6QVVYamwyLUdMbHhVMkZvekx0MUJnUk04QQ?oc=5" target="_blank" rel="noopener">Singapore Awards $4.1M to Three Projects Upcycling Food Waste Into High-Value Products - Green Queen Media</a>
+        </div>
+        <div class="article-meta">
+          <span>Green Queen Media</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 20 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Foodwise" data-country="United States" data-category="Retail Tech">
+      <div class="article-accent" style="background:#0891b2"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0891b2">Foodwise</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMizAJBVV95cUxOUFp2QkJYVHRrcUV6SlpwcDNmc1M5ZC1wc1NkelNhNDNxY2NHdDlNS2cxZTFzVzIweFBleEJMMWNPT3dobTgzeDFOaEhZYnlYOWNSdEpUdGt5TVgxV29mOWJMVXluUGgyeWpNTC1fdXpNaU1KMWtHXzBVckNMU2VSTFZCbFBIR3h0TWlXVEJtczFhbFU5eTlwdGk4TXN0ZmcwMXFrT20wQ3RJcU5fcmRsT1Fib1EzQWx2UHI2WlpnNjFoRFV2eG5MMGJocEwyOGFlYm9CaWFtNE9lbVBCMUJjRWVucWVodFIzSVJOT2ZWeDJTcmMteWpsX0lBaW5mZmZwUjNYZ0ZsSlJVZGs0VmdvLXplc2pJRG1aY0ktN3Q5QVpjNFRtNTJNU2dTZTBBelhvN3A3a0o2dl9rZEcwTWx2TjN2d01YQk9paDFIOQ?oc=5" target="_blank" rel="noopener">Making India &#x27;food wise&#x27;; AI lifts VC inflow in startup ecosystem - Dailyhunt</a>
+        </div>
+        <div class="article-meta">
+          <span>Dailyhunt</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 20 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Vitesy" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Vitesy</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi0gJBVV95cUxNUnY4TV8yQTI5aVJLTkNYNUJRUTZVbHNaXzZLVi1aMHNuUGVKbXoySDJsdjhPSWI3eldncmVhanhCcnRjRXB3WWZDRU9uNEpSczNpeXVpc2ctU3ZFZmwwWjk0cU9ma0xLMTdpcVE3dDFnVTJoQ2w3M3VQY0lpX1J5Q0JqWUpuZk1jelEtSGlnTG1Tcm82T1pqZ2dOekpKOWY3YTdtR2E1UDhVS05Fb1EwTk5SWEgwZ0MzcnFiOG01enBOX3NrOTNNWjVkYWhuZ1dBYzd3QndJbHg4T3dlVWFveWVIOGJnLVJUSndiTTJ0NnhSc1prMmx0SnZrZEhZX3VvcHFNQUQxVTRtTzhQZkptTmgtMm0ybHNfT0Jrd2lyUGxOakNWU2hENkJpZERMNWI4VmF4aWJCUWdRZnloLWNfV0ZDMlIyeVNYRy1NZzNSd0JGUQ?oc=5" target="_blank" rel="noopener">Vitesy’s upgraded Shelfy promises even fresher food and less waste - MSN</a>
+        </div>
+        <div class="article-meta">
+          <span>MSN</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 19 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Platter" data-country="United States" data-category="Retail Tech">
+      <div class="article-accent" style="background:#0891b2"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0891b2">Platter</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxPTFRtWjc3LW5Ua191Z1hMWXBrUVVYM0pvMXdhV2x3X2NXUlFlbHlQZVhHWmstYzFkMXExbUFnR2NYdWdoZ1dwekNVenlxRC0tRC1JajFKS1JYeTdTUF9yOUV5N0tMSWduQU9VbGJOLWhaT2FGZW03bHc1UkxFbTBHa1dRalpCalM3cFhnZXd4Sjh0UDFscUNIYjk1ZTZyblZ3TkI4?oc=5" target="_blank" rel="noopener">Essex seafood diner named one of UK&#x27;s best beach shack restaurants - Colchester Gazette</a>
+        </div>
+        <div class="article-meta">
+          <span>Colchester Gazette</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 19 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Food Recovery" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Food Recovery</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMilAFBVV95cUxPcEhTVHBYV3p5RDFXSVM5Tjhac0dBTDI0WC1ndVU4cFdjbGUtVFhRMmdmWUNvdzVFZUtLVTg4dEJnRWRuY2ZvVFdRak56MEdmaUNvMkcwcGFoVXN6NHplamVhTXh1dnBpbDFyVmV4ejFvLTc5ekJWMm1BY2FzWF9LRlVwa010emtiZFRYa2xWSnJmZzl00gGcAUFVX3lxTFBXTEUxei1zbU4xSlRGRVlaRTl4R0Vkd19Bdy1OZW91LU0tWm1pSV92eTRoNDlGeFk3aHZieWhFdTN2UXVYSXpiUkotc1AzamJWWUNhMm9wWWtLc3ZURnFxc3lXa2tBQlM3U0x1bXVfQjVzODJVOXZqd3AwQ2xUa2p0ZjVJUlpSYVdKR1pCNUVBS3VfeGlIRnQ2NEpWTw?oc=5" target="_blank" rel="noopener">Dubai Police launches new app to help drug addicts with treatment, recovery - Khaleej Times</a>
+        </div>
+        <div class="article-meta">
+          <span>Khaleej Times</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 19 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxOWmtIdWR2Tm9SV09rZWlYd3I1NGczTXM4NlAyT1kyRmk2QUhmME50RzBNR3RTRC13YVpmc0JtSFRPTWF5VGszczV6NHhZOUJWUGdjSE02cDFvc2ZaZVR0blNnZ3BzenhSd1hHSWN6MUU4MUNyLU95ZUttMDB3RWsxWWItX05XaVZOSFc0M2E1RWNiUkp4NzFfUUp2b1dsdHVOanBLbFNR?oc=5" target="_blank" rel="noopener">&#x27;Hero&#x27; pot washer Sam pens moving poem to back vital summer food appeal - InYourArea</a>
+        </div>
+        <div class="article-meta">
+          <span>InYourArea</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 18 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Veggie Specials" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Veggie Specials</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMihAFBVV95cUxQM3dFV0ExQktkRlNFdzJfd1BwY0xnWUpnZ2FyQldlc1FfQVBtZndyWEJFMUtPWmJDOTI4cnk1Sm96dFpIbmRHMlcyRDlvRERNeUFLamFKeUlnYk1BR0lMSTZjUTFsNEZCN1NwcDlsVjBMWGlRa3BYMGwtbVlQekhlZm8xYXg?oc=5" target="_blank" rel="noopener">The FE - Veggies, fish, chicken, egg get costlier - The Financial Express</a>
+        </div>
+        <div class="article-meta">
+          <span>The Financial Express</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 18 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi9gFBVV95cUxPQUlJQXpHRE5zQ2ZqdGliTmdvbFNIVHg3THRIeWw1anU3WUZBMHNqUzlqMFVUbmFxbTk3Zkh5OVRmakpFcDlvQ3FjeEp6OHNic0s2VnJ3VWxudm5uSmRzbll6LS11cWNLajU3TGY4UkdFM1VRbGhJbHFzbm9GZDc4aHFrVjZ0ZE9xNlRNQkFHTWtzTFhBUWZaSVZnU2JQR1Rzc3M2SlZUU3NBelpyV2hWU2k0X3V0cEUtOXZtSE53UmtsVzZzUWkxZGJ3enFaZjh6dlJpOTNDTS1FSXk4SG9HVkxicU9rcFczUUVOekEwT0JYM1pSdGc?oc=5" target="_blank" rel="noopener">Derby Day on Main raises record $81,159 to help feed local children - GreenevilleSun.com</a>
+        </div>
+        <div class="article-meta">
+          <span>GreenevilleSun.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 18 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Food Recovery" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Food Recovery</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxOXzI2YTRDVFRGTnNPRTdSYUNISDktbjhoeVRLM2xNbEMyZ2hndTZLWGxqSW9EekRTZ0hnUkNwYWJGOUVpMEpKdlJrRUotdDZMVXVCNGMwRE80R3l6SHU3amROS3BZNndqTk1vQlpUSmlOWVFQMEsweVBzakZSYVRwZzFvb1h4Vks4NWJsRWFPaHR4M3hyV3AwVk9fMjViMDBva3JXaXRTNExJRW91U0tfVDNOZFE0R0pJMkxfRE12dw?oc=5" target="_blank" rel="noopener">HungreeApp founder John Akinboyewa visits Lagos for flood relief mission - The Guardian Nigeria News</a>
+        </div>
+        <div class="article-meta">
+          <span>The Guardian Nigeria News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 18 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Fonte Ingredients" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Fonte Ingredients</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxPSXY0cWd6Z1hTalp4SThQR1g1djBZcktHZ1RtZkd1ckhFMkF6TS0xYkdBdWFkT1lRaHNCb1RvYnZVWGJEQW5zWVNlQXhvSzZ3aG9mUUxtLUVad3dlcmVCSDloV0JnUG1iMGdQS2VYcE4wV1hxTUtVanhLZEx4T0VEdS1ndnRrX3BHTmRlMExkUXNXMFM3R0RQZkhndF9MZzlM?oc=5" target="_blank" rel="noopener">From deficit to surplus? Alberta&#x27;s bleak budget outlook &#x27;changed dramatically&#x27; as oil prices rise - CBC</a>
+        </div>
+        <div class="article-meta">
+          <span>CBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Karma" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#b45309"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#b45309">Karma</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE1udmdIZTZJU093UktQM3JBbTdjc0s4Rk16YWZkYjRuOTNzQjUtc3NTVE40X1FRMXZqY0dmVHdQbmJSTnFhV2dPMkwyV0RnOHQyT19CUnNFZkVmSzlGcjBKdmJ3bXBWRWhGM1dEeU9uNnhHVldBdFJV?oc=5" target="_blank" rel="noopener">Business: Morocco airport renovation, Mondly app success - Monocle</a>
+        </div>
+        <div class="article-meta">
+          <span>Monocle</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Save Me" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Save Me</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxPUHN6N1JYb0VVU3VxMnpTVEV4QUd3ZnVNVXRSNE9ZVmZvUWdXTkVXNm5QSW5sTUxKT3ZtMlN0UUVISURKb0pVQXdqS2c1M0NQZ0RQTUk0aGFHWk9ncEhUSUMyaEdiYTBza1BGZ0szRy1aVi1lc09HcmtXZjNEdG9xU0EybW1jNnlVRjl2bnJKZXNLSVZJTi01eTcyMVpEY2tfcFVQUdIBpAFBVV95cUxPUHN6N1JYb0VVU3VxMnpTVEV4QUd3ZnVNVXRSNE9ZVmZvUWdXTkVXNm5QSW5sTUxKT3ZtMlN0UUVISURKb0pVQXdqS2c1M0NQZ0RQTUk0aGFHWk9ncEhUSUMyaEdiYTBza1BGZ0szRy1aVi1lc09HcmtXZjNEdG9xU0EybW1jNnlVRjl2bnJKZXNLSVZJTi01eTcyMVpEY2tfcFVQUQ?oc=5" target="_blank" rel="noopener">Free tool helps families save money by using food already in their kitchens - Fox News</a>
+        </div>
+        <div class="article-meta">
+          <span>Fox News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Liva" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Liva</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOMnhYc2htWk5LaTFEdU1FX0JtS3FRdndqeTdKODcwUVVtMlF3NnBJcGJiXzAwLUpybDRScTlTSURBZ3hwSTdJa05wTjBBVmp1dUVNOUo0SUtDdWEzQ09NbVc4YTgyOGY3S2tuMWp3Ujc5ZE5LT0Zia2V5bEE3MWl5Qm8zMTl3bXJOWmRwdVI3ZDdrOEQ1OUpMUDJFbDZIUWvSAaQBQVVfeXFMT1BzejdSWG9FVVN1cTJ6U1RFeEFHd2Z1TVV0UjRPWVZmb1FnV05FVzZuUElubE1MSk92bTJTdFFFSElESm9KVUF3aktnNTNDUGdEUE1JNGhhR1pPZ3BIVElDMmhHYmEwc2tQRmdLM0ctWlYtZXNPR3JrV2YzRHRvcVNBMm1tYzZ5VUY5dm5ySmVzS0lWSU4tNXk3MjFaRGNrX3BVUFE?oc=5" target="_blank" rel="noopener">Free tool helps families save money by using food already in their kitchens - Fox News</a>
+        </div>
+        <div class="article-meta">
+          <span>Fox News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Foodwise" data-country="United States" data-category="Retail Tech">
+      <div class="article-accent" style="background:#0891b2"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#0891b2">Foodwise</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi0wFBVV95cUxQWFlYUDdFRkFTb3AzSXlLUnpvNXZxLVR5UndxVDAtYnVaZENIYnIxQVFsdkI5aHRkdUp0OWt6Y3Y4dGx0cnF1VXJtWWpyWHF1ajFHTGpiQ01FMUJEdFhmeU9Cdzc2UGRmQ29QZTRtbWlDRm95Vmx0QXZpbVdGaGJLalFXRHdRSENlQlRPU2JVREVfZVN0UjhCZmhVUjZrQV91SXdVd3V5MnhXNGhpZU1QaFhjVTJYMk5zVkwzOHo3dDBFa2xrX3BDUi1MWUlxZ0lHOTk0?oc=5" target="_blank" rel="noopener">Startup news and updates: Daily roundup (July 17, 2026) - Dailyhunt</a>
+        </div>
+        <div class="article-meta">
+          <span>Dailyhunt</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="FollowFood" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">FollowFood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiywFBVV95cUxNQXk3U2VndG0wQzNQU2JRSExFcWZ5OXNRUGpGcWxjZWI2YVYxWnBmUC1QcXIzdF9JTzQ1bVVYd1NSNzZNNEVxNDMzVVFoVC1ldG85VWZpYWpXdElOWjE0YzU0anBvcENxczN2VEFCakpJTDM5S0ZXY1RMV21xdHd2eHBBM3ZKVlMtTnI5ck9fNUgxSks4Q0xPOE5QV09kMkVYTXZCa3NKdUxqVnYyR1lhWk93YzFjNkcwMDdmOEJDSDgtWW85Z1pEZi1oNA?oc=5" target="_blank" rel="noopener">Why Sustainability Pays Off: Lessons from Climate &amp; Company&#x27;s Work with Food Companies - Climate Action</a>
+        </div>
+        <div class="article-meta">
+          <span>Climate Action</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Food Recovery" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Food Recovery</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxQVmdvQlNnTzZHcUg0VTRWU1FYMnc0RUJRcGR0X1YzU21NMWhFSVV0RWNQZzZYbF9jaEpQNDljMldmelRBcDdQMnJWRExkT2tiaThYTmc1akdNSzUyVGdSSlJIYTFpdU01eFdmcnhRYzNlR3dRbEFTd2xiWGlNNjlpNE8xaWVpWHltcGhtZlllUHg0ckEzVTF1Z1RWbmF5MzhqR25rVUw5Yw?oc=5" target="_blank" rel="noopener">COLA Platform apology and service restoration announcement - The Guardian Nigeria News</a>
+        </div>
+        <div class="article-meta">
+          <span>The Guardian Nigeria News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Save Me" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Save Me</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE1TTmtkb2NkTHBITzBnckRIVXItZF9zTHIxZ2lXSlZOUEVjRVlONWVWV2M0dmpvbUltMWhmR3p3T3NhMWhqdVdBNkNIQVdUNzU2UHphVmRudThMaGNC?oc=5" target="_blank" rel="noopener">&#x27;Volunteering with food charity saved me from loneliness&#x27; - BBC</a>
+        </div>
+        <div class="article-meta">
+          <span>BBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Equal Food" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Equal Food</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE8zaFR3RjM5RUFMVmFiLVR0YkExc01pNVA4ckIyZlJfWTBQZEVhTjdiYlpoU19WcVFwd2pkYi10UnlSNnk0Z1lTajRlZDdIMzBLTFBCUzN3RTZvQl9JS3Zn0gFkQVVfeXFMT1VuUVhCZThVenEyaTJWV3pfM3hnX3VSbTZXdkhpdHJ3UmNMd1prQy1OUmZNZU9GN3UybDlxRV9YR3NBc0x3b0N0VVBBNXRhS2VrcXdPVUdwT0Q1U3BxeHkzS0NnWA?oc=5" target="_blank" rel="noopener">Imperfect Vegetable Ferments - Trend Hunter</a>
+        </div>
+        <div class="article-meta">
+          <span>Trend Hunter</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="SaveFOOD" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">SaveFOOD</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiygFBVV95cUxNcV9UMUs2RlNLZzhyM19hUFE3bzJpMDV2bEp2TEo1MXFzZUdtNXdMbF82ZFdrc1F6emtKMHphdEltWHptOGk5bk82V2JXaG1xdjNKbno2MmtZbXBZM2kwcEdnaV85QXBIal9sWVl6aUVVYnFWSnZMUUNHTjlMTklua3Z3WS0wdlQxQkdSSVk5MndzUWxnUVFDT2tPLUViS0o1OXpmSHJuQXVlcktSeHd4MU54X2xiRFNKRXl1UmVIOFl5U2trMm5ELXNB0gHXAUFVX3lxTE9xNkUwTU1QWGZOU3c5OGx6a0lkb2VSNjBzVUp6aFhtbzNYUG5LeGxwLWJTVTVYRVhhbEs2REZadjh0ME1xR0FNalZkNVhQMUIwOThYd3l3RUp6b3hpbGUtbllBMnpxVDlkSHJLTjZtZ3Q0azNlQTEyeDEzRTdselpHeDZwa2d2cExnejJlRERTSTZGSkoxRVhOMkV1SWhpTmNNcHFRaU9yTkhFcHUtaFpYOG1hWWd0UjZhNVlqSEZqRmFOcGo3a0dLX3RnSENhM3dubnNERTBR?oc=5" target="_blank" rel="noopener">Packaging innovation takes centre stage in the fight against food waste at interpack China 2026 - FoodTechBiz</a>
+        </div>
+        <div class="article-meta">
+          <span>FoodTechBiz</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxOVTZwMDBvcWdnNEpPZ29SdnhPeGFQeWYwZ2VZcUZGbjRzS1Ixcm4tTnhXNUhfR01SeS1ueTVsSjJHdUtIdjNHcjNwbldwWmlodWpOZnR6cFYwTXBZc3Z4eG1VZWZMVEkyTGhrd1R2dFBVOHBpV2MtTE81NlVIaEVTRk83SE15OHJkd1hsSlZrSkp6ZFBRUUZrUXlXWklpcVZnbE9zX1RHenpyZGJKYkJMeFNHZldwdGR2OXpuc1BvZVNFMGlCblE?oc=5" target="_blank" rel="noopener">Whole Foods donates refrigerated van to Second Harvest, kicks it off with 1,671-pound food donation - WTOC</a>
+        </div>
+        <div class="article-meta">
+          <span>WTOC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 16 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Veggie Specials" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Veggie Specials</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxOTllidF8yVzNGb0twMmIxLUZCZUZkVjVCVHByaUttRnJzMkxZeWZXcUgyYjRTWk1XRnFHd1c0SXNEcDUzVE14SVNISHUyWklBRUhfcV9lR2JRRXJrYXpXcDltdnc1MkZpVng3cHFCRnB5N2thalZvLTl2S09UV2F3elhickxObEhwTURnMlpscFMtWDd4SVVBd3ZxZmZUQl9FV0l4ZnlYd2U?oc=5" target="_blank" rel="noopener">Children sold homegrown fruit and veg at Barking market day - Barking and Dagenham Post</a>
+        </div>
+        <div class="article-meta">
+          <span>Barking and Dagenham Post</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 16 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Innovafeed" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Innovafeed</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMimwJBVV95cUxOQ0VCeGRZU2xTbnNQanZkY1EyUXl0OVd4eW9aenlrUUx2RVdWOFE4Mk5sWWprTUN3bW12bU51N1BVUmt0cjZpMVlubXZmS0UwYWlpYWVkN3FlRGRZNXRjeUl1NEQzbEc3Ty1hU2N2dC1uanI4TW15YWt6MHdBS0JUajRhQUhjTkI3WHQ0Uk1xazlhOU5MdThJVm1GbENBQm1qY0Rjc3RTRjBIZWRpZXJ4NkFXdTI0WGwzQklPQi1HMFVGNzlaVUdiQngwZmQ1R0Y3bDRDakN1NUdqMGtmSWgzeUg5cU8wVWxBOF9CcmY4SGlreDB2S202MFRUb0lrcHhDWGZPQnJqbjBXUWc5VktOZVFJbHhySmU4X240?oc=5" target="_blank" rel="noopener">Insect Feed Market Accelerates Sustainable Protein Transition as Alternative Feed Demand Surges | CAGR 15.4% | Persistence Market Research - PR Newswire</a>
+        </div>
+        <div class="article-meta">
+          <span>PR Newswire</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 16 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Forsa" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Forsa</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxPZnZxZ1NZeHZaSkFEeU5kMFVjWnEwOVN6RHFEby1DdFBpdDEtUEJYcTl2RGhNcXluOTVlZHRtc2l2N3NvX2NjTXdsTWVUTDZfYWIzVC1mbGJyVlA1MWg5cDhzQkItMmJLTmp1SXRObm85bUQ2UjY5a1VoVXRHM2sxZHcwVGNrb0JrMzNZQ3ZPQXJkTzNHRGIzUFhURQ?oc=5" target="_blank" rel="noopener">Refreshi helps South Africans save R12.5 million on groceries - Cape Town ETC</a>
+        </div>
+        <div class="article-meta">
+          <span>Cape Town ETC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 16 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Food Recovery" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Food Recovery</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxQMEhMbVVnV2NMS2gyVlJVUXhNdTJMeTNCT2VYT0xzVU1aYzNlLW9SV2ZzVkpzOURZZTAxNzdZYWxoYklyMkx0QTQwX2EtWlZPc0dna2FBMUdKNkNaRmpIMXNuLXZSTjhha1gtbG9GQXNfWTROR3hHX2V0NnlOMWp1OWlOZG5NU19zUjFHWlFUek9TMXNNTmRfTjQ1Zw?oc=5" target="_blank" rel="noopener">Banking Brothers Secure KES 195 Million to Scale UAE Food Tech Startup - streamlinefeed.co.ke</a>
+        </div>
+        <div class="article-meta">
+          <span>streamlinefeed.co.ke</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 16 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Rscued" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Rscued</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxQcm84OGlhQ0psa19KMFlJQ2lUMk1vdmY3cVhRbklybHhjNm8tSUFEbWZVZ2xoZ2N0Y294T3RlRGtrUms5cmdWSnB3MkVsUEhCR1hWaVZIRm1WaHBTZDZudjNKbVgtX1NXY0duNXJEUXdSV2ZwaktUVWQ1Z2RMcWxpc0hLdWItN0pKZ2V5LW4ycjRITEtXX3hoY1JaNzlBWTBqdjVjWDVDck1qcTVoUkpOY3R1OVlFa0xHMlpiRnhwUkxrT2Zq?oc=5" target="_blank" rel="noopener">How Refreshi helps shoppers save as food waste bill hits R61.5bn a year - Business Day</a>
+        </div>
+        <div class="article-meta">
+          <span>Business Day</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 16 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Bpacks" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Bpacks</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqgFBVV95cUxNbUhkdXlSVUtlQW43SEZTNVFoWFNETXA4WDRpXzV5X1dKbFJmVmlMV3FqYkhaNGkwQ19xd21WdVYtLWVlN0lVVnpSdWtRaUpRWTBBSmZoajB5bFpNOGtjYWdFRW9EeEZCRkgtZGREMS1tMTdFbVR0TTF6d3JXU3JsNVVCUHJPdWN3SC04TmVoRWhXekJCZjFwMUhHZHlaaGlySFJJUlJGWms4UQ?oc=5" target="_blank" rel="noopener">i2r padless trays cut waste for fresh protein packs - Food and Drink Technology</a>
+        </div>
+        <div class="article-meta">
+          <span>Food and Drink Technology</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Circlr" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Circlr</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxQaGExTmpyUzB5blI5OG9NMHRKYW1NYkpJSEo1Ujk5ZTJxMWpNSW9oRE1TQWN0NFJYempCalVBSmRHY3FYRV9tVGZQT1ZTaHlmZlVjYld5ODh6RHhTSXdwT3Vuelc1UjdFQVNLVjFWTkdqeGpkeGd3b1FmWDQtTGh5NVdaLVV0VjhvcHNtOG5Ja3Rud2NUSEJkajh4Yy1zLU9kaWZobg?oc=5" target="_blank" rel="noopener">Surplus food startup Refreshi reaches 700-store milestone - Bizcommunity</a>
+        </div>
+        <div class="article-meta">
+          <span>Bizcommunity</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="No Waste App" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">No Waste App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMizgFBVV95cUxPUWlzS2tza0kySmlQMS1TVzFqMTIyeGp0Qzd2TVdNd3dsX3EwTVh0T1cyZDc5TFdHdEJvX2ZoZDR1S3NBdlNna1RQbUZWS0hORGJlck9HczRoTkZXejFqdFE4aTBVSDhxVEQzckJkLTkwR0lWQjBxU2FCWHJ4R0ZUQUxhc1NDUnJfaGpjemEtNjNPckhQYmlRX29udnMydE44ZDlyWUV3NlhDdWdacGUwNWJxUFRsVkZEdklnYzk4dFpFM1p1VG82UkNzeDkzZw?oc=5" target="_blank" rel="noopener">7 Best Shopify Inventory Management Apps for Small Teams That Need Purchase Orders and Forecasting - Enepsters</a>
+        </div>
+        <div class="article-meta">
+          <span>Enepsters</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#1d5fa8"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiyAFBVV95cUxQVEVvX0o0LUM4b1M4bmpWYjdmOWcxXzNkVURESXFvUWptQ2lxdXZnM2lsekotZllNbjM1clA5cVYxc2FnVVdCZ0I2dGRoQXExQnIwc3o3c3h0SVp2MVJ0VWJiaU1MNmQ1bWZUWHQzRmhkOFpsSFRmVlp2dW8wdnNyUjhFaG15REdhM0FHNWxTR0oza0dMZFAwSG5uZW5Bb1M4TDlXWHRCalVlV0p5RmZGYl95UUlXVkl2S3lwOGtNTjd4S2J1eE1CYw?oc=5" target="_blank" rel="noopener">Cut food waste and costs in Louisville with Flashfood, Too Good to Go - The Courier-Journal</a>
+        </div>
+        <div class="article-meta">
+          <span>The Courier-Journal</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#1d5fa8"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMixwFBVV95cUxPVlUxazhaeXk1WG5DV1FoSlNmM2NLQi1SM1hsbjlfbWtMWjV1ZG5USk5nQzJkRjVwSGNTUjZfR2dtLTF3QnpOSUNqVEVfYkRCUndMRk5MbXpIUnFiaFM1Tm1zS2NHNmdRNzA2ZVpmcWVlRklSQ2docE9OSUFIMlFRZEZYRDlscWRWX0dkc2NhTFIyWXVCWHlucEJqc05rRlVOeTlRRFRKQ29NUWIwTHJYN016OEFVRk9pc3EySGhGN09jUXhwQTBz?oc=5" target="_blank" rel="noopener">Struggling with high grocery prices? These 2 apps can help save money - The Courier-Journal</a>
+        </div>
+        <div class="article-meta">
+          <span>The Courier-Journal</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Vego" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Vego</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMingFBVV95cUxPeUpxZ3kwZHA4WnEtVUFVVXNDSjc4MU1GV3pjcmhkTW9iUHNaRTVrV1E1SUgtakkwN2xTU0R1cXAyd1VGT3h4amRYQ0tvYU5sMVROY3o4WFhIRGdpbEdCTVM4OUZqOHROZW94OV9IRkJvdzNuOEE0UWlfU0Z0UkcxUGRtNHVLS2prUUlZWEt2TWoxRmF4NERaSHJhcDFDQQ?oc=5" target="_blank" rel="noopener">Smart Composting Food Waste Processor Market Outlook 2026, Key - openPR.com</a>
+        </div>
+        <div class="article-meta">
+          <span>openPR.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Bpacks" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Bpacks</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiwAFBVV95cUxPdWdJYlhDY1E3X2dNQkF4Z2ZReE10QkwtVndVeTEwUkM0ZXB0R3dEajBwdllvY0Nwd096RnF2YTROUk1LcUh6YkM1NDFuRHVvRXhXbjI4TU1PSV9jZ0s3TFhmTjJfUWExYU9SbWl5c0ROZDdGSjdpY213UWk2a2JVSmY5eUZmME5vTkt4X3ViUTRLbUhTWEcyQk5pMGh5TmZCbWZlakwtcjJmamV2Njhibk5VdUdDZjNob1p6bWpoSWU?oc=5" target="_blank" rel="noopener">Inside a new project turning flexible snack packs into new food packaging - Packaging Europe</a>
+        </div>
+        <div class="article-meta">
+          <span>Packaging Europe</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Food Recovery" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Food Recovery</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiowJBVV95cUxQNjlkMVZCTUtWN04tTTZ0Zjc5c2FzZHNEaEV3eEdTVGxMQ0l5R01sVVFoSFRra0JvMjlWWGNBaVBUV1JmX0FwX1ZKb2ZfQkptVURNSHN5c3M2WGp4Q3NVeWttd0Vram5Fc1RjWHBEVXhkNXVmMjUxWnVEa2d1clg0bGJ4UW1qRExldDV6YjFzSGJTeTR2SFBVVG9LbVR1c09ad2hRVUxsd3hPLUp2bEVlUFd4VDBrcklvS1ozU2x3c3NmZVhORDhLc05fTmhZLVdmU3ZKbkhiUUV1cC15MndndU5pNEh4NjBCMUw5SU9ZaUhFUnRkWUhMLTZoYTdOUzQzQXZWZVN5ZHhMVUk3dDhsMk9ydEtDTEt0bGRIT1JxUHBpa2s?oc=5" target="_blank" rel="noopener">Towji Announces Launch of Vehicle Recovery App to Help Drivers Access Towing Information - WyomingNews.com</a>
+        </div>
+        <div class="article-meta">
+          <span>WyomingNews.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 15 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Food Recovery" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Food Recovery</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxNVXdrck9RNnJOSlNWX1ppdnRSMWdqX2NHdTBWLXI2Zjc2RGlLTGdZMnREdEF2eXBjcXZUclNvaHhIZUdVV2xnQmJPNl9aTmJGN0R6blV5aU9CeWg5MzN4YXptQmgwU1hUTHBZaHRYYjBOQUthR2owS2RLR0pkZlNUVFNYRFBIVG9WSTNFZ0RVellVZw?oc=5" target="_blank" rel="noopener">Virginia teen launches Grocery Genius to tackle food waste, grocery bills, and hunger - The Cool Down</a>
+        </div>
+        <div class="article-meta">
+          <span>The Cool Down</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Equal Food" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Equal Food</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiyAFBVV95cUxOTnVLcmNqUFVfLWxHNDg5Qmhnblp3OTBDRkJQSzZrbkhiSVJBdUtHTUtqd290NHFSQ1BubVBtbDJmc29EYnNFcmsxS2xnQ1c2YVNqVjh4SGIwVWFVVEdmNFgxamJrbGEyRC1OMFVDSXluYm9zT2pIOFFGOVMycko3elYwYWswNDNBeFBlalpkY3YxcGtZa2J3RjVZQnNzMjZZV1FaX3JlWl9RU2JmUm53V240bHpmdnl0MC0tNkRBVmREckxqWUFtaA?oc=5" target="_blank" rel="noopener">Carrefour stock reflects steady retail strategy amid European consumer shift - Ad-hoc-news.de</a>
+        </div>
+        <div class="article-meta">
+          <span>Ad-hoc-news.de</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxObXBUc0ppd2RhVEVvQzJQeTUzVmVsZlM4cG54Mm9OSWtEWkNDYWpjY3ZnNTl4YTR0Z2Y2R2hXOGF6ZGkzZVpDbEE1dmdHNVdaRU0wb3NaMVBSVFZJSTI5TnYyejVKdG5ycjdwdHJhMEZodEpDRHd0cTdjZmxzM1Q5WTJKTzFZOWZJRllUYmZaVQ?oc=5" target="_blank" rel="noopener">Sullivan County Commission to make decision in Second Harvest Food Bank resolution - AOL.com</a>
+        </div>
+        <div class="article-meta">
+          <span>AOL.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Forsa" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Forsa</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxORXEtV18tdHIzVDA0cHQ1X0szLUlQdzZVZmk5T09UZFJ3Wk1zcTNZVnZPSUcyMldabjZhQ20ybEpXX2dTTzRTSE9mWlRtSVlLU2NNLWd2NzR4ZVVGd0hhY1pZUTVJX2dKZERGN0E0OUIxSW5RMVhRdnl5OHZ5MUx1Rzk4QUFpT3dxMC1sVVpzS29JTFNlcUw4Y2Y4V215SUZkRzRCMlNUSnExZnZWaGdTS0ZHcw?oc=5" target="_blank" rel="noopener">Too Good to Go? App offers surprise bags at Bend grocery stores for discounts - bendbulletin.com</a>
+        </div>
+        <div class="article-meta">
+          <span>bendbulletin.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="FollowFood" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">FollowFood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxPZVd6R0pWNmpMSU9RLTlqQW40ME5LdzJ1aXFabHVYSnJ3RG9DdmF0U0JoNXdXY2RlbjJkUjVlSWZWYXJfMXRqOE9rb2lSUWJieUJ4ajBaWU9aeDNmc0o1T3NNc0hwRmFSTmtQU2U3dm9HemU0TUk5QTZFVFdDVWhvUHc2Ym1nNldYbGVnMXRmWjdRUE9yU3c3R3hoUGtCMmdCQ0wzQw?oc=5" target="_blank" rel="noopener">CYCLOSPORIASIS TRACKING: Oklahoma Health Department tracking cases - KJRH</a>
+        </div>
+        <div class="article-meta">
+          <span>KJRH</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Forsa" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Forsa</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxNZERKOVJJU1gwM25mME9XbmtGTnloMmEwRXVvbE9HMFZIWkF3VnI5RmE2QTFGY2t6bkxJMm5uaHM4WFlKYnUxNjZYbUgwY0F2aE1rQml3eWh0T193bGNWMVBCdjBTUzNrMUY5ZjNYeV9vM1JwMFVLb05nVkZsdURRUk5Rc0szMWkxelgwMkRDMzMtdGJzSTN6V0tkSGdyMFhaUGtZcEo4OGpyenRUckk2aUtBeGZNM1lV?oc=5" target="_blank" rel="noopener">Refreshi App Rescues 200 000 Meals From Landfill, SA Consumers Save R12.5 million - The Bulrushes</a>
+        </div>
+        <div class="article-meta">
+          <span>The Bulrushes</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Bpacks" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Bpacks</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxOMDZLZDVVUmdKeHdfQWRzNkJlM2x5QnVmTnhHNFM5N0hUVTlPeHFDZUJzUEw2czhMOUJpY1g3UjFCMjFUOUVTSEFVaDJyRTFSb0NaSmg3Z0w4cGRYbDlGLUZDc0JPT3pidjduT2VSa2xSOVhreGlnbFJLN2gtMFhTZmhyVm03MGZraVo3N3V2eC1IalFtU0t3ZVZIanpSY2hDdmstU2VndFROZGNZNExjbVR6Nkk?oc=5" target="_blank" rel="noopener">Inside a new project turning crisp packs into new food packaging - Packaging Europe</a>
+        </div>
+        <div class="article-meta">
+          <span>Packaging Europe</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Rscued" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Rscued</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiyAFBVV95cUxPV0JONFF1UmtIQklTRUtfVEMzdng4TmgtSWhrLWs0VDdXY3Q1MFQwaFpjTTJXdUx6WElZUXNyQnktdlpKdmJwTUdYejhGQURLS2d4aXgyS2dYbFRJM1k1VW96ZnNhQ2xmZ0JvU2ZpX2ZWSUJfS1pZOWtsWmYwYTc4cE9FdTFwYzJTeEdqMjN3d3p1VzVOdFJiLVJhT3pUWlU4bUNEcVdTNW1LeGVCSTM3TExmZEY3a0p6ckhzS0RMTElRVE1pdWlPWg?oc=5" target="_blank" rel="noopener">Sixteen months on, food rescue startup Refreshi reaches 200 000-meal milestone - Engineering News</a>
+        </div>
+        <div class="article-meta">
+          <span>Engineering News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxQRGZLX1cwUHczb1RhOEMySVlwUzRjVXdzd2RHbGd2MnNzQ05fdnZ3VjhFVVFTTVJQQS1oRUVxM1dvcFl3UTB1RUhPZnNmNWlINjdmV3BodEFlUlFCQUk4aEhPZ2RqVEJsdjAzb3RmbU51YzlsQzhrMmZwS2M3Y3hJempxUHZIU3NrNjEyWXRGeXdueE1BZEE?oc=5" target="_blank" rel="noopener">Winnipeg Folk Festival provides 6,000 meals to Siloam Mission - CHVN Radio</a>
+        </div>
+        <div class="article-meta">
+          <span>CHVN Radio</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Olio" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2d7a4f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2d7a4f">Olio</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxPN0psNVN5T1dFRmI5dkZpdWdienpyZTNhRzVvLUo4Q0EzT0szT3NOVFI1WnN3aXlnZGszS25PalZUaWpXV3l6aGh0bU03ZFhEZWxWNlBLeGtrUHBkTU05a0h2SU5SME1qZV9xQzFfTG85b3NHVXY5S092TGFfaHVaOEhtZFg0dnRzeVhLUjk0ZXFWekptbUVhTlo5dm56a1VCRjBVUQ?oc=5" target="_blank" rel="noopener">Applications open for Power 30 Most Sustainable Agencies 2026/27 - micebook.</a>
+        </div>
+        <div class="article-meta">
+          <span>micebook.</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 14 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Skip Shapiro" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Skip Shapiro</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxPeHJfalJ6SzZCNVZlSURwazFJMUxNYWJtc0NyQmlOYTdZSWNzRVktUnFhZF9DeWVHdGNTcmVhZEJKQmV0aGlpbF84MGo3YzRsS24zM0lOdWQ0aHZ5Z19KX3F2RnQtSHZkbHh0ZW9PS0JHeW1Rekd3a09yWnZGcjBJWjliaUQ0ekZUeWRxOFQxMUlNY0JGWnZ3TUVFQkpCWDkwVXhTbnA2cEx6dll4aEpQOFg3VVJob1dBLUxieHJ3bjRyLVdlM1pXRnNXeEZycC1zOHNmeEZR0gHqAUFVX3lxTE1tMmpxU2d3QUhIYTNjQVR4RGROQUhiNGtGai12cVo2Z1liZEJDNWtqWXRlWVQ4a1RMRFNsWEppMUJCMTYxNzllTS1NZG1qeHNndkxIX0FCUmc1YURLTzVpcWdfckxPb3AwOG9kM0x2WXZXUEYxZlQtQjAxTk9FUlRKaXk4OGZkM0lFbk40NmNWWnlYTDdyZjNZTGJBQzFzYktKNVpjVERhRGVuTEt3YlJfdzBoYmxyblFrRU5kMHFhMmpxV1lGcDlxTnVQWkMtV05XTU9VQmZRSkI4UXE0alpWSE9Tbndpb2xQUQ?oc=5" target="_blank" rel="noopener">After years of complaints about brutal odors, Pa. sets course to regulate food waste as fertilizer - PennLive.com</a>
+        </div>
+        <div class="article-meta">
+          <span>PennLive.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Green Spot Technologies" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Green Spot Technologies</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOUUN6RThaYXlIQU9FTlVMeHdKWDc0YnhoSlJvVzJ5ZEozOF9QNDRoZ3Z3NUdzdHYxQlptczU0bWQ4QUM1YUpWR3I4SFNlUG85Y09RUWp3b1Yzc3V1WWMxMG5rVldMTWNLWGwwT2J3V2Jha3pneDd5UnZCQmNQYUxnMlBqNVlBSmF1OUhfRHFOaG1lY2kzSlVoN1d6SmRhcW8?oc=5" target="_blank" rel="noopener">‘Lettuce or Salad Greens’ Identified as Potential Source of Cyclospora Outbreak - The New York Times</a>
+        </div>
+        <div class="article-meta">
+          <span>The New York Times</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZXBFbnFvY0FOSkxUN1pRSElyMkxIQmZEd0JSdS1mUmJyS1dSbjNoZHVqd2NDV0pLbGY2X0dTaDAyTElqaVMxR3U3ZHk3Zk9NeUJmZXVxeUJnTEFBNnlTMHh0MjJEZlVNNnpDRTRFUml4N2ZnN1g3TjdqajE2Wnc4X3lyeVBmaElXMWYxS1QtbC1xWERWZWdqM1ZyN0JVNTJHX3N0VHNXM1ViRTQ?oc=5" target="_blank" rel="noopener">Folk fest donates leftover food to Siloam Mission - Winnipeg Free Press</a>
+        </div>
+        <div class="article-meta">
+          <span>Winnipeg Free Press</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Equal Food" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Equal Food</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxNSE9tRU95andiSW9mbEJEWUFFYi1xZVQxRGVwSFZnelRpdzVxLWl5cnQwZmZrNmRITlFZN0I0bFZZd0liQTYxcEhpQUoyS0lnaUlHRGxmRWo0ZEhDN05OS0QtMkJJdy1GUG1Pd1JGMjg1VklyMnN6R2NqbmM5QUFxNWJsUFJ4bWNBVHprcDQtc1RQYld4dEE0S3B2OW16OUEyMEc1dHItLVJoMzRPUWhjb2dSWFhvT2PSAbcBQVVfeXFMTUhPbUVPeWp3YklvZmxCRFlBRWItcWVUMURlcEhWZ3pUaXc1cS1peXJ0MGZmazZkSE5RWTdCNGxWWXdJYkE2MXBIaUFKMktJZ2lJR0RsZkVqNGRIQzdOTktELTJCSXctRlBtT3dSRjI4NVZJcjJzekdjam5jOUFBcTVibFBSeG1jQVR6a3A0LXNUUGJXeHRBNEtwdjltejlBMjBHNXRyLS1SaDM0T1FoY29nUlhYb09j?oc=5" target="_blank" rel="noopener">Carrefour and Bonapp extend partnership on food waste to four new cities - The Romania Journal</a>
+        </div>
+        <div class="article-meta">
+          <span>The Romania Journal</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Equal Food" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Equal Food</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi6gFBVV95cUxPM3RrclpNT1RuaXE3eWVOYnlhSnpPZjBEeDNycFAtVEVEMUdwUEZ6R2Ezcmlfejc5TUNUNHFzcGhEVkZidUZjdVlnZTlhYnAwN2xwT01CTExyVTNWLTNaWFFRRzdrNXdDY0ZTeHU0ZE9mSXJ5YUl3RzRMeU9qVk9LYnVKSzM4cFV5Sk9tcENpS0p6d1FnenNpd0JaT1NOdTJ5WlRVVlBqdTN3VVdtLWluNnFpX0RuajJYUGc5WUtid1RWNlhMWUlEZGVseVFLRndnaDgwZFNtc3JVa2ZGc1ZxLWxMc3JNTUotTHc?oc=5" target="_blank" rel="noopener">Carrefour and Bonapp expand partnership to four new cities after saving over 5 tonnes of food from waste - Business Review</a>
+        </div>
+        <div class="article-meta">
+          <span>Business Review</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Reencle" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Reencle</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxNYjNycHBNS01IMzlBWEp0OENldWc1YjVVazFmMTR3T2VCZ2RaZlp6c1JRdmlqbEMxN3dKTm4tTUxrc0hTNjNqcmVSSVFwaHRmem52bjJMWTdac3FWbEFmUTI2Xy01ZE5IZDVFN05aTTBTU09DZm0wX0pTX3pseWdvOGlhcXlXYmFvbTZzTGdxZ3YzRjMyQWs0?oc=5" target="_blank" rel="noopener">Best Kitchen Composters and Food Recyclers Ranked for 2026 - streamlinefeed.co.ke</a>
+        </div>
+        <div class="article-meta">
+          <span>streamlinefeed.co.ke</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxNYzA1TlktQnV0emw4b1BaMDVLaEN5dVVsQ2tQSFRyV1F2T0dQWG9venU2WnNVNEZFODduMXZuQzlzbnRDRjNpOEZvZW9vdXdONVNpRzllSXJvVHRnbU1lc3VCaklrc0FFSFZBTEJxRHRocTBnRTREN205RG9xY2dyR2QteV9TSXdsZVE?oc=5" target="_blank" rel="noopener">Your Olive Oil Might Be Going Rancid in the Pantry—A Food Scientist Explains Why - EatingWell</a>
+        </div>
+        <div class="article-meta">
+          <span>EatingWell</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Leftovers" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Leftovers</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxQOUFNY3d6TkFKcHc4eFBoZWlZYzVlZDZQTHhWZy1meDFkS3dENUlGM2psSjUzbEFPc3ZSaWUyVEJYemJnYWlpLWdBa0Faa1VBSG9fR0pDTUI3Q0g0T2RxdmozQVVhc21jcURiOGEzZDZTb2NpMmdBQlBmRnBOejY1S3hnLXgyaUhtYUhMR1FzYTVlSDBWX3czN3NIMnRmYUZzTnpKVDNlcjY?oc=5" target="_blank" rel="noopener">‘Hard to grasp’: New food surplus waste figures released - Limerick Leader</a>
+        </div>
+        <div class="article-meta">
+          <span>Limerick Leader</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Rscued" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Rscued</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxQcE84ci1MV1E5eVo2QXk2NXZvbXVYNkUxU1BEdllfR2lMT21Gc05QX1BwaGN3NUlBcGhsSmRIUVRmQ1R5Q1Z6V1VEc0RsakU3WFBoWVlpLTlDdGR5aENvOUl2SXNxY0hOc3ROMEVHeUFGTGMtRnViYkZSY0h5eW1DWDF1N245U0h4QXhBTWc0aEJYVWt6SU9XSDl3?oc=5" target="_blank" rel="noopener">Potluck Food Rescue cuts landfill waste and hunger - Northwest Arkansas Democrat-Gazette</a>
+        </div>
+        <div class="article-meta">
+          <span>Northwest Arkansas Democrat-Gazette</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 12 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxQY2lDSURlcGM5NjNldDZQWGdzTlRKTzB1QVFnWXFNUzFPUkNiYkVYQUV1d3c0NWNESEJPdW9YTFZWbzhGUEExc3l2M0daVDZkbkV2RnBZelFQQ3lyOHRJbWNjV29uWDBBMENhdWgxeEVjNG9rVkZVbjRtajE1cDdwS182UkE2aWpGTUFkOGU2T0xDVE9rakdPR3FiY0pVZ2ctUFNBNE1lN0JtVFR2Um8xUThHNkp1QdIBuwFBVV95cUxOQXlfN2xPMGRLX2xYWkVYcTB6MThjOTdmQUVGVXc3anpxOVpMcUdkellWRlRPZnNvbUEwYzJZdmI1RjVQQlAwbE0zNzlnY2dObUliU0lfWWQ2dWFuVHpoa1hTb3RBZzA4RnBxYnB2ZUtuZW0xREJ4SVVpalNWbzJ6YXpuRUVUM2ZSUzZMQVFVVzF1S3QtR1hrNlB1YlNVeWZBNkY0UThLSXdDakRLNnIyd0Zxc1Y3cDJiNGZz?oc=5" target="_blank" rel="noopener">Sullivan County Commission to make decision in Second Harvest Food Bank resolution - WJHL</a>
+        </div>
+        <div class="article-meta">
+          <span>WJHL</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 10 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi-AFBVV95cUxNd0p5aDk1VEVZbHUyNDdsQ3owY09VNEtnbl9aeXFtekhTQi1TM0lwZEZHcWs4emxrRldMU1lUaGNrandNNUJuc29EeTg5dXFBRXoyWlhTNEZEX0hUTC0xVEprb1hzZ3l1c2NxZUpVak5HLTNKZ0tTSk5wQzVkRXZlcmd3NnFVdFdjX29LWHBNejg2V3A2cGhkY21aVUdndHhSTUt1ZVZZRkJMeW03VDlWTEV5TDVQSGx5elpwQmJHZnVCVGJxVDRkUFNHOVAzY0dvck1oUDFTYWVpcC1DTFp2X3Q4eHFkVEc5cUtWUVRXSFRfZmFqcnRsRg?oc=5" target="_blank" rel="noopener">‘Too good to be true’: Many parents are wary of opening a Trump account. Here’s why financial experts say they should. - MSN</a>
+        </div>
+        <div class="article-meta">
+          <span>MSN</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 10 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiugJBVV95cUxPUTFQZGtrNFVORFFxSlAtTWNFaG02OFg4WVpUWUlKMzh1al9kaURjaXlzckRjeUlFUlkwNkl5d1lubl9maVh5d09wdDhHSXJ1MExJZG10Q3NpbVVackMwQjFfdjYyNGowazVrRnB4UkxKeFZCMlJrZmVYcXp3NE9DeVRLWndzYjFfWG1BYWJVMFAxcWpDQllidnd1N3Rfb3dETmc4YmNicnp2emE4eWhzdEpLZThEdkt2UHdZM290WjJYZ0xOVmFHaHJGN2J0cmJqTDh3WDNOY1pCYkJjbHllYllDXzNCZ3N3YXNxNTRKTkdjSXRZeWRmbUdXa3loOTFDc2xQNzUwR3UxZ0lGZ3NIdnNrbmNMOXA2ckpVMmFHOEFxQlRYbFBFQTROelJ3Z0t0TWtYYUtQclRnQQ?oc=5" target="_blank" rel="noopener">‘Too good to be true’: Many parents are wary of opening a Trump account. Here’s why financial experts say they should. - MSN</a>
+        </div>
+        <div class="article-meta">
+          <span>MSN</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 10 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMidkFVX3lxTE1ITllrR2pmMlpYb3FnVGZva2stVkFvSm1ScXF5Mk16RVc3VXZBOVZ1TWV4U3BjQUx1a1dOWlA2VTdVV0JYUkFnc0pJOFNSSnFvanJ0Q3RkdktDc1o2NXdMVVh6SGNTMmJkcnB6VFZVcFdwM2M4N0E?oc=5" target="_blank" rel="noopener">11 Simple Ways to Add More Anti-Inflammatory Benefits to Your Home Cooking - Real Simple</a>
+        </div>
+        <div class="article-meta">
+          <span>Real Simple</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 10 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxOME4wX2hSVHlfSE9UNGJvelduakhDRUhxbURUMW05N3FQNzFPU2dZUXMwN2ZTQnltQlVrSHZDRm9QcGVSbjIxYUM5NDlMRXZpbE9VZWFmaERVTHRwME1mTW1KWXhZUFhoY191UTVYMVRIUm5EMWlwbHQ1QWVTZVUxdTVOVkJKOEVuNC16N2tfeDFSeXFDSmZpOGtGSEpDbzhib0ZVRXNJVWhoYXd1?oc=5" target="_blank" rel="noopener">Wisconsin football volunteers at Second Harvest Food Bank - MSN</a>
+        </div>
+        <div class="article-meta">
+          <span>MSN</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 10 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="No Waste App" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">No Waste App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxQWEJmOUlySEtORGVCTmNoYjJSLU9UdlJtTzJMRjloV0hadS1mcnkzNW1hQ1E2ZWFRVzVsbzh2LVVaVUZIOEdxaEdabFJva3l5MmVPNy1rS3NwSmdRMGlJdnBSQllET21MNnpJNFhCX2pXT2tkakZreGQyYzl1NS1Na254Tm5faTBUeTVzV1I0Unk?oc=5" target="_blank" rel="noopener">Virginia Teen Creates Website That Automatically Turns Pantry Inventory into Recipes and Donation Alerts (Exclusive) - AOL.com</a>
+        </div>
+        <div class="article-meta">
+          <span>AOL.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 10 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Save Me" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Save Me</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxNd204TFlLSk5EMVo1WjJhQzNlX0w4S2lPMnllR3FGOTR0YlBqSHNaMFRKaHNYX3FwazNuUVlBSmtSMHQyaUtTZHo1X2FIWWRjUmhfVmdmQzJ1T29oMmVCdHM4UzR1VUNHNDBLRi1pLTNLek1yeVE1THZBUHFxVnRxUEkwa19VZVpRd2F4NkNTamJ5QkU?oc=5" target="_blank" rel="noopener">Virginia Beach teen launches free &#x27;Grocery Genius&#x27; website to help families save money and reduce food waste - Yahoo</a>
+        </div>
+        <div class="article-meta">
+          <span>Yahoo</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 08 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxNMjZpMjhKQmtQOGJQZjlVNk56dk5zNlQ1OGQwTjhILWlaT1hQVlFtbmZpMHI4MDUxUWhOOVRUbmNJNWNuLTZuSkludHpPeFJrX3pBSURKQWxOaW5NSTlvdkNoQWdiXzJpMmVfRHlqZmxXMVZUZTJEVnZqTGE0eHl2c2tCcw?oc=5" target="_blank" rel="noopener">Second Harvest here to help storm victims in need of food and clothing - AOL.com</a>
+        </div>
+        <div class="article-meta">
+          <span>AOL.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 08 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Leftovers" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Leftovers</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxQdkNXanc3bmtTWnQ0YlVyYUpveHRTbXJ2UE5CbHdDekdjdkU5aDJzcUdwdHRsRENsQnZRZDZTbTFnNUFRTmJSOWhMT1dEeTBKblZfRzRSTWdGeXdreFd6eDl1LV9USE8tYkFXZUJoTFVOVmpOb3RBSEVqbUNGMU96R01RcmRXRGs3NWxzRDAySzMzcEdQU1lpVDJpMmxQaGI0dlRaZWlnLTFvb2dJUFJMMFFn?oc=5" target="_blank" rel="noopener">‘‘Hard to grasp’: New food surplus waste figures released - Ireland Live News</a>
+        </div>
+        <div class="article-meta">
+          <span>Ireland Live News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 08 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOM2FWOFVJdVRDUWpuMVh1bndVTVFGaHgtdkptRDFDMnh4eWFDQ3RfbXJneXBXcnhIZVlTTzRzaVhaMHpkLU1vR1ZIRWhHRC1LRHduSnNsaVNqUi1Bd0x5a2c1ei0ta3REUVEzanI4a1BzanJLZjFoYldPSENlbXRzYmsxTXZKLXF1Z2hXSXZxckZqU1dHN25UM2NtcGtLMmFqUF9RT0c5bjE4bzExc1EzamRoWQ?oc=5" target="_blank" rel="noopener">Second Harvest to move Grand Rapids food shelf to new location in fall - KAXE</a>
+        </div>
+        <div class="article-meta">
+          <span>KAXE</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 07 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Save Me" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Save Me</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxPV0o3eVl6TzJWa1A4Z0kzbmlNYVdSVXlZZXBXUW9Ba1YwTms5U0ZLckotNzJuZ3ozTmp0U1hxa3ZGVWFfejFiM1RGMGhVcWFYaFdyOGFiUElpOWxwRVdwTkQ0RU16a2s1ZTQ5cVRqMlJJa3IwTl9CV2E3cGFOMEktX2pvbW5xcFQwbmNRX3YyRQ?oc=5" target="_blank" rel="noopener">Volunteers racing to save surplus Silverstone food - AOL.com</a>
+        </div>
+        <div class="article-meta">
+          <span>AOL.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 07 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Leftovers" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Leftovers</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxPODg4ZWhES3hMaWhVSmpfQUxUdzVDLTR6c1NWZVQ1NHRCSnFjcW5ZeTZwVVgweDZNeEl5cE9HOE9OM09CdnFuc011OGltMndqcGlMOFpaQ0FkaXM1WUFjcFljRW5Xa0FCUERCdGJ0R2ZtQkxHZE9LemNDX3RlQTZmQmw0cE5RaFJybkYzN2dlLUNNMnJuc0NuOGpfQmJKNGptY0tRUEhqQzJwY2FkWWc?oc=5" target="_blank" rel="noopener">Hate food waste? 7 creative ways to turn your leftovers into a new meal - NPR Illinois</a>
+        </div>
+        <div class="article-meta">
+          <span>NPR Illinois</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 06 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Lucky Meal" data-country="South Korea" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Lucky Meal</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxOM3p3bktaSWVLbklpY25WVGZXMGxjcVFmckt6WnBDTk9JTWt1N2xsOGNza29NOEhINnNSWmt1alBacG1XYzRvQmlDTVh0TktLdlA1Y1Q1Ylo4R0x3M3pPQ19fYVFwZ1BjY185QkZSUWdkcE1tWi1uZ3hyUTFqRnlYbTQ4Yk5rczTSAYwBQVVfeXFMTnVCTkh1WmFTZkZWMEpoS0hvaThXeGpjWnRBcHZsLTJTU0VQR1FpV2NLQlZPVFBtenh4UkxKNzJ2X0x3dm9ELThlZEYzS1FfZTd6S3Fvd0R3VGlqVlU2WWVnQ0MzaU5YYmRqdE9zeDhuNFFiN3BaWTVEa0JsY0UtYXB6TGFFVDhhdC15aWE?oc=5" target="_blank" rel="noopener">Ayrshire charities urged to sign up to supermarket giant&#x27;s surplus food donation scheme - Daily Record</a>
+        </div>
+        <div class="article-meta">
+          <span>Daily Record</span>
+          <span class="article-meta-sep">·</span>
+          <span>🌐 South Korea</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 03 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxPb2tQS1I2Q0VCaS16M0JsVmVfTHdVMUxiVXNiNVZQTEp2T0lndGo1dUt0UVV4SEdJZWgwUHFoRUVvQ3djV1lqVERib1FmTVhsbGhfSklFeDBKQnhXY1FDOFc3WkVpcWhmQVQxNlI3S2FTZ2NUM0NmMGkyaTRaMDB0cmdGRkRFYy0tSVRoRC1KSFR5MGY4bmQtb3NCaXR5eG04ZUQyQQ?oc=5" target="_blank" rel="noopener">Taylor Swift and Travis Kelce donate $1 million to Reading food bank - Inquirer.com</a>
+        </div>
+        <div class="article-meta">
+          <span>Inquirer.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 02 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxNelNfWDRBbEJVa3dRU3NZcXNUS2w2eF8xWDdIaXBzay1VanRFY0lUZWYxS1hRY3ptQ0szaTZrX1J1LWhucDhWdTZKZG1HXzhrVE5CYlRwNS1nZUJ3dW4wWjZMbVhmZGtvVGcxMy1nTDBvV21kSnpuVER6MUNWZDN4WTZlNmdfX2dsdHc?oc=5" target="_blank" rel="noopener">Free food distributions planned across East Central Indiana - AOL.com</a>
+        </div>
+        <div class="article-meta">
+          <span>AOL.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 01 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Prism" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Prism</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi6wFBVV95cUxPOFF6RExSQlR3VXRlZldUdUozaTNfWmczZ3pqV1ZzZkRCU1owTzJyREtrYUxnUktUcm5fNmdaQTJvZzN6dEZyRU55amVaSUZqVFprS3VBVU9PMTRvOG9ERkJCOGdPSG9seWY4blRheXRCaEdiblBpWTBiZmhfUUlXZzYzZlgyUWVpdEtsU2RDVFF5SElmdnNTZG93TFRlSGthYXlpRVNtQVBVVzRsYUtmRVNybC1WSEtFT2FTTEEydW9iYll1V2tPUUhxZUFGOTZZaDd3SElLT2ZiX1RfbTJWc1ZZcjhVSzhEUVFJ0gHvAUFVX3lxTE1CM1MzNmhWckRTTkhZRU5zUjVScF9DUWx4d1VZLXpPOEhaODVOOF9LNjZGb2YtZDNOb2pOenREa0FKenk3T0l0QXg1dnVtdjBaaFB1MV9makhYU2l6VHo5bklkaUZ5NmJmRkJKd0ctZGFPemE3ZlJqdGFadkh2UHBzZFZQczR1bzJ0dHdKTXVuNDk2UlR5YWZDTFRBWFBzMmliaWpMVHltTGJNdXBzTFQzMzdnN3lkZFdGRWt2Njh3Vzllc2IzWjI2aWE4ZHFQeG92Q3FXMjBmYW5hbEdpMFVNZ245YlM2WnBWWEJWWXNz?oc=5" target="_blank" rel="noopener">Focus Prism Pvt. Ltd. Revolutionizes Indias Catering Industry Through Technology-Driven Consulting and Operations - The Tribune</a>
+        </div>
+        <div class="article-meta">
+          <span>The Tribune</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 01 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMie0FVX3lxTE1NYTNUcUpUQXlteXBsT2ZZdUpsdGNFRkd2SzdkN0dEbUFkRi05TExaR25mNU1UdjN0YzlfT3JXSFRGVHNFeGs1T1VFMGw1LWc2OUozTDVtVHYzY1k3TXRlQWNVXzFLeDRBWlpvMVZ6dXZJTW5ZVW1HaFR6RQ?oc=5" target="_blank" rel="noopener">Best Debt Consolidation Loans of July 2026 - NerdWallet</a>
+        </div>
+        <div class="article-meta">
+          <span>NerdWallet</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 01 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Prism" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Prism</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi9AFBVV95cUxNQlloMnJ5Q3RvajQtd2JQcFE0RUtYWVlwQ0tpczYyclZNekRiSmJmV1pQLTVRSTBqdEVIdGpMNzN6ZVNqVnlnOHNFWVVNeExTWUhaTWRRRnlsQng3XzR2VTB6RlJTbTdEUlhVaVp6dDFYd2VyTHltXzh2WEszdWY5NWdncHVGRXcyYlltUGxtalQ1THBkWFJ4bzY3OW80YzJEX2Q0TUxhcEsyclh3bGFFUE9Lek9pNXZHYXUwOTctM3FPeVBudTNKX2NzSlRtY3hZb2ZETHNuRWM5Rk01clVzeTBENndSa05oSkFKRzcxQ2ZhakZI?oc=5" target="_blank" rel="noopener">Focus Prism Pvt. Ltd. Revolutionizes India&#x27;s Catering Industry Through Technology-Driven Consulting and Operations - ANI News</a>
+        </div>
+        <div class="article-meta">
+          <span>ANI News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 01 Jul 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="We Don&#x27;t Waste" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">We Don&#x27;t Waste</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxPbTZib01YbzZXTVJnQnRxc0lIRWd2bkhPNFRMSC01d0wwbnBYaUg4dFJiaUVYSGlYcjBYbVVpODhWTEQ2dTFEWXVxTUJiTXBMaTlROEtHaVdvcHo0T0RSQzRndGZxSGNaWjlBcjVBN1l5TWoxdDl0bUlqeDZrTEJmLWl0SU56NXZ4MlJV?oc=5" target="_blank" rel="noopener">Federal funding boosts Okanagan food rescue project - Victoria News</a>
+        </div>
+        <div class="article-meta">
+          <span>Victoria News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 30 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="We Don&#x27;t Waste" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">We Don&#x27;t Waste</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxPZThxNGVWOUExUkExRlp4STk0d0E4dUhUZzdVTUo1X3AxemZWejNXcU1zczlUQnM4ZnJrbkxicTJ3Sy1XYXlQcnhDa2xxdmItdGkwTUluUmVuUDNnWWdfT3gtbDFseFlMRXJKcy13LUNwdWJuQVZrdUFoTk5zUlJTVEZEdmxRaVZWaW5HX05aa1E?oc=5" target="_blank" rel="noopener">Federal funding boosts Okanagan food rescue project - Chilliwack Progress</a>
+        </div>
+        <div class="article-meta">
+          <span>Chilliwack Progress</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 30 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxPd0xQNVd2UUljYVZEUkF1bTNvMnFHTksxbloxdVV2c2FmaXpmWjRZTG5KMTI2aWg1bkZuWHNlazhzcVl3akFGSTJXR2YyMUg1ZUtUVEM2UUwyTVpYSWMtMVlYMGFVZmxPQWhJNTZScmQxMllZLUVGcFkwMEQ5ZGlXN3F5b3QxWVotWDkwclF0SUNGNEZ2T3oxR0E0N2tCN0hGSFYwNXZCZWRZWWljVXJMenZKMjVDWUdNLXlSU1BRMXpEeFB5UURmYVdoX2k2dU0yVEs4eFZR?oc=5" target="_blank" rel="noopener">Looking to save money on groceries? This app offers surprise bags of food for a fraction of the price - News4JAX</a>
+        </div>
+        <div class="article-meta">
+          <span>News4JAX</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 29 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxPamFmczIxYUF3Zm1yMmV3bFlYWjNhS0M5ZVFlV0F3Q3ZVWE1XaGNhM2FEendVQkw5eEhWYjRrLXBBM1luam1ydlUtTk10S3o2RkFoNy1MU0d6SnhSVjQ1RzJVU2JfVG9JUGpDaDBCc1NYWVp0V2JaWUJMRDk5VUFlaVVaaHRNc1k4eHlBdU9DVTJKcjNvZi1IRTdscW9ZWU9jWUlhdDBaVDlZZ3R5MFR4MW9iYw?oc=5" target="_blank" rel="noopener">He changed outdoor cooking forever — then took over Weber - The Verge</a>
+        </div>
+        <div class="article-meta">
+          <span>The Verge</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 29 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxOZUNOZXZkSnBocTdnZVlXOHZOVlVpTTFIamVVdnROdVQxTDVqbDdPai03NHJzOHZaNEZuR3pMRGZmU0tQblRLbS1henNTdWRFN2VybjNMOXhnYUNJZTRCWlBicG1pMGlhd1UxWnd2RktJRDZfWm5XVm1iSHZEMlctV2pzMXNjNzg0UzM5REY3b0ZPbVFyZ3JHNFl5Y1FYbFI1Rm1mWGVB?oc=5" target="_blank" rel="noopener">This mindset shift can help you get better at using up your leftovers - NPR</a>
+        </div>
+        <div class="article-meta">
+          <span>NPR</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 27 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Green Spot Technologies" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Green Spot Technologies</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxNUUZ4ZVFRZWFXYlVGckstci1SSXZfNWZDV2k1WG8yM1FhTnotLTVJa0k1MVFDLVBrRlFhSVJsaGRkc094c2xNTEVlRlYwZjNLUEFzQmFmdGVxRnY0MzYtZ3dINmlHVDUzc3JKT2hvaEFnOXozU1JsanYyN2JodTJ3VmdHc2NzOHR0aHdBcU01X0tWQjNkMmdNZi1ndF80bW10WnBGMU9oOF8yR3BMNVhDdUxB?oc=5" target="_blank" rel="noopener">Food Service Workers Strike At Rhode Island TF Green International Airport - Patch</a>
+        </div>
+        <div class="article-meta">
+          <span>Patch</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 25 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Vego" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Vego</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi6gFBVV95cUxNOWNxcHFCaWdQZUF5a25JekdtXzVCTi1SYXpSeEZKUVZzM2JhSjRnd09vbjhSUXFVNDdRcFRleHlHb1BZNUtEV2ZuS3Jfb2RSbWlTODk3Ym1pbzQwTE9oS1BaWV9SSWVYckM2ejRweGtKY29SdGJueXhGdlBLbEI3SVpnNEFyRUNtOXh5SHE3bWxaeXZRSkRvekdueDlGYXpsb2Fpb1Nrd25vZU1OWHJEenJTXzljVDdWV3BxYzg5LWZyRWNuaEM1N2cwTzh2SlpOWDhiMGZmLXNKT1QwOVlIc0R6LTd5UWJwblHSAe8BQVVfeXFMTTh6UTcyb3B3My1UQkppbWRMdFZ3MXBVdGYwMllVSlZrQV93ejRsWVBKTlNzRmx6SWNfdHkxa3NzZU1zaDh6ejQ5akZBX1NKWThhQVFHWWFDUU14a3VfWTZSRmJhWVUxUW9tREdBdVpIdEdOWkZNQnU2WTZkOUo2T2NzRnVXb19oTTlURk9uZTNmS1ZGLU1KdTQxcGxBN0puLWtra0FpWUpBVzhkc2JReGVmRlV1S0o1eFBZaGlDWExIbExrYkxzcDZWcnhBQkppcEY5Q0FUX29Daml5b0t4S19NODhvRDFwaUhFaXE4ZXc?oc=5" target="_blank" rel="noopener">Five arrested, boat seized after video of meat, liquor party on Ganga goes viral - The Times of India</a>
+        </div>
+        <div class="article-meta">
+          <span>The Times of India</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 24 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxPX2RaNmJjaWpYeEFST1F1T01qbzNNSlBpWGhHYXh5UF9aRXpiTmpzNTVPMUFwcEF6U1Z1cDgzWmNnYWFpdzQwNWZ2UmxtdzVVQUNlTWpocURkUGxNaWE1eVRudUZtYXJja3VONkgyWjhwTGY4bWJSSzNDTzg2UmlzRm90cU5KYXo3Mk5wWnJQazBUN2R5ZUpB0gGcAUFVX3lxTFBXcV9SSWs3bkdtYlNSV0pkcU13RmZTNUdxYnFQSlRleGVKcjhUV3dVNFJvZUl1Qk9nZmdwTXduWkVBb2ZCWkhmZVZBcnAxV0FnblE5SHF1VTk5WWlxMXRiSEJZRS1PN1YwdkUxRzhhU0NDVmN4RWFmUVRqM3ZIaUpDNWxpbTJFeUZvXzdTaTBqbFpnQW9UTnhhQkhtQw?oc=5" target="_blank" rel="noopener">Second Harvest distributes meals to children in Greeneville - WJHL</a>
+        </div>
+        <div class="article-meta">
+          <span>WJHL</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 24 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Edama Solutions" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Edama Solutions</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE1xN0loTkRtZE9zd1Q1UkZBekJPR3ZzaXJHQ05IYWxiVTZwbmhITkZRLUxGSHc3QnlybnVZZVRDajVPcXNvZHRDYllpVjRocDJCWTVXbnMwczBhS2trT1lnSjNNU0RmSlRKSE9qd1FPN29MZjhDRjVz?oc=5" target="_blank" rel="noopener">5 Foods That Contain Both Protein and Fiber - The New York Times</a>
+        </div>
+        <div class="article-meta">
+          <span>The New York Times</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 22 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Coupang" data-country="South Korea" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Coupang</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiWkFVX3lxTFBoM3E4Zk1ReDZpejh2c0pCQzg5VVRrWVF3aHpGeWY2X2RzWDNWZTFZV2ktdGdSbW9lSkpPQ1NiN2kxblo1Tm85WFVBMmNhVnVzMC01OWk3SDkzUQ?oc=5" target="_blank" rel="noopener">Watchdog rejects voluntary corrective measures proposed by food delivery apps - Yonhap News Agency</a>
+        </div>
+        <div class="article-meta">
+          <span>Yonhap News Agency</span>
+          <span class="article-meta-sep">·</span>
+          <span>🌐 South Korea</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 18 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Gone Good" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Gone Good</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE5hMm9Pb2lHZU9jTjdpb1RpNXo1WFFWU2NKYkxUY3c4WFZwV1loUzdtVjhRNkxtdV96cnI2YmRXV25MeWxkWUJkOTdaMkNXcEhzN3dPYWZzc0pETUFy?oc=5" target="_blank" rel="noopener">Council urged to act on &#x27;gone to pot&#x27; bins - BBC</a>
+        </div>
+        <div class="article-meta">
+          <span>BBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 18 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxQMlhIU19sUFR1Ykp5NmJmVldLbHI0UDNiTExpbk0xenhzMnFJY0ZnSVV6NHYyWUdLbGo5VnUxUkltV0lITzFHQWhBcEV4UU9kc29RYzhvRFFzdzVBYTY2N3ZNTE1qTUQ3aUV0cXlZSzcxVUkzcXBuQmw1QWRkOVQyQlY5Z0l6dEJhUzExQVVwWEVKLW5hY0daUUFiZzBvWEJjUUtRYmk1aEwtQm02MlpENW9zeGVWN0R0MHNEdXFwdl8wZ9IB1gFBVV95cUxPM1BuQ3drVXJ1U2htcnJFemx1RW9UUXp1MEV3WnVFZUlnTnl6VUM5NnJHcXM1Q3VsaG5OZHlwV0RYZlFVbFVnOE1RUmNZd3VsVHZvUldRcE8zeHJWcm5Bb0N5Q0RfanpncWZZMVNMZzBZUk5fSHRVY1U1NUdWNVR1MUxxWC1DYWNyZU9GdmFuU1FYNGpZN2NCYkNLekg3NHF5bnNESFhTaTRuUnpVcUd0bWc3RnRzXzZYN2JwTFFRVVQ1WlVfcU9XTjgxOUFGR2hwZjJPSENR?oc=5" target="_blank" rel="noopener">9 Food Drive: An inside look at how your donations get to people in need - WSOC TV</a>
+        </div>
+        <div class="article-meta">
+          <span>WSOC TV</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 18 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Forsa" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Forsa</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiuwFBVV95cUxOaTJwT3RZNHRRV3NORlh0aklHb1JXWklycXpNbi1rUlVuVU1kZ0hpYXNxTFlHd3NSRHdSdjNDb2F4M2UxQXpYWVBhR2c5LXZKV1NfbldXLTloNW1rWkxtdnBzX1BiaGFiQkpuN1ExaHN2WDVTdFFGTEJUODlnZnNiaHlLdGRDYVBEa3gwT1VUSVpnUjlIbzlCQ3NjaDBGbHg1dmx5Sldydk9zOW5uVTFOZmE0bndiVEpSWDFr?oc=5" target="_blank" rel="noopener">Trader Joe&#x27;s new mini striped tote bags have dropped. How to get one - USA Today</a>
+        </div>
+        <div class="article-meta">
+          <span>USA Today</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 17 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Topanga.io" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Topanga.io</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi0gFBVV95cUxQckd0bnh1bUpLX0xONUVTT0hfY2Z5S3A3RDhDVlhUVlFOYTZOQjdWYUZYU0NEcDJoVnlBbDRUUGo0bzdBNzhYLVljOG1EZGlMN0d3N1VmMEN3SFBTbEMzMHNpck45TlE5N3hvdjktakY5WENTajVkT0F1RmtFN0hBdXZocEswRFlqZzdtcm9LUGE0NldWbTYtVjF3MWNEOEdwdEdpajFSaW9lSDF3U1FnNDRsZU5Ea3FVN0hHWDI1alNHV2h3MVVxdEJQeXBqZm5rV0E?oc=5" target="_blank" rel="noopener">FSD Chefs Immersion University of Michigan preview: Meet Margaret Occhipinti of LifeWorks Restaurant Group - FoodService Director</a>
+        </div>
+        <div class="article-meta">
+          <span>FoodService Director</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 16 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Food Recovery" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Food Recovery</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxNYUF4NmdKZ2tHbzQ5cXgxemRZV1BiclkxYlFub0xESXFDbTAydXhaQWVmMFh0ZVdOWUNjZ1JzVjVyRVd2NVA0Y3RnenI3NjdZekZKd3g1SkVDQnRTUDk0X1R3T1BHZEdTQnV1R3Q1TS1CcG1pU09pRk5sOVZWZHBGVHh4UGZPLTRSRGl6UHlDenR3TFkzOGpjXzhjc0R5UHBkTVZr?oc=5" target="_blank" rel="noopener">Korea&#x27;s Delivery Apps Roll Out Closing-Time Discounts to Cut Food Waste - Seoul Economic Daily</a>
+        </div>
+        <div class="article-meta">
+          <span>Seoul Economic Daily</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 15 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxObTY2SVpuREtYX0dzVmcxWlByU0RpLXpvR0F1LVdmMFRITVRjOURfN011MlltRzhQYW9kbk90Tm9VUXphVk4xUEJtMjFoUUFOZEV5WUp1WGlwa2xFWVE4d1FSV3FBUzB5b0RVWDduTnotM3l0RDd0c1FxTzQyaFk2N1Z5dkZtRVpCN3JFdzFyTE12T2dPVi11YWxRM0VwMDlBYVYwTnhwUTRFaE8xUVRzSmFWSzczV29pLTJIWUtfU3lfNVRya3fSAcsBQVVfeXFMTnNTbkhkLTVKR2ktQWhBcm1IckR6djh3OXk1ZmFRdEdHRzZTYUFMOVBGV2xNcWIwQkhmY3ZJMjd5MXZzeHpVMmdzVUdQal9qTWFhc1VKMGRZc0FqM0pOUTAzeVp1RG1ibjBENzI2MDZjY1ROdTNubTFzeVhhbE5NaU40dmwwSG5UVHNWbTdxa2xUTFpvWmRQMW9YZ1ZfY2VEWjg5SEJNQktqU3B5QmIyQ205Qy1fOFA0Q1dtRWd5OVJNREN3bFRyTXdfYU0?oc=5" target="_blank" rel="noopener">News Channel 11 gives back to Second Harvest Food Bank of Tennessee for Founder’s Day of Caring - WJHL</a>
+        </div>
+        <div class="article-meta">
+          <span>WJHL</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 12 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Veggie Specials" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Veggie Specials</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiYEFVX3lxTE5wVGlCSlh1M2F5UklGdUFva1ZiNU5MWEpLbXdyaDVaOC1vVHBSYmpIVmNEV0pKVnpjYTBKbldkbXNqRC00VWgyazIxcTFLOHNUbzlCSUFjTDZQQkM1T0lxMw?oc=5" target="_blank" rel="noopener">Top Amazon deals: $7.99 Electric toothbrush set, $9.96 Tactical flashlights 2 pk, $13 Veggie slicer - WRAL</a>
+        </div>
+        <div class="article-meta">
+          <span>WRAL</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 12 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Vitesy" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Vitesy</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiYkFVX3lxTFBMZ0hHU2RNZXVTU0MtbWdjZ0dqVnNpNEdZNU1EM3ZuUlVWOUw5aThObElGNjBwd2ZsOXVaTF93akRPYi1YbkdtMHo3Y1JsMGNEQW9Lam05NkFwdTJ1WFI0X3FB0gFnQVVfeXFMUDN5OW5nQnA0Ylp5OE5CN1RzTEE2Qy02TjJtbU5OSzU4XzhvZVQ4WG5DTlNXbVhDVWgyTC1UMnkyYVBnaEF5c2RZRWUzbnVfaWl6bmV5OVJnU2d5TVhWbmNhcjdRcXd6QQ?oc=5" target="_blank" rel="noopener">Freshness-Extending Fruit Bowls - Trend Hunter</a>
+        </div>
+        <div class="article-meta">
+          <span>Trend Hunter</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 11 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Rscued" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Rscued</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTFB2UV9oM3F1TXQ4b3d0U3BBaGdhLXNERGZ4d2NUa2VyQkFvTVdxWkJqTWZMaktWWjBnZmxHNndtS0lUbXlwVWM1c2lzNmt4MkdzQnRmRHMyVDM1SGVMTmI4UXQyeE5JWUhtMExhQk1tN1M3dl9KeE9F0gF8QVVfeXFMTUdIVmVlLU1HOFJXakRGTy0wZGJZcXJiMVp6bW5qOU9mdkVOYnBGMEx3MlIwMnBUUXVNQ0xOeWl1bk11MG1QVlZ3YmQ5X2ZXb0ZKUVhlTFBnWlY4dVdxWnA4ZlEwNGkwRFhIbG5BU2hXLTZ4MVlqQllZSkVxcA?oc=5" target="_blank" rel="noopener">Baesler’s Market to host cookout benefit for local canine rescue - MyWabashValley.com</a>
+        </div>
+        <div class="article-meta">
+          <span>MyWabashValley.com</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 11 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiiAJBVV95cUxQa1BHbDEzdjhsTlUwSkhzbUsxVGJvclJKS0o3NWplSTFSNmh5aENJNXNsMEw4cDRfMFRPWm9Rek01ZlRZT1IwZXFGZEgzVjk3cHhqV2NObTFkREhzZ0hobk12aHNhMDFMdTI5Z3dJS21KVFU0MjBZUzkyZWtlYVl5aE5LRms0WF9Dektycm9tV2tZTUozVFVyYjJIYkFJMENWM1BpT0lQN3FETXZVMURUdkJONjFaVVNPZEh1OWdHMkM0eW5haTBzYTdyalVVckFrWkcwLW5yQTVzZ2tMRkE5ZnVybEdXbjVQZ1djelVzX2dkdC1BUkVJaFdHeVpVYnNvSjQ1MFJwaFE?oc=5" target="_blank" rel="noopener">Makin’ Groceries Mobile Market to bring fresh, affordable produce to Houma on June 10 - The Lafourche Gazette</a>
+        </div>
+        <div class="article-meta">
+          <span>The Lafourche Gazette</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 07 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Innovafeed" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Innovafeed</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxQS3E5SlcxUGdZQ3I1ajJLaXR0dzJPSldvSm0tQnBRVmwzSVYxNnRudkFQMVdVTVNnS2htcG9BMzJLY3pPbElFdy0xLXl5RnowaWl2ME8zSHFwNkMwa1BCNmxWNXV5clEwc3JCZmlUdVBMcjZDbk1iLThzdEVGQjBQNlJxdVF3ZVlxWHc?oc=5" target="_blank" rel="noopener">Innovafeed: insect feed producer raises €51 million - Salmon Business</a>
+        </div>
+        <div class="article-meta">
+          <span>Salmon Business</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 05 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cool Innovation" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cool Innovation</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxNdTgwRDR4LWFXWHJ6SVRSRjZpQThGVXFEb0hqaXR4T0RxQjl5bzlhNkxXQV94dEk0WjU3TzdpSGQ3bXRmS1pfRVV3bVJWbkp2OEYxa3NiaUZYdk41VXgzQTk0b05pS1RxM2cwM2xWRW03YzRSYUZaajFWVDVQa3o2ZExHRWlLLTkzX0JoS2Fva0d5dDJDV2s5Y1VrYUZlVkdYSmlUWGJ3?oc=5" target="_blank" rel="noopener">Dave’s Hot Chicken diners don’t want to talk to robots — so here’s how it’s innovating - Restaurant Dive</a>
+        </div>
+        <div class="article-meta">
+          <span>Restaurant Dive</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 04 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Green Spot Technologies" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Green Spot Technologies</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxPemlreVRzNG1fcnZkOThnRzdSdFBkaFdiWTN5WHR2SG5acUJRaTZFV0ttZ1V2NHZCVU1SdWZhcERCUjc0YVFTVnlkaDVnbjhKTEZKandRMkFCVEZKUGdQUkxEMDg5dlRtUzFYemhYenBSR2dZNG1JTURfNldKYjVqSjBlMVd3eEN1WVpwMkZ1RnFraGxWLXg4RHVyTV8tanpyZkQ5RXhjcGg5QjA?oc=5" target="_blank" rel="noopener">This Summer, Enjoy Free Community Dinners, and Themed Activities, On The Branford Green - Patch</a>
+        </div>
+        <div class="article-meta">
+          <span>Patch</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 01 Jun 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cool Innovation" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cool Innovation</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxPb0lJVldUM2ZzSm52Zl9NM0FTQ1hqMEZ5TmpDMFdtcVpjUks0cmdjM1ppZXNpRElqMmJRMmlrRzFGckZkSkZkWHVUVTNUSG5nc1Ztbk5nMWFPU3pSMW9tdktaam1BYXdjT0gzU2ktVWJ6bzBDbmNOdGV1SDBQRlBrVHB3bUVETnk0by12MlR3Z290clpySVBIclJCdi1Benc2b2lEYQ?oc=5" target="_blank" rel="noopener">AIPIA Brand Challenge 2026 winners drive innovation - Food and Drink Technology</a>
+        </div>
+        <div class="article-meta">
+          <span>Food and Drink Technology</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 29 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxNOTBaTXdCSDV5UUs1QzFMMEdKajV0MjlpRHNMcWlpM19HYXhiN1d5NGNFTnNxalJ0Z19IRE4tT0FNTXpiV2U1WHVVN1R4cDlrUXVlQ1ZRN3F4bjIzOVY0WXY3WW1JTU01SUwyZjlOT3dDYUhwbW9qZXNWVWlZN2Z4NHpXeUdDSTIyT3B0TU0zWdIBlAFBVV95cUxPMGRySUZ0M1kyeXFZVGxyWmtnNDUtcXp2ZzJTUy1lNm1xSTI2ZGtHRVJjenRHX1A4emFZWTIxRHdibWRIelRyNU8yOHZVMnA1NExGcVBCS0ptVEw3aV9VVWRkVUkxRnVtd3dhRnZkcmROZnZhdHNTTVh3SWMzd0V3RklTTzM1QmhoX25iRmZYNkR2QzQ2?oc=5" target="_blank" rel="noopener">5 common food items you should &#x27;never&#x27; put in the fridge - Daily Express</a>
+        </div>
+        <div class="article-meta">
+          <span>Daily Express</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 28 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxOOHlLRXpJWEI3b19sVE1mUVc5aW5CYXVhWDJqMTlsVlFWMWlSNWY5MjIyTTdNY2dsdml0TDFhUk03SGpDck9rMEplZlJmZEVVcmZoTk1yZURoeVM5Qkl5MnZiYmRuVm14R3o3aGJHMkxuOGZfNHBTcE56SVVZNUhRc3dkdnBHRU9EVVVwZGQ4Y291LWotUkFOaU80ZFZLVVhaZ2pV0gGoAUFVX3lxTE1WcmVOeGVPbDE0UkRkUDYxeEI5eVRhR1VRVW9Hd292cEFYNW5MX1YyNUk2bEtSWEtrSktsbHBiMWs4Y3MxX3JWZGxHUThkRUtzbnQ0cE9wc3Bmay1IWWpLNDdhWTZfLVc3ZEpucDdmbHktblNiemRQWnM0QXREcXowb2FkUl9uX0V2U081SGxZekx0SzdXQkVKbmktanZ3OU9xWWlrUXNBVQ?oc=5" target="_blank" rel="noopener">Second Harvest Food Bank’s summer feeding programs back in full swing - WJHL</a>
+        </div>
+        <div class="article-meta">
+          <span>WJHL</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 28 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxOQWtMZ0lqbFlLam9rT21lU1hVS1Z4dW44dExadHlCbW1GR3RfSVZCUEJkZ2ZaVk13bnRyVUw4NVRRdEUyUS15Nm5zSVcyREVHUEkxaWpib2NiLW1OR0NFVHZRcFQ5YXhHVlM3UUpGLUlSMks2QW5NTzVjblk1NTctb01SZkhrN05QSVplZkw2TEhETjFuVDE4QkJNVWM0N3N0c0lrM0dR0gGrAUFVX3lxTE1nWGs2ZkJOWUFsR25CSGIzeUJhS3BFbS1lWXJ2VEFfbWNQcWhrMVdycUF4aWVnQUxDNkJzM2ZvNl9kekhnYWNoMmh0Z2w0RDlFWkduNUxlQWR3dHV6STJlYTNEQm5pTDJlNi11VV9ySDF2bGJVLWlqYldlZFpXYmp0TjZ1c2pCcUctX1pyejN5ZVQxQllIVnVlOFpqQThDUFphZjY0RTNNWENFSQ?oc=5" target="_blank" rel="noopener">Second Harvest’s Summer Feeding Program distributions to begin Thursday - WJHL</a>
+        </div>
+        <div class="article-meta">
+          <span>WJHL</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 27 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Edama Solutions" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Edama Solutions</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMizgFBVV95cUxOWDlwOXIyQTA1VlJ6VzdkX1FieWNpZ2hodThWNUR4TTExZDNQZDFRV3VZbnRfVUlFMVk4MTQtOVZ6WnAyQm4xQlFTSVZJTS1XWlhXeldpTDNQUVJWMVJQT0U0VDdBejFMUGxqd1B5eWdvZmsxbURnVVh4TktEYXoyZ2dOMVdjeUlVc0pTVE50QmJub0hERVp1Z0t1SmxpNmZJZzhGMWlsM2owV1ZvU0g0UnV2c0xENTllV1daZ09OaXFMcUFHZ1ZjRXBHcEQyZw?oc=5" target="_blank" rel="noopener">Hey! Chips Launches Superbeans: The Clean Protein Snack that Started in a Local Home Kitchen - Mini Me Insights</a>
+        </div>
+        <div class="article-meta">
+          <span>Mini Me Insights</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 25 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Best Before Store" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Best Before Store</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxPRm41R0QtQThOSHZrb0ptSFRGWW9nTG84WnBMMXNRRTBsaWF6WmpGd1hOZy1KRG1mWDA4VDJ6Y1NEcDBfMVhnRkVINWRzZUpWaDkwZDVFWFlvOUgyanZWa01sU2o5dWJkWk0xOE5EQXlydS1Ib3REZUZNYWdad1BvdXVQMWFveTJVUzVQU3dWcGJHUQ?oc=5" target="_blank" rel="noopener">ADEG retail staff are committed to food rescue - rewe-group.at</a>
+        </div>
+        <div class="article-meta">
+          <span>rewe-group.at</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 21 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Green Spot Technologies" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Green Spot Technologies</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiiwJBVV95cUxQeXlXQUt3Yy03WXE2R3NUeElMa1I3RmxDNTlGbWZjVUY5cXlOM2o0am9TRGt1cUtfbXpVU2ItYUNUd0M0d3VXYVh2U243djQ5blE1TmVLRmFBc0Q2eXNxb3BpM2RFSGF3QXZGZnNzbXpWNVlrdHQzSktRNkxKaEtYRUc0VGRJUEFzbGFSV2dMb05ydHFQVm4tOFBsM3JDVzQ4dVppNUZBSXAzOUhKRk5tVGg1NnV6X3dOcHljM0daUGxRUUd1SVRVX3g2SFVLSVIzRmlhb1dSTzBVbGFuV21sbThBOUthNmdpTjNNSXR0Y0RFUXN6RGtCUzJMSTd1aDZhVWM0WjNZVTI5d3M?oc=5" target="_blank" rel="noopener">Green Cow CBD Gummies Reviews: Honest Feedback from Real Users and Testing - Portal CNJ</a>
+        </div>
+        <div class="article-meta">
+          <span>Portal CNJ</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 20 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Harvest Food Rescue App" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Second Harvest Food Rescue App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxPZkZNaVJSdWdsNW5peVdYSXNjM3ZZczJZZW9oSkd3S05BTHBZM3p2WXJ1Q05Ld1M0bTlneGtaUVZXN1NaUmN3MURuLXc3dHRqcjgzbnZzd3dxVm9GTm1HU2FJQlpxaE5RMzZjODY2amF3bHJVSXk2ZlE3bFcyaU44cDJaWXB0V3lxYWRVZzZnRkx6b0NLVmVuUU1YaHhxTDdTVzFpV052dVRwbC13Wk15YVVzQ0sxTzJtWVgtajFqekx2WEE?oc=5" target="_blank" rel="noopener">Second Harvest of the Big Bend partners with USPS for annual ‘Stamp out Hunger’ food drive - Hawaii News Now</a>
+        </div>
+        <div class="article-meta">
+          <span>Hawaii News Now</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 10 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Coupang" data-country="South Korea" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Coupang</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5SRzRBMmJ2VjRqV2FEcEVCNmxyMEFGU2lFUXpjQnJJT3dHMGxXbXFpSU5Da0pYWWRaQm9KY0RzZkNxUlFHcFVzVXFqVTNpVVN0MzNPYngwTUFxYy1GUEVxekFIc3RwNWZJZ3Z4eEhSUXo?oc=5" target="_blank" rel="noopener">Who we are and what we do - Coupang, Inc.</a>
+        </div>
+        <div class="article-meta">
+          <span>Coupang, Inc.</span>
+          <span class="article-meta-sep">·</span>
+          <span>🌐 South Korea</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 08 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxOc2wzSEd0Y002NWZNUkpBQkh6UXFpTnFLYXhQUDFqaWoyRGMxb25ZVXNGNFZzc0hIeXhRbGJlc3ptdngwekM4eTdVcVJTQkVDSU5uZEZlcjBtd2dNbzI0WWJhS3dDSlhfbi1FOXJXbVNCNGROVTVKSDhMbFVaaHhnZG1wU2lTYnBnYmd2el8tMkRlcjdqVHYxVENKZ29fVC1oOWpWTU9VbXlya1lUV2FBM0J1UjE0dEtmdFMycGFzeXJRdnY4RFhpOXVfLVI0LUZyYWYyZ2VLdHZPS3RfREtfZHpPSGxsaDJzVlhqNWFCOA?oc=5" target="_blank" rel="noopener">Louisville&#x27;s historic Memorial Auditorium faces major funding cut - The Courier-Journal</a>
+        </div>
+        <div class="article-meta">
+          <span>The Courier-Journal</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 08 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cool Innovation" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cool Innovation</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi4gFBVV95cUxObjZ6YUpEbjBnanZqSDAzaWJtQ3REc19xeEdfVEhrZ2ttSENYaUFOcUk4U2NzazM1Qzhpa0pvYzkyb0dDYk52S1g3R3Q3SGxWZm4ySncyR3RVU0dDZ3MyWnJOR3VuTWhKcldvSlJtZkVLc1BjSHhBRlc1Ul83TENDV3J3N0ZaRW13UUFOM3AwM01CUnpjWURManhJazJkQWlmYlFUWk5ud3BvcWRsX2FoX09STFZiazFGUHBCTXlrNXVkZlVtMVZuSVpZamdFYUVSRzBDOVpISWtfclFoekRKMl9B?oc=5" target="_blank" rel="noopener">JBT Marel Makes Landmark Foodservice Debut at the 2026 National Restaurant Association Show - Business Wire</a>
+        </div>
+        <div class="article-meta">
+          <span>Business Wire</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 07 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Topanga.io" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Topanga.io</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxPUlNBQXZGQ3JlSFVfMEt3LTJ0MUNONUpaNUUtM0psZU1Ed3BPcE4yWUxDOTI5VjFRUzZTYUhPdGZqeDllVFVSblpwLU1WRFg2NEFvdXVDVTVfWVU2TE9YcWNYbHZqTDJnMmRTRjNra1MzSUlhaENKNXZEZ0pGRFZuZDRpSktpQ2hjdTg2Y0g1T1RWVEp6WXZvZVE1dWgxc0xkbzRnNGZnUjVXT3pJMWRXRUotSQ?oc=5" target="_blank" rel="noopener">Autonomous checkout drives speed, sales, and 24/7 access - FoodService Director</a>
+        </div>
+        <div class="article-meta">
+          <span>FoodService Director</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 06 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Save Me" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Save Me</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxQY0thS1lQbUt4M3lhWXBoMnhkNU5zTzk2dGxsbHVLX1hkbGhoVGp3UVllUENlbTRPOXM4UlduUGx1OUJmZG1IVGJ3aU9iT3AzVTdFZ09OWXFzenBjRnk4Rnc5NFZWZWZETnZDdWhreVBQSHV3ZUF2dndjSmIzd0xqUkNrMi05dGZqSEFtQ1BHdUxmQ0NqRnBzZEtmUUlCbDVTdHBxMVRaWFFjc2FiNzFmZmtlZ2N2WEE?oc=5" target="_blank" rel="noopener">Canadians are getting used to paying more for food, but they’re also fighting back: survey - CBC</a>
+        </div>
+        <div class="article-meta">
+          <span>CBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sun, 03 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Plate" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Second Plate</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxQdXBsOWJ1REl3dDYtN1AwVFg2UjFoT29BNmlYNDRMWVpHZEQxZkN3b3J2Tl9XdFBnbXpPRjJWTGc2ZXpiM1JNQlR1bGpORC1wc3VCRy1FVVhUTEdUQTFBUkthMWJzWGx4MGd1dmxDc1V2NEw0S3BEekhQRTZ0S0FfV204eDJPZGZFZ2dJQ3Z4U3FDRng4aEN3ZHAzOA?oc=5" target="_blank" rel="noopener">$10 Million To Rescue Food, Fight The War On Waste - Sydney Times</a>
+        </div>
+        <div class="article-meta">
+          <span>Sydney Times</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Sat, 02 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Veggiebox" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Veggiebox</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQNzJXai1wQlZTbmh4VGxJcDdhT0x0Mi1tVzd1dC0ySFo1UEtNcHhOR3ZyTjREcmJ0a0xiZlFpU1BZSXE3Nl8tVkY1SHBDbzRQWERjdk9Qd0JEelNuQXpOYkJzQVMyb0VuR0p0OURuZ2tldE9DN0NIMFUyNUdhV0FibnFKc1E0M1ZDT1FFNkNpcnplSTdiblNpNy0tYWVvZktxdTNSaWdMYU9lU1JaSVZj?oc=5" target="_blank" rel="noopener">‘To sell a bunch of coriander for $3, takes me 90 days’ - the mounting pressure on growers - The Press</a>
+        </div>
+        <div class="article-meta">
+          <span>The Press</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 01 May 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxNS0E5MUt5WU5tYmZuQ2pjd2Zwak5kS25YOVlQOXBiMEdRN3htdFY2c25OdUs1by1ZMVpIMnFySmV0UzYxZE55cmpVWDZ5WFlfYTFaNmF3aVRuY196QnBKRnJQc3p0ZV9DNm5QMHlIMmRUb1g0YzVXQWhyMDc5RHFCZEJkMTA2TnNfWFRwNU5nOXFVdlEzeTRnS0phQkJBblF1a05GbFlIYzV3V201c2Juek9icknSAboBQVVfeXFMT1dvRDZjTEY2b2Nka2JJMkNMZ3lIamdNanU0WVNDUVFuWVlkRTg5VVl4YXVXR2FPUTR3UjY3OGxMZ09vUWM5N21XN2MwNmdzZGY1b0NvQTRVcktpMHBBSEMwcXdUa0pYQlFMUGVlM3hpMlc5eEpqcmlkMWxBb3hEbFJKWHkxTWNJZFpJel82WWJiNmRPMUU4SlZxMFgydjVsN1M5Z2h3UlNXQWdKLVRSMFBBc0h6UUhxZ3Jn?oc=5" target="_blank" rel="noopener">The relationship benefits of traveling and four tips to do it well. - Psychology Today</a>
+        </div>
+        <div class="article-meta">
+          <span>Psychology Today</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Wed, 29 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Coupang" data-country="South Korea" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Coupang</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMif0FVX3lxTFBxOHd2U2ExQXdvaUFrY1pYTy1GblQ5MGhNUzdCeHlBMk8tblRTTDJTNjdPdk1CWng0V1NoRlFQOF9TVVozTFBmSlA0dnFKYnExWmlDbWFSWVprNE9XRW5ZVWpZLVZIZnc0cTVrTkxoS3J0S2hpTXZpalA4c056cknSAZMBQVVfeXFMT1JQVGwzbTV4ZEhiU1FLTVZNNVVVX3hZY3ZMWXF3WWxsUHF0TkpyZ2dzVk13QnJ5UktObGpIMGo0ei1PeEpxRlMxcGFCdlo5SVVsU0NpVlM1dWVWZ3ZqTHpGT2Vxd25zTDhON0kxOHA0X1NvaVNYZ2h0aUNQWGhWWG91bXV0V3NsTHU3YkJRU0ZLMC1j?oc=5" target="_blank" rel="noopener">Harim Group wins bid for Homeplus Express to speed Korea retail-food push - CHOSUNBIZ - Chosunbiz</a>
+        </div>
+        <div class="article-meta">
+          <span>Chosunbiz</span>
+          <span class="article-meta-sep">·</span>
+          <span>🌐 South Korea</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 21 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Topanga.io" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Topanga.io</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxPaEowWlhqNVJOV200QW44ZHVESjJNNmxjM0s4WGJmaDg5elUzTUdPRTlsQ1Z5djVIY19YLWpJMVE3RVplZ2dqV2t6OGRtTXNMYzBtRFhwSzFGQWNOQ1BqenFMaU11V181cnQwcHVWVGV1MHJmNzMtNzZ4dGNzSzl6SFpRMW9mR2hFZDk4TmZqSzJPT3FRUms1WU00U3g5Q1NrY2lITVBkYXV3SThMY1RiZXkyZy1Gd0pvRjdOWGJ6ektvWU1xMkE3bVpxY3ZZNUhZ?oc=5" target="_blank" rel="noopener">Liberty University makes composting much easier for students at the dish line - FoodService Director</a>
+        </div>
+        <div class="article-meta">
+          <span>FoodService Director</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="No Waste App" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">No Waste App</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE5oOGNYdFAyLUZSV3BfVEM4Nl92YkhSekZRZnQ1cnMwT0VrRnNQZmI2TlZvdzlvc01RakZaZTc3cUp1MGR0M1A1TDlqNHlLMzF2SXBpaGg4NjJLcmE1NHhocTNOeGx2aHhGUWtxMGVjY08yNl9tenhj?oc=5" target="_blank" rel="noopener">The Food We Never Eat - American University</a>
+        </div>
+        <div class="article-meta">
+          <span>American University</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 17 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Sharing Excess" data-country="United States" data-category="Retail Tech: Donation">
+      <div class="article-accent" style="background:#d97706"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#d97706">Sharing Excess</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE5hTEZLS2Z5UldERDZoMVgyTDlRN1d6M3drNndQaWozRDlJRlVLU3NyME5PV05CeVg1Z1JxMDVDQ1RFMkFLMnFMZlFTZDhCbVJpNVowTXNCRG5Ic0JtNFhBZURmSXhhTnhB0gFuQVVfeXFMTmI1RDVIT21YX01WaFhISHdBaFFrWFFtcmVvMGx0OFozTWVLbnIzM19oVTRDdkdPNjZEbHF3eXE4cnR5bkFRZjRzU1BGaFJpUzVUMktYdy1vQlEtVkRrS1hnMVRnUVRJQmhhcHBTV0E?oc=5" target="_blank" rel="noopener">6 Local Uni Telegram Groups That Alert Students To Free Leftover Food, Including Buffets On Campus - TheSmartLocal</a>
+        </div>
+        <div class="article-meta">
+          <span>TheSmartLocal</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 16 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxQRmVhdUZNOWF6TU9RWFVuc3FlS19sM3N4TFdScUhuWW8zcUtiM1d2N1NXV2hCeGlLek1JOWlqcWI1MEUzTmY0VWFsYl9zN1BYamxPNm4yNldFclNER1RfMDV0RWRJNXdHZlFSVE8tS2I4RVdsYzVjVUswZk0yTG12WtIBhgFBVV95cUxPSlVQenZYVzZuYXZweW1XcUFhcy1IWWE0NVNPeE5USFZCZkpkdlAxSF9TYXE2Q1h6Z0tqcjg4c3dSdjFiRVZXOUxQaHh3QzRTUnZING1ibGIxQlVFQmpQdC1ZMnZtN3JDSWtnMXpqcTFoOG4yVFR4ZEh4SHBlTXJNQjA2bXByQQ?oc=5" target="_blank" rel="noopener">Items not allowed in food waste bins after new 2026 council rule change - The Mirror</a>
+        </div>
+        <div class="article-meta">
+          <span>The Mirror</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 13 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Wonky Box" data-country="United States" data-category="E-commerce">
+      <div class="article-accent" style="background:#7c3aed"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#7c3aed">Wonky Box</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxQamlmZmc5STltQjdiam95VHFtc0V6U3BSV2NkazdOdF8yWHZ4QTh0dXA1Q053c08ySVdhWjc1SlphdE5oUmFOZDNQY3BOaXp5TFdNVGc4eWtoZjYtTXNmbXhGVW91bFlBTU5nMnVjWUhIajlmWG91NTZBUWR6QzFJdDc3Q0hkaXRjSkRVUWVHTGdpcXk1VXREWFdCUk8xVGFsUWdwR2ZnU1ZKM1kyQmc?oc=5" target="_blank" rel="noopener">Subscription-based food suppliers struggling with rising fuel costs - RNZ</a>
+        </div>
+        <div class="article-meta">
+          <span>RNZ</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 07 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Vego" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Vego</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxQbzYycGZ1dUs1bGxjbHhLMDJFMWFydlJtMkhnQlNLS29kT1pwLVBoS185cTFnbDhZaVpsakFtVE95SGVUNnp4VDduQ2s3U3pvbVdkNGVCM2U0U0FaV0FnWmJXVXF6ZzBVVzBvaHFoVWw0YkJ0QzNlbzZqN3NsTDc2WjlMRy1XOWtMZndyRTRtTQ?oc=5" target="_blank" rel="noopener">North America Household Composters Market Size, Analysis Report 2035 - Global Market Insights Inc.</a>
+        </div>
+        <div class="article-meta">
+          <span>Global Market Insights Inc.</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 06 Apr 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Fridge Friend" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Fridge Friend</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxQbF9kNDVNanBzRXVfa3FzYm95clZnazVOVGpNS0pTX3Y4Z1hPb0FScDNJQ2FEUWNRMl8zUUN1cnNNc0p3N2padWhRRkxTV1NtUGZKNEFiT0lNVER1bWRObEJyTDRXYnRPRllhcjFoT2JLTWN3Q1o4ZFZhYWdsa0tZSE5Ea1JRMTU4RFHSAYoBQVVfeXFMTVBDd3c0YllzV2JoQTF3ZlJVcGw1dDU3WWpoOWFEZWhiX21LWFNpSkltQXE2dHBvaDhxaVk5SlBSc0VMbUhZTjc3YjdBVXVHakwyUWFtaEtqbXhhS0tVeGxPVm9DWEViaGU4LTBtWFoxcXF1RzEtYWd1VVpaU0wxcktJaUNsRnhJb2d3?oc=5" target="_blank" rel="noopener">&#x27;Insanely simple fridge hack saved me $800&#x27; - Taste</a>
+        </div>
+        <div class="article-meta">
+          <span>Taste</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 27 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Green Spot Technologies" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Green Spot Technologies</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxOcHRuZms0NFhtUjhsdENIamNHVmxaamhJU1FlRXJJZkREYS1ZR3dMcWs5YWFlcWpZZ0x3MG9sRFFPV2xSRUx2RkVEVm90UDNiYlowOWFDVmhzUDJTUTVMVncxcnVURjBzSnFpTEYtYTVrQW1WNzFBWDFuZy1VRzZ5c01NM3AyWWtRZE10SG5VVkc4UDBIUDk0?oc=5" target="_blank" rel="noopener">Opinion: Don’t Judge My Nudge – Why We Need to Rethink Behavioural Shifts for Plant-Based Food - Green Queen Media</a>
+        </div>
+        <div class="article-meta">
+          <span>Green Queen Media</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 26 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Cook Forever" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Cook Forever</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMijwJBVV95cUxOT2hSQVVZdV9lQXpvenhiREdjVjV4MUtKSjd4QkxOZzV1NmpWcmlpVXlfRkw2cDItVVBiWXlWMkd3amJKRjlPZGNKbV96MXh2Y1dVVEtreGdvMFJGQWF4VjhjaWhzaDRlMXhvV1NHbEJFZVNuNGZFZGc0bEhHS2x0YTF2SC1fb0hoYmh6N0lIU2ZwUDQySnlqUGtYZTViNGRUOG9xcjRKRkFwRmltSTNiV3ZndFB5V1hKR3Z6VmE5R1ZOM211ZVZQUnR1ZjNNcE1WUjNnZm1GNWkycWpGVmdBZEdOVUptWTczOW13QzdkcDdaVk05azQ4S3FIRzFjVVJfRXRvQVJ5ZnhqQUpBQjNB0gGWAkFVX3lxTE9lSzRzZWltZXM4cmdXZlBrNDRsMU9BNzBnTzlQTXJKeTdCZm9VeFN4by1Zb1BGTGZGUTA1c2RuckxTQ3VDR2VYTHJzRE9fTFF0MkN5Z3BOcDZhNGRsci1wREFlZjRSQTdLSnpPZ1J5aHdUcnUtTkEyeDJKR1lYU3F0bjhDT0ZZSmgxMnhwaVlDMHRvY1c4MGxXam5WcEFEaVRmYUE5QUtKLTF4bmRxRXNMQnE4NGxPOWU1elI4bmV5V05sTnplTEdEZnREZlg3b2hoQ29lM0hUa2NvYThjbmFROXJwYnFpRC0wSXpyQTdCbVloX1BjZDBDZlNMVllhNmE2bjdEWktvWXVIaFhHb1BDbklYcEJR?oc=5" target="_blank" rel="noopener">As Bengaluru hotels cut menus amid LPG crisis, how this restaurant is using 8 tonnes of city waste to take on more cooking - The Indian Express</a>
+        </div>
+        <div class="article-meta">
+          <span>The Indian Express</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 24 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Second Plate" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Second Plate</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMizAFBVV95cUxQTmItR1hXQ2pDMmtMTzVxX093Z2JWUkJvMUV2SjN4elRhY3RkanBNNG1aVlpRc2hhUHcxU3BtTUc3YXRvdHdBM25pTHU0SlFhalRmWV9PMVdGd2Y4ZGVqbDZHVnA3cEhXc2E0RGdsQ1AtRXA1X0habDZrVGtZWUhTYzdYT21OWG1RQTBVdGpzLTdMaE53UzBUVDdTQ1RWMzI3emJ5OGtpc2dJRV95ODNNLW1Ldm1UTk1FaGFGVHg5UHB0LVF0ZDMyaXk0cUI?oc=5" target="_blank" rel="noopener">Research shows right-sizing portions can stop profit margins from getting trashed - FoodService Director</a>
+        </div>
+        <div class="article-meta">
+          <span>FoodService Director</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Fri, 20 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxNOUxKc183c0RYQnZzWlFORUh6aWZfT09MUDRSQnUzWkVlQzQyU3VxcnU5OGh5MWxSeHhvNjljaGVQelZRdGhKOUxULWctSDBGWnM2ZThTa2tUaEs1ZkxnYUQ3c0x1aXlJZUl0dVc0LVhQME5GcUhGaGkybnF2bk9pdC01dmlweXJNT1FsWm1jN011Uk9SQkxUNGxDaE9HMThYbVdjZ1hPUmJJVmUxY0E?oc=5" target="_blank" rel="noopener">Too Good To Go &amp; CEVA Logistics Hit 300,000 Milestone in UK Food Waste Initiative - LM - Logistics Manager</a>
+        </div>
+        <div class="article-meta">
+          <span>LM - Logistics Manager</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 19 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxNdUJwbms3NVZ2ajUzMl9sT1p6OWQzSVBtMVRIQVYwck4zelIxUTBEOXQ0YVl4dzFpaDBPVjFYZGdDaXlBY1l6TXJjazFLTjktcHZpNkJRbGh1SlhINlB6SWpqVXI5UFB3cGxoSVRhcmtyTFJ5TVVmNUJyNTh4QXF5WE1XUVkxNmFxOEV1dVJMbDhZcFdad0VoUUxJWnY3NFFwRXpHNFpQSE5uMkZfenJKSm9iUWlRUHFFQmxaTEpZeFFSM0VrX2c?oc=5" target="_blank" rel="noopener">Houston money-saving guide: Apps that help cut gas, grocery and dining costs - Click2Houston</a>
+        </div>
+        <div class="article-meta">
+          <span>Click2Houston</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 12 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Flashfood" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#1d5fa8"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#1d5fa8">Flashfood</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxOblhwNVl5UEc2bDdobW42VjhpXzJEcTVwd1B5MEVTNUZwOG1xaURTZDdOak0yVF9WdGpTU21mRVExN0lfRFBCZ1F6YlFUemhSckxKb3g0Z2ltSkJ6amNIWk9LNnE0V1UzOVQ3RVdNVjQ0amVxUmhXSm05M0M2YWVJVkNmdEpET3NTWkhkZA?oc=5" target="_blank" rel="noopener">Loblaw® and Flashfood helped Canadians save $58 million on groceries in 2025 - Yahoo Finance</a>
+        </div>
+        <div class="article-meta">
+          <span>Yahoo Finance</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 02 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Gone Good" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#2563eb"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#2563eb">Gone Good</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTFBDWkNaTTVDRUVrS3V2UFp5d2puTDlJMi0xN1B3VXpmdGdCYXViU290Vm15S1V0UWpoZVdFaV9HWkF2NkRSa0Y0TnNoUFJzOEZjeTBzaVE0OU9Rby1u?oc=5" target="_blank" rel="noopener">Food waste collections: how your peelings are turned into power - BBC</a>
+        </div>
+        <div class="article-meta">
+          <span>BBC</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Thu, 26 Feb 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Topanga.io" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Topanga.io</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxOOFFENm0xamVhU2Z2SXhsNm4xX1hQMlRsYXNLakRZS0x4RHNhd3Z4MFFFYjBZMkNmVDJpRmpsR1VJRUVBaHJRUVdicDd2X0MtSXJhbFVYSjBYeEt3cWpmRTR6OTJydy1vVzlHa2ZlbmRfZmYyTHlSZnplNWlPdTZmXzNYLWtDeW9aenNNa1NqeUkydGN6aHdVaHdrczZSazZ6X180UTNWbjRCeEVUTmg2WlJrWm1QazZWNUlOcm9IdHFGRjA?oc=5" target="_blank" rel="noopener">AI in the kitchen: Cal Poly Pomona’s tech powers a smarter operation - FoodService Director</a>
+        </div>
+        <div class="article-meta">
+          <span>FoodService Director</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Tue, 24 Feb 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Rescube" data-country="United States" data-category="Other Surplus Optimisation">
+      <div class="article-accent" style="background:#059669"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#059669">Rescube</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxNQWdnbC15UFRSYlZQeVZBN252OGpCaWF6ZGUwRTRjRXNLZGtabUJaRWZualNHcFRzVUU0MkZXTHp6aWI2NkFKTFlJSTBfOFVZUnc0ekJsT3VBY1Y4c1AyYXlHclc2RnYybFFTZ2RTcHhRVmZGczNEQmtuTmk3em5LaXF3ZHJkdzJ6eEVzYmVjdzJXMGdlNWYxSlVQaHN6cVo1N3RN?oc=5" target="_blank" rel="noopener">Ramadan 2026: Ne’ma expands food rescue drive across five emirates - Gulf News</a>
+        </div>
+        <div class="article-meta">
+          <span>Gulf News</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 23 Feb 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-row" data-competitor="Too Good To Go" data-country="United States" data-category="B2C Marketplaces">
+      <div class="article-accent" style="background:#00615f"></div>
+      <div class="article-body">
+        <span class="article-tag" style="background:#00615f">Too Good To Go</span>
+        <div class="article-title">
+          <a href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE1tRFBrUlZNdHdQS3p2djBUekttX0JmaGxYWkVrM0ZVbTZXUGVGR2NUbjZIV0Y2TXlURW5MVC1pVERGb3dvb1J2YlZZcGFsQ2tNUUpOUzk3amRJX0w5Um1OQml6MXZYbndy?oc=5" target="_blank" rel="noopener">Why Is Everyone So Nice to Eileen Gu? - The Free Press</a>
+        </div>
+        <div class="article-meta">
+          <span>The Free Press</span>
+          <span class="article-meta-sep">·</span>
+          <span>🇺🇸 United States</span>
+          <span class="article-meta-sep">·</span>
+          <span>Mon, 16 Feb 2026</span>
+        </div>
+      </div>
+    </div></div>
+    </div>
+  </main>
+  <script>
+  function applyFilters() {
+    const ac = [...document.querySelectorAll('.filter-btn[data-type="category"].active')].map(b => b.dataset.filter);
+    const countrySel = document.getElementById('country-select');
+    const country = countrySel ? countrySel.value : '';
+    const compSel = document.getElementById('competitor-select');
+    const comp = compSel ? compSel.value : '';
+    document.querySelectorAll('.article-row').forEach(row => {
+      const mc = ac.length === 0 || ac.includes(row.dataset.category);
+      const mk = country === '' || row.dataset.country === country;
+      const mcomp = comp === '' || row.dataset.competitor === comp;
+      row.style.display = (mc && mk && mcomp) ? '' : 'none';
+    });
+  }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
+  });
+  document.querySelectorAll('#competitor-select, #country-select').forEach(s => {
+    s.addEventListener('change', applyFilters);
+  });
+</script>
+</body>
+</html>
